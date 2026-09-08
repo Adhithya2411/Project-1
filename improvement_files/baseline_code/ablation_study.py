@@ -42,7 +42,12 @@ from ahrag.eval.harness import (  # noqa: E402
     load_and_validate,
     resolve_corpus,
 )
+from ahrag.eval.reports import save_report  # noqa: E402
 from ahrag.stats import bootstrap_ci, cohens_d, paired_bootstrap  # noqa: E402
+
+#: Report kind written to data/reports/, where the UI reads it.
+#: See ahrag/eval/reports.py.
+REPORT_KIND = "ablations"
 
 # Per-row keys as emitted by ``ahrag.evaluate.run_item``. These are NOT the
 # aggregate names used by ``ahrag.eval.metrics.aggregate`` — e.g. the row key is
@@ -226,7 +231,8 @@ def main() -> None:
     parser.add_argument("--only", type=str, default=None,
                         help="Comma-separated ablation keys to run")
     parser.add_argument("--output", type=str, default=None,
-                        help="Write the full report to this JSON path")
+                        help=("Override the report path. By default the report "
+                              "is written to data/reports/ where the UI reads it."))
     args = parser.parse_args()
 
     manifest, eval_set = resolve_corpus(args)
@@ -332,25 +338,26 @@ def main() -> None:
               f"${summary['mean_cost_usd']:.6f}")
     print()
 
-    if args.output:
-        payload = {
-            "corpus": str(manifest) if manifest else "seed",
-            "eval_set": str(eval_set) if eval_set else "seed",
-            "items": len(items),
-            "full_system": {
-                metric: dict(
-                    zip(
-                        ("mean", "ci_low", "ci_high"),
-                        bootstrap_ci(baseline["vectors"][metric]),
-                    )
+    # The report is always written, to the canonical data/reports/
+    # location; --output only overrides the path.
+    payload = {
+        "corpus": str(manifest) if manifest else "seed",
+        "eval_set": str(eval_set) if eval_set else "seed",
+        "items": len(items),
+        "full_system": {
+            metric: dict(
+                zip(
+                    ("mean", "ci_low", "ci_high"),
+                    bootstrap_ci(baseline["vectors"][metric]),
                 )
-                for metric, _ in METRICS
-                if baseline["vectors"][metric].size
-            },
-            "ablations": report,
-        }
-        Path(args.output).write_text(json.dumps(payload, indent=2, default=str), encoding="utf-8")
-        print(f"Report written to {args.output}")
+            )
+            for metric, _ in METRICS
+            if baseline["vectors"][metric].size
+        },
+        "ablations": report,
+    }
+    written = save_report(REPORT_KIND, payload, args.output)
+    print(f"Report written to {written}")
 
 
 if __name__ == "__main__":

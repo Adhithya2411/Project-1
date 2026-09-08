@@ -300,7 +300,11 @@ python improvement_files/datasets/integrate_datasets.py
 ```
 
 Produces 6,139 documents / 7,082 chunks / 965 labelled queries, with a 7-class
-ACL lattice and 15 supersession chains. Then either point the UI's **Corpus**
+ACL lattice and 15 supersession chains. Of those documents, **249 are
+enterprise-shaped** (policy, finance, runbook) and 5,890 are single-paragraph
+reference articles included so first-stage retrieval is genuinely selective —
+quote the 249 when comparing against a "number of enterprise documents"
+target. Then either point the UI's **Corpus**
 selector at it, or run the experiments against it:
 
 ```bash

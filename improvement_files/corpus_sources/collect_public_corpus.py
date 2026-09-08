@@ -57,6 +57,12 @@ import yaml
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
+# The principals are defined once, by the dataset integrator, and reused here.
+# Both corpora draw audiences from the same role model, so sharing the user
+# definitions is what lets them be seeded together into a single ACL lattice.
+sys.path.insert(0, str(PROJECT_ROOT / "improvement_files" / "datasets"))
+from integrate_datasets import USERS  # noqa: E402
+
 OUTPUT_DIR = PROJECT_ROOT / "improvement_files" / "corpus_sources" / "collected"
 
 SEED = 1729
@@ -428,12 +434,25 @@ def main() -> None:
             entry["supersedes"] = document["supersedes"]
         manifest_docs.append(entry)
 
-    (OUTPUT_DIR / "manifest.yaml").write_text(
-        yaml.safe_dump({"documents": manifest_docs}, sort_keys=False,
-                       default_flow_style=False),
+    # A manifest without a `users:` block is unusable: seeding with reset=True
+    # clears the users table, leaving no principal to query as, and every
+    # request then fails with UnknownUserError. The role model is imported from
+    # the dataset integrator rather than restated here, so the two corpora
+    # compose into one ACL lattice and cannot drift apart.
+    manifest_path = OUTPUT_DIR / "manifest.yaml"
+    manifest_path.write_text(
+        yaml.safe_dump(
+            {"users": USERS, "documents": manifest_docs},
+            sort_keys=False,
+            default_flow_style=False,
+        ),
         encoding="utf-8",
     )
-    print(f"  wrote manifest.yaml ({len(manifest_docs)} documents)")
+    # Read back rather than trusting the write: an earlier version of this
+    # function printed a success line for a write that had been removed.
+    written = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+    print(f"  wrote manifest.yaml ({len(written['documents'])} documents, "
+          f"{len(written['users'])} users)")
     print(f"  wrote {len(manifest_docs)} corpus files")
 
     report = {

@@ -340,3 +340,113 @@ class TestSingleItemRun:
         assert row["acl_violation"] is False
         assert row["recall_at_5"] is None
         assert row["query_type"] == "permission_constrained"
+
+
+class TestBenchmarkEvalSetIntegrity:
+    """Guards on the generated benchmark evaluation set.
+
+    These exist because the freshness stratum was silently unusable: every
+    system scored exactly 0.000 Recall@5 on all 15 freshness items, because the
+    generated queries were almost entirely function words and could not
+    retrieve their own gold chunk. Nothing failed — the metric simply reported
+    1.000 for freshness compliance because it was never exercised. A generated
+    dataset needs its own tests for the same reason production code does.
+
+    Skipped when the benchmark corpus has not been built, so a fresh clone is
+    not required to run it.
+    """
+
+    @pytest.fixture(scope="class")
+    def benchmark(self):  # noqa: ANN201
+        from ahrag.eval.harness import INTEGRATED_EVAL_SET, INTEGRATED_MANIFEST
+
+        if not INTEGRATED_MANIFEST.exists() or not INTEGRATED_EVAL_SET.exists():
+            pytest.skip(
+                "benchmark corpus not built; run "
+                "improvement_files/datasets/integrate_datasets.py"
+            )
+        from ahrag.eval.harness import build_seeded_engine, load_and_validate
+
+        engine = build_seeded_engine(
+            INTEGRATED_MANIFEST,
+            settings_overrides={"embedding_backend": "lsa", "reranker": "lexical"},
+            quiet=True,
+        )
+        items, _ = load_and_validate(engine, INTEGRATED_EVAL_SET, quiet=True)
+        return engine, items
+
+    def test_every_label_resolves_to_a_real_chunk(self, benchmark) -> None:
+        """A gold ID that does not exist reads out as recall 0, not as an error."""
+        engine, items = benchmark
+        known = {chunk.chunk_id for chunk in engine.db.get_chunks()}
+        dangling = [
+            (item.id, chunk_id)
+            for item in items
+            for chunk_id in list(item.gold_chunks) + list(item.forbidden_chunks)
+            if chunk_id not in known
+        ]
+        assert not dangling, f"{len(dangling)} dangling label references: {dangling[:5]}"
+
+    def test_freshness_queries_can_retrieve_their_own_gold_chunk(
+        self, benchmark
+    ) -> None:
+        """The regression this class exists for.
+
+        A freshness item tests whether the *current* version is preferred over a
+        near-identical superseded sibling. That is only measurable if the query
+        retrieves the section at all. Requiring a clear majority rather than all
+        of them keeps the test about the generator being sane, not about
+        retrieval being perfect.
+        """
+        from ahrag.eval.metrics import recall_at_k
+
+        engine, items = benchmark
+        freshness = [
+            item
+            for item in items
+            if item.query_type == "freshness_competing_versions" and item.gold_chunks
+        ]
+        if not freshness:
+            pytest.skip("no freshness items in this evaluation set")
+
+        retrieved = 0
+        for item in freshness:
+            result = engine.answer(item.query, item.user_id, write_audit=False)
+            ids = [entry.chunk_id for entry in result.evidence]
+            if (recall_at_k(ids, item.gold_set, 5) or 0.0) > 0:
+                retrieved += 1
+
+        assert retrieved >= 0.8 * len(freshness), (
+            f"only {retrieved}/{len(freshness)} freshness queries retrieved their "
+            f"gold chunk. The stratum is unmeasurable and freshness_compliance "
+            f"will report a meaningless 1.000. See "
+            f"build_freshness_items in integrate_datasets.py."
+        )
+
+    def test_freshness_gold_is_always_the_current_version(self, benchmark) -> None:
+        """Gold must be the superseding document, never the retired one."""
+        engine, items = benchmark
+        by_id = {chunk.chunk_id: chunk for chunk in engine.db.get_chunks()}
+        for item in items:
+            if not item.freshness_sensitive:
+                continue
+            for chunk_id in item.gold_chunks:
+                chunk = by_id.get(chunk_id)
+                assert chunk is not None and not chunk.is_superseded, (
+                    f"{item.id} points at superseded chunk {chunk_id}"
+                )
+
+    def test_acl_probe_items_are_genuinely_unauthorised(self, benchmark) -> None:
+        """A forbidden chunk the asker may actually read tests nothing."""
+        engine, items = benchmark
+        by_id = {chunk.chunk_id: chunk for chunk in engine.db.get_chunks()}
+        for item in items:
+            if not item.forbidden_chunks:
+                continue
+            user = engine.get_user(item.user_id)
+            for chunk_id in item.forbidden_chunks:
+                chunk = by_id.get(chunk_id)
+                assert chunk is not None and not chunk.readable_by(user.role_set), (
+                    f"{item.id}: {chunk_id} is readable by {item.user_id}, so this "
+                    f"ACL probe cannot detect a violation"
+                )

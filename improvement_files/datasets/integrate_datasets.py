@@ -869,37 +869,87 @@ def build_adversarial_items(answerable: list[dict], limit: int = 40) -> list[dic
     return items
 
 
+_STOPWORDS = frozenset(
+    """a an and are as at be by for from has have how in is it its of on or that
+    the to was were what when where which who why will with would you your do
+    does we our this these those may can if not but all any such other than
+    also into upon been being them their there here more most some only over
+    under about across after before between during through while
+    """.split()
+)
+
+
+def _distinctive_phrase(text: str, words: int = 9) -> str:
+    """Extract a lexically distinctive phrase from the start of a section.
+
+    Used to build a freshness query that can actually retrieve its own gold
+    chunk. Skips function words so the phrase carries retrievable content
+    rather than 'what is the current rule in'.
+    """
+    tokens = re.findall(r"[A-Za-z][A-Za-z0-9\-]*", text)
+    content = [t for t in tokens if t.lower() not in _STOPWORDS and len(t) > 2]
+    return " ".join(content[:words])
+
+
 def build_freshness_items(documents: list[CorpusDocument], limit: int = 25) -> list[dict]:
     """Items whose gold evidence is the *current* version of a chain.
 
-    The superseded sibling contains near-identical text, so a system that
-    ignores freshness will retrieve the retired version and score zero.
+    WHY THIS FUNCTION WAS REWRITTEN
+    -------------------------------
+    The first version phrased every query as ``"What is the current rule in
+    {heading}?"``. Against 7,082 chunks that is not a retrievable query: it is
+    almost entirely function words plus a short heading, so **all eight
+    evaluated systems scored exactly 0.000 Recall@5 on all 15 items**. That was
+    not eight systems failing at freshness — it was the generator producing
+    questions nothing could answer, and it silently made
+    ``freshness_compliance`` report 1.000 in every run including the ablation
+    that switched freshness enforcement off. A metric that is never exercised
+    reads as perfect.
+
+    The query is now built from a distinctive content phrase taken from inside
+    the versioned section, so the section is genuinely retrievable. Note that
+    this deliberately makes retrieval *easy*: the point of a freshness item is
+    not retrieval difficulty but whether the **current** version is preferred
+    when a near-identical superseded sibling is equally retrievable. Both
+    versions contain the phrase, so both compete, and only freshness handling
+    can break the tie in favour of the gold chunk.
     """
     chains = [d for d in documents if d.supersedes]
     items: list[dict] = []
     for document in chains[:limit]:
         if not document.chunks:
             continue
+        gold_chunk = document.chunks[0]
+        phrase = _distinctive_phrase(gold_chunk.text)
+        if len(phrase.split()) < 4:
+            # Too little distinctive content to build a retrievable query;
+            # dropping the item beats emitting an unanswerable one.
+            continue
+
         retired = document.supersedes or ""
         asker = AUTHORISED_ASKER.get(
             document.acl_roles[0] if document.acl_roles else "employee",
             "erin.contractor",
         )
-        heading = document.chunks[0].heading or document.title
         items.append(
             {
                 "id": _stable_id(f"fresh-{document.doc_id}", "fresh"),
-                "query": f"What is the current rule in {heading}?",
+                "query": (
+                    f"According to the currently effective version of this "
+                    f"policy, what does it say about {phrase}?"
+                ),
                 "user_id": asker,
                 "query_type": "freshness_competing_versions",
                 "expected_route": "R3",
-                "gold_chunks": [document.chunks[0].chunk_id],
+                "gold_chunks": [gold_chunk.chunk_id],
                 "forbidden_chunks": [],
                 "should_abstain": False,
                 "freshness_sensitive": True,
                 "notes": (
                     f"Current version is {document.doc_id} v{document.version}; "
-                    f"{retired} is superseded and lexically similar."
+                    f"{retired} is superseded and contains near-identical text, "
+                    f"so both are retrievable and only freshness handling "
+                    f"separates them."
                 ),
             }
         )
@@ -1018,7 +1068,19 @@ def main() -> None:
     print("=" * 74)
     print("SUMMARY")
     print("=" * 74)
-    print(f"  documents           : {len(documents)}")
+    # "6,139 documents" overstates what this corpus is: most entries are
+    # single-paragraph reference articles from HotpotQA, which exist to make
+    # retrieval selective rather than to model enterprise content. Reporting
+    # the two counts separately is the honest form, and it is the number that
+    # should be quoted against improvement.txt §1's "500-1000 documents".
+    enterprise = [d for d in documents if d.doc_type != "wiki"]
+    reference = [d for d in documents if d.doc_type == "wiki"]
+    enterprise_chunks = sum(len(d.chunks) for d in enterprise)
+    print(f"  documents (total)   : {len(documents)}")
+    print(f"    enterprise-shaped : {len(enterprise)}  "
+          f"({enterprise_chunks} chunks)  <- policy / finance / runbook")
+    print(f"    reference articles: {len(reference)}  "
+          f"(single-paragraph wiki, for retrieval selectivity)")
     print(f"  chunks (real)       : {total_chunks}")
     print(f"  corpus text         : {total_chars:,} chars")
     print(f"  supersession chains : {sum(1 for d in documents if d.supersedes)}")
@@ -1073,6 +1135,15 @@ def main() -> None:
     report = {
         "seed": SEED,
         "documents": len(documents),
+        "documents_enterprise_shaped": len(enterprise),
+        "documents_reference_articles": len(reference),
+        "chunks_enterprise_shaped": enterprise_chunks,
+        "composition_note": (
+            "Most documents are single-paragraph reference articles from "
+            "HotpotQA, included so that first-stage retrieval is genuinely "
+            "selective. The enterprise-shaped count (policy, finance, runbook) "
+            "is the figure to quote against improvement.txt section 1."
+        ),
         "chunks": total_chunks,
         "corpus_chars": total_chars,
         "supersession_chains": sum(1 for d in documents if d.supersedes),

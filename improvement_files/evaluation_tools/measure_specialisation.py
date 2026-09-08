@@ -10,10 +10,24 @@ E1. LATTICE STRUCTURE
 
 E2. INTERFERENCE (the security claim)
     Hold a principal's authorised subcorpus fixed and delete everything it
-    cannot read. A non-interfering system must return bit-identical rankings.
-    Reported as Kendall tau-b and top-1 flip rate between the two conditions,
-    for the unspecialised index and for SPIS. This does not depend on corpus
-    size.
+    cannot read. A non-interfering *index* must return bit-identical rankings.
+
+    The route is pinned to R3 for this experiment, and that is not a
+    convenience — it is what makes the measurement mean anything. Deleting
+    unreadable documents also changes ``AuthorisedScope.withheld_count`` and
+    ``total_chunks``, hence ``restricted_fraction``, which is a **deliberate**
+    router input (mechanism M2: the router is supposed to know how much of the
+    corpus is withheld from this principal). Letting the router run would
+    therefore mix an intended dependence in with the unintended one, and no
+    system could ever score zero. An earlier version of this experiment did
+    exactly that: it reported 0% route changes on the 9-document demo corpus
+    and read it as proof of non-interference, when the feature change simply
+    had not crossed a decision boundary on those few queries. At benchmark
+    scale it does cross one, and the same experiment reported 12.5% route
+    changes for a system whose index is provably pure.
+
+    With the route pinned, what remains is exactly what specialisation
+    governs: the ranking the index produces over a fixed authorised pool.
 
 E3. RETRIEVAL QUALITY AND THE LAMBDA FRONTIER (the performance claim)
     R@5 / MRR / nDCG@10 against gold labels, unspecialised versus SPIS across
@@ -51,11 +65,15 @@ from ahrag.eval.harness import (  # noqa: E402
     load_and_validate,
     resolve_corpus,
 )
+from ahrag.eval.reports import save_report  # noqa: E402
 from ahrag.stats import bootstrap_ci, cohens_d, paired_bootstrap  # noqa: E402
 
 # Fixed reference date so freshness-dependent behaviour does not drift with the
 # real clock, matching the rest of the evaluation harness.
 EVAL_TODAY = date(2026, 8, 19)
+
+#: Report kind written to data/reports/ (see ahrag/eval/reports.py).
+REPORT_KIND = "specialisation"
 
 SEED = 1729
 
@@ -203,7 +221,10 @@ def experiment_interference(
     print("E2  INTERFERENCE FROM UNREADABLE DOCUMENTS")
     print("=" * 78)
     print("  Condition A: full corpus.  Condition B: unreadable documents deleted.")
-    print("  A non-interfering system returns identical rankings. tau=1.000, flips=0.")
+    print("  Route pinned to R3, so this measures the index alone: deleting")
+    print("  unreadable documents also changes restricted_fraction, which the")
+    print("  router is *meant* to use. A non-interfering index returns identical")
+    print("  rankings: tau=1.000, zero flips, zero order changes.")
     print()
 
     results: dict[str, dict] = {}
@@ -215,9 +236,14 @@ def experiment_interference(
         comparisons = 0
 
         for observer in observers:
+            # The "full" condition never mutates the corpus, so it can use
+            # the shared cache. Only the pruned engine needs its own database.
+            # Re-seeding both from scratch for every observer put this
+            # experiment at ~45 minutes on the benchmark corpus, which is why
+            # it was previously skipped there and the interference figure was
+            # quoted from the demo corpus alone.
             full = build_engine(
-                tmp_root / f"{int(specialised)}-full-{observer}", manifest,
-                specialised, isolated=True,
+                tmp_root / f"{int(specialised)}-full", manifest, specialised
             )
             pruned = build_engine(
                 tmp_root / f"{int(specialised)}-pruned-{observer}", manifest,
@@ -227,9 +253,30 @@ def experiment_interference(
             if pruned.db.count_chunks() >= full.db.count_chunks():
                 continue
 
+            # Pin the route so the comparison isolates index behaviour from
+            # the intended restricted_fraction dependence. See the module
+            # docstring for why this is required rather than optional.
+            from ahrag.models import Route
+            from ahrag.pipeline import AHRAGEngine
+            from ahrag.routing.router import FixedRouter
+
+            def pin(engine):
+                pinned = AHRAGEngine(
+                    settings=engine.settings, config=engine.config, db=engine.db,
+                    router=FixedRouter(Route.R3), today=EVAL_TODAY,
+                )
+                pinned.index = engine.index
+                pinned.acl = engine.acl
+                pinned.retrieval.index = engine.index
+                pinned.retrieval.acl = engine.acl
+                pinned.validator.acl = engine.acl
+                return pinned
+
+            full_pinned, pruned_pinned = pin(full), pin(pruned)
+
             for query in queries:
-                a = full.answer(query, observer, write_audit=False)
-                b = pruned.answer(query, observer, write_audit=False)
+                a = full_pinned.answer(query, observer, write_audit=False)
+                b = pruned_pinned.answer(query, observer, write_audit=False)
                 ra = [e.chunk_id for e in a.evidence]
                 rb = [e.chunk_id for e in b.evidence]
                 comparisons += 1
@@ -240,6 +287,10 @@ def experiment_interference(
                     flips += 1
                 if ra != rb:
                     order_changes += 1
+                # Retained as a diagnostic only. With the route pinned this is
+                # always zero by construction; the unpinned figure mixes in the
+                # intended restricted_fraction dependence and is not evidence
+                # either way.
                 if a.decision.route is not b.decision.route:
                     route_changes += 1
 
@@ -250,7 +301,9 @@ def experiment_interference(
             "top1_flip_rate": flips / comparisons if comparisons else 0.0,
             "order_change_rate": order_changes / comparisons if comparisons else 0.0,
             "route_change_rate": route_changes / comparisons if comparisons else 0.0,
-            "non_interfering": order_changes == 0 and route_changes == 0,
+            # Route is pinned, so purity is about the ranking only.
+            "non_interfering": order_changes == 0 and flips == 0,
+            "route_pinned": True,
         }
         r = results[label]
         print(f"  {label:18s} n={comparisons:4d}  tau={mean_tau:6.3f}  "
@@ -395,7 +448,8 @@ def main() -> None:
                         default="erin.contractor,dan.finance,alice.employee",
                         help="Principals used as interference observers")
     parser.add_argument("--output", type=str, default=None,
-                        help="Write the full report to this JSON path")
+                        help=("Override the report path. By default the report "
+                              "is written to data/reports/ where the UI reads it."))
     parser.add_argument("--skip-interference", action="store_true",
                         help="Skip E2, which reseeds one engine pair per observer")
     args = parser.parse_args()
@@ -428,10 +482,10 @@ def main() -> None:
 
         report["quality"] = experiment_quality(tmp_root, manifest, eval_set, lambdas)
 
-    if args.output:
-        out = Path(args.output)
-        out.write_text(json.dumps(report, indent=2, default=str), encoding="utf-8")
-        print(f"Report written to {out}")
+    # The report is always written, to the canonical data/reports/ location;
+    # --output only overrides the path.
+    written = save_report(REPORT_KIND, report, args.output)
+    print(f"Report written to {written}")
 
 
 INTERFERENCE_QUERIES = [

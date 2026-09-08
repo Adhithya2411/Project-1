@@ -27,6 +27,7 @@ from ahrag import __version__  # noqa: E402
 from ahrag.config import RouterConfig, Settings  # noqa: E402
 from ahrag.db import Database  # noqa: E402
 from ahrag.models import DocType  # noqa: E402
+from ahrag.eval.reports import load_reports  # noqa: E402
 from ahrag.pipeline import AHRAGEngine  # noqa: E402
 
 ROUTE_HELP = {
@@ -37,15 +38,45 @@ ROUTE_HELP = {
     "R4": "Decomposed iterative hybrid — comparison, temporal, multi-hop.",
 }
 
-CORPUS_OPTIONS = {
-    "Demo corpus (9 documents)": None,
-    "FinanceBench subset (30 documents)": str(
-        Path(__file__).resolve().parents[2]
-        / "improvement_files"
-        / "datasets"
-        / "financebench_subset"
-        / "manifest.yaml"
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+
+# Corpora the UI can seed. Only those whose manifest is actually present are
+# offered, so a fresh clone shows the demo corpus alone rather than listing
+# options that fail on click — the benchmark corpora are build products, not
+# checked-in fixtures in every deployment.
+_CANDIDATE_CORPORA: list[tuple[str, Path | None]] = [
+    ("Demo corpus (9 documents)", None),
+    (
+        "FinanceBench subset (30 documents)",
+        _REPO_ROOT / "improvement_files" / "datasets" / "financebench_subset"
+        / "manifest.yaml",
     ),
+    (
+        "Public governance corpus (73 documents)",
+        _REPO_ROOT / "improvement_files" / "corpus_sources" / "collected"
+        / "manifest.yaml",
+    ),
+    (
+        "Benchmark corpus (6,139 documents — slow first load)",
+        _REPO_ROOT / "improvement_files" / "datasets" / "integrated"
+        / "manifest.yaml",
+    ),
+]
+
+CORPUS_OPTIONS: dict[str, str | None] = {
+    label: (str(path) if path is not None else None)
+    for label, path in _CANDIDATE_CORPORA
+    if path is None or path.exists()
+}
+
+# Corpora large enough that seeding them from a browser click needs a warning
+# rather than a spinner. Ingesting the benchmark corpus takes several minutes,
+# and Streamlit gives no progress signal during a synchronous call.
+SLOW_CORPUS_DOC_THRESHOLD = 500
+SLOW_CORPORA = {
+    label
+    for label, path in _CANDIDATE_CORPORA
+    if path is not None and path.exists() and path.stat().st_size > 100_000
 }
 
 
@@ -515,12 +546,32 @@ def page_corpus(
     )
     st.subheader("Re-seed the selected corpus")
     st.caption(f"Drops all documents and chunks, then re-ingests: {corpus_name}.")
+    if corpus_name in SLOW_CORPORA:
+        st.warning(
+            "This corpus takes several minutes to ingest and index, and the "
+            "browser will appear to hang while it does — Streamlit cannot show "
+            "progress during a synchronous seed. For anything more than a "
+            "one-off look, seed it from the command line instead:\n\n"
+            "```\n"
+            "python -c \"from ahrag.eval.harness import build_seeded_engine, "
+            "INTEGRATED_MANIFEST; build_seeded_engine(INTEGRATED_MANIFEST)\"\n"
+            "```\n\n"
+            "That caches the result under `data/corpus-cache/`, after which "
+            "loads take about 15 seconds."
+        )
+    if base and manifest_path is not None:
+        st.info(
+            "The API backend seeds its own configured corpus and ignores this "
+            "selection. Stop the API to have the UI seed in-process, or "
+            "restart the API against the corpus you want."
+        )
     if st.button("Re-seed"):
-        if base:
-            result = call_api(base, "POST", "/api/seed")
-        else:
-            assert engine is not None
-            result = engine.seed(reset=True, manifest_path=manifest_path).as_dict()
+        with st.spinner(f"Ingesting {corpus_name}. This can take minutes."):
+            if base:
+                result = call_api(base, "POST", "/api/seed")
+            else:
+                assert engine is not None
+                result = engine.seed(reset=True, manifest_path=manifest_path).as_dict()
         st.success(f"Seeded {result['documents']} documents, {result['chunks']} chunks.")
         get_local_engine.clear()
         st.rerun()
@@ -596,22 +647,347 @@ def page_audit(base: str | None, engine: AHRAGEngine | None) -> None:
     st.json(record)
 
 
-def page_evaluation(base: str | None, engine: AHRAGEngine | None) -> None:
-    """Evaluation page showing stored runs."""
-    st.header("Evaluation")
+def _fmt(value: Any, digits: int = 4) -> str:
+    """Format a metric for a table cell, distinguishing zero from missing."""
+    if value is None:
+        return "—"
+    if isinstance(value, (int, float)):
+        return f"{value:.{digits}f}"
+    return str(value)
+
+
+def _stars(p_value: Any) -> str:
+    """Conventional significance marker for a p-value."""
+    if not isinstance(p_value, (int, float)):
+        return ""
+    if p_value < 0.001:
+        return "***"
+    if p_value < 0.01:
+        return "**"
+    if p_value < 0.05:
+        return "*"
+    return "ns"
+
+
+def render_report_baselines(data: dict[str, Any]) -> None:
+    """System comparison: per-system metrics, pairwise stats, efficiency."""
+    per_system = data.get("per_system") or {}
+    systems = data.get("systems") or {}
+    if per_system:
+        st.markdown("**Per-system metrics** — mean with 95% bootstrap CI.")
+        rows = []
+        for key, metrics in per_system.items():
+            row: dict[str, Any] = {"system": key, "name": systems.get(key, {}).get("name", "")}
+            for metric, stats in metrics.items():
+                row[metric] = (
+                    f"{stats['mean']:.3f} "
+                    f"[{stats['ci_low']:.2f}, {stats['ci_high']:.2f}]"
+                )
+            rows.append(row)
+        st.dataframe(pd.DataFrame(rows), width="stretch", hide_index=True)
+
+    comparisons = data.get("comparisons") or {}
+    if comparisons:
+        proposed = data.get("proposed", "P1")
+        st.markdown(
+            f"**Pairwise comparisons versus {proposed}** — paired bootstrap "
+            "p-value and Cohen's *d*. `***` p<0.001, `**` p<0.01, `*` p<0.05."
+        )
+        rows = []
+        for other, metrics in comparisons.items():
+            for metric, stats in metrics.items():
+                rows.append({
+                    "vs": other,
+                    "metric": metric,
+                    proposed: _fmt(stats.get("proposed_mean"), 3),
+                    "other": _fmt(stats.get("other_mean"), 3),
+                    "delta": _fmt(stats.get("delta")),
+                    "p": _fmt(stats.get("p_value")),
+                    "d": _fmt(stats.get("cohens_d"), 3),
+                    "": _stars(stats.get("p_value")),
+                    "effect": stats.get("effect_size", ""),
+                })
+        st.dataframe(pd.DataFrame(rows), width="stretch", hide_index=True)
+
+    efficiency = data.get("efficiency") or {}
+    if efficiency:
+        st.markdown("**Routing and efficiency**")
+        rows = []
+        for key, info in efficiency.items():
+            routes = info.get("route_distribution") or {}
+            rows.append({
+                "system": key,
+                "routes": " ".join(f"{r}:{n}" for r, n in sorted(routes.items())),
+                "mean latency s": _fmt(info.get("mean_latency_s")),
+                "est. $/query": _fmt(info.get("mean_cost_usd"), 6),
+                "abstention rate": _fmt(info.get("abstention_rate"), 3),
+            })
+        st.dataframe(pd.DataFrame(rows), width="stretch", hide_index=True)
+
+    by_type = data.get("recall_by_query_type") or {}
+    if by_type:
+        st.markdown(
+            "**Recall@5 by query type.** Strata with no gold chunks "
+            "(`permission_boundary`, `unanswerable`) show no recall by "
+            "construction — they are scored by abstention appropriateness."
+        )
+        rows = []
+        for query_type, per_key in sorted(by_type.items()):
+            row: dict[str, Any] = {"query type": query_type}
+            row.update({k: _fmt(v, 3) for k, v in sorted(per_key.items())})
+            rows.append(row)
+        st.dataframe(pd.DataFrame(rows), width="stretch", hide_index=True)
+
+
+def render_report_ablations(data: dict[str, Any]) -> None:
+    """Component ablations against the full system."""
+    full = data.get("full_system") or {}
+    if full:
+        st.markdown("**Full system** (the reference row)")
+        st.dataframe(
+            pd.DataFrame([{k: _fmt(v.get("mean"), 4) for k, v in full.items()}]),
+            width="stretch",
+            hide_index=True,
+        )
+
+    ablations = data.get("ablations") or {}
+    if not ablations:
+        return
     st.markdown(
-        "Run the suite from a terminal — it is deliberately not triggerable from "
-        "the UI, so that reported numbers always come from an explicit, "
-        "reproducible command:\n\n"
+        "**Effect of disabling each mechanism.** A negative delta means the "
+        "mechanism was helping; a *positive* one means the system is better "
+        "without it."
+    )
+    rows = []
+    for key, info in ablations.items():
+        for metric, stats in (info.get("metrics") or {}).items():
+            rows.append({
+                "ablation": key,
+                "label": info.get("label", ""),
+                "metric": metric,
+                "ablated": _fmt(stats.get("ablated_mean"), 3),
+                "full": _fmt(stats.get("full_mean"), 3),
+                "delta": _fmt(stats.get("delta_vs_full")),
+                "p": _fmt(stats.get("p_value")),
+                "d": _fmt(stats.get("cohens_d"), 3),
+                "": _stars(stats.get("p_value")),
+            })
+    frame = pd.DataFrame(rows)
+    significant = st.checkbox(
+        "Show only statistically significant effects (p < 0.05)", value=True
+    )
+    if significant and not frame.empty:
+        frame = frame[frame[""].isin({"*", "**", "***"})]
+    st.dataframe(frame, width="stretch", hide_index=True)
+    if significant:
+        st.caption(
+            "Rows hidden by this filter are mechanisms with no measurable "
+            "effect on the metric shown — which is itself a result worth "
+            "knowing. Untick to see them."
+        )
+
+
+def render_report_embeddings(data: dict[str, Any]) -> None:
+    """Embedding backend comparison."""
+    backends = data.get("backends") or {}
+    if backends:
+        rows = []
+        for key, info in backends.items():
+            row: dict[str, Any] = {
+                "backend": key,
+                "model": info.get("embedder", ""),
+                "dim": info.get("dim"),
+            }
+            for metric, stats in (info.get("metrics") or {}).items():
+                row[metric] = f"{stats['mean']:.3f}"
+            agreement = info.get("agreement") or {}
+            row["sparse/dense Jaccard"] = _fmt(
+                agreement.get("mean_sparse_dense_jaccard"), 3
+            )
+            rows.append(row)
+        st.dataframe(pd.DataFrame(rows), width="stretch", hide_index=True)
+        st.caption(
+            "Lower sparse/dense Jaccard means dense retrieval is returning "
+            "something sparse does not, which is what makes the R1-vs-R2 route "
+            "choice consequential."
+        )
+
+    comparisons = data.get("comparisons_vs_baseline") or {}
+    if comparisons:
+        st.markdown(f"**Versus `{data.get('baseline', 'baseline')}`**")
+        rows = []
+        for key, metrics in comparisons.items():
+            for metric, stats in metrics.items():
+                rows.append({
+                    "backend": key,
+                    "metric": metric,
+                    "delta": _fmt(stats.get("delta")),
+                    "p": _fmt(stats.get("p_value")),
+                    "d": _fmt(stats.get("cohens_d"), 3),
+                    "": _stars(stats.get("p_value")),
+                    "effect": stats.get("effect_size", ""),
+                })
+        st.dataframe(pd.DataFrame(rows), width="stretch", hide_index=True)
+
+
+def render_report_specialisation(data: dict[str, Any]) -> None:
+    """Scope-pure index specialisation: lattice, interference, quality."""
+    lattice = data.get("lattice") or {}
+    if lattice:
+        st.markdown("**ACL lattice** — the structure specialisation works over.")
+        columns = st.columns(4)
+        columns[0].metric("Distinct ACL classes", lattice.get("distinct_classes", "—"))
+        columns[1].metric("Principals", lattice.get("principals", "—"))
+        columns[2].metric("Total chunks", lattice.get("total_chunks", "—"))
+        columns[3].metric(
+            "Smallest class share",
+            _fmt(lattice.get("smallest_class_fraction"), 3),
+        )
+        if lattice.get("specialisation_is_degenerate"):
+            st.error(
+                "Every principal has the same authorised scope on this corpus, "
+                "so specialisation is provably a no-op here and the results "
+                "below are vacuous."
+            )
+        st.caption(f"Class sizes (chunks): {lattice.get('class_sizes')}")
+
+    interference = data.get("interference") or {}
+    if interference:
+        st.markdown(
+            "**Interference from unreadable documents.** A principal's "
+            "authorised subcorpus is held fixed while everything outside it is "
+            "deleted. A non-interfering system must return identical results: "
+            "tau = 1.000 with zero changes."
+        )
+        rows = []
+        for label, info in interference.items():
+            rows.append({
+                "condition": label,
+                "comparisons": info.get("comparisons"),
+                "Kendall tau": _fmt(info.get("mean_kendall_tau"), 3),
+                "top-1 flips": _fmt(info.get("top1_flip_rate"), 3),
+                "order changes": _fmt(info.get("order_change_rate"), 3),
+                "route changes": _fmt(info.get("route_change_rate"), 3),
+                "non-interfering": "yes" if info.get("non_interfering") else "NO",
+            })
+        st.dataframe(pd.DataFrame(rows), width="stretch", hide_index=True)
+
+    quality = data.get("quality") or {}
+    frontier = quality.get("frontier") or {}
+    if frontier:
+        st.markdown(
+            "**Purity / utility frontier.** `lambda` is an information-flow "
+            "budget for the sparse channel: 0 is provably non-interfering, 1 "
+            "restores global statistics."
+        )
+        rows = []
+        for label, entry in frontier.items():
+            row: dict[str, Any] = {
+                "setting": label,
+                "provably pure": "yes" if entry.get("provably_pure") else "no",
+            }
+            for metric in ("recall_at_5", "mrr", "ndcg_at_10",
+                           "abstention_appropriateness"):
+                stats = entry.get(metric) or {}
+                if stats:
+                    row[metric] = (
+                        f"{stats.get('mean', float('nan')):.3f} "
+                        f"({stats.get('delta', 0):+.4f}) "
+                        f"{_stars(stats.get('p_value'))}"
+                    )
+            rows.append(row)
+        st.dataframe(pd.DataFrame(rows), width="stretch", hide_index=True)
+        st.caption(
+            "Delta is against the unspecialised system. Purity is expected to "
+            "cost a little quality; the point of the curve is that the cost is "
+            "measured rather than assumed."
+        )
+
+
+REPORT_RENDERERS = {
+    "baselines": render_report_baselines,
+    "baselines_heldout": render_report_baselines,
+    "ablations": render_report_ablations,
+    "embeddings": render_report_embeddings,
+    "specialisation": render_report_specialisation,
+}
+
+
+def page_evaluation(base: str | None, engine: AHRAGEngine | None) -> None:
+    """Evaluation page: experiment reports, then stored in-database runs."""
+    st.header("Evaluation")
+
+    reports = load_reports()
+
+    st.markdown(
+        "Experiments are run from a terminal, never from the UI, so every "
+        "number shown here comes from an explicit, reproducible command. This "
+        "page renders whatever reports exist in `data/reports/`.\n\n"
         "```bash\n"
         "python -m ahrag.evaluate --per-type\n"
-        "python -m ahrag.evaluate --json data/eval_results.json\n"
-        "```\n\n"
-        "Systems compared: **B1** fixed BM25, **B2** fixed dense, **B3** fixed "
-        "hybrid RRF, **B4** always-maximal iterative hybrid, **B5** "
-        "complexity-only router, **P1** the governance-aware AHRAG router. All "
-        "six share the same corpus, indexes, reranker, evidence gates, and "
-        "generator — only the routing policy differs."
+        "python improvement_files/baseline_code/compare_baselines.py --integrated --by-type\n"
+        "python improvement_files/baseline_code/ablation_study.py --integrated\n"
+        "python improvement_files/evaluation_tools/compare_embeddings.py --integrated\n"
+        "python improvement_files/evaluation_tools/measure_specialisation.py --integrated\n"
+        "```"
+    )
+
+    with st.expander("The eight systems compared", expanded=False):
+        st.markdown(
+            "- **B1** fixed sparse BM25 (always R1)\n"
+            "- **B2** fixed dense vector (always R2)\n"
+            "- **B3** fixed hybrid RRF (always R3)\n"
+            "- **B4** always-maximal decomposed iterative (always R4)\n"
+            "- **B5** complexity-only router — hand-set token thresholds\n"
+            "- **B6** Adaptive-RAG — a *trained* classifier over query-text "
+            "features only, which is the shape of Jeong et al. (2024)\n"
+            "- **P1** AHRAG governance-aware router — hard constraints, then "
+            "hand-tuned utility over the admissible routes\n"
+            "- **P2** AHRAG learned router — the same hard constraints, with a "
+            "trained classifier ranking the admissible routes\n\n"
+            "All eight share one corpus, chunking, indexes, reranker, evidence "
+            "gates, generator and ACL layer. Only the routing policy differs, "
+            "which is what makes the comparison an ablation of routing rather "
+            "than of unrelated pipelines."
+        )
+
+    if not reports:
+        st.info(
+            "No experiment reports found in `data/reports/` yet. Run one of the "
+            "commands above; each writes its report there automatically."
+        )
+    else:
+        st.subheader("Experiment reports")
+        labels = [
+            f"{report.title}  ·  {report.corpus_label}" for report in reports
+        ]
+        chosen = st.selectbox("Report", labels, index=0)
+        report = reports[labels.index(chosen)]
+
+        columns = st.columns(3)
+        columns[0].caption(f"**Corpus:** {report.corpus_label}")
+        columns[1].caption(f"**Generated:** {report.generated_at}")
+        columns[2].caption(f"**Items:** {report.data.get('items', '—')}")
+        if report.data.get("embedder"):
+            st.caption(f"**Embedding backend:** {report.data['embedder']}")
+
+        renderer = REPORT_RENDERERS.get(report.kind)
+        if renderer is None:
+            st.warning(
+                f"No renderer for report kind `{report.kind}`; showing raw JSON."
+            )
+            st.json(report.data)
+        else:
+            renderer(report.data)
+
+        with st.expander("Raw report JSON", expanded=False):
+            st.json(report.data)
+
+    st.divider()
+    st.subheader("Stored in-database runs")
+    st.caption(
+        "Written by `python -m ahrag.evaluate`. These are separate from the "
+        "file-based experiment reports above."
     )
 
     if base:
@@ -622,14 +998,13 @@ def page_evaluation(base: str | None, engine: AHRAGEngine | None) -> None:
 
     if not runs:
         st.info(
-            "No evaluation runs recorded in this database yet. Note that "
+            "No evaluation runs recorded in this database. Note that "
             "`python -m ahrag.evaluate` writes to a separate evaluation database "
             "(`data/ahrag_eval.sqlite3`) by default; pass `--db data/ahrag.sqlite3` "
             "to record runs here instead."
         )
         return
 
-    st.subheader("Stored runs")
     st.dataframe(
         pd.DataFrame(
             [
@@ -654,7 +1029,7 @@ def page_evaluation(base: str | None, engine: AHRAGEngine | None) -> None:
         st.warning("The most recent run has no stored summary.")
         return
 
-    st.subheader(f"Latest run — {latest['run_id']}")
+    st.markdown(f"**Latest run — {latest['run_id']}**")
     st.dataframe(
         pd.DataFrame(
             [
@@ -679,7 +1054,7 @@ def page_evaluation(base: str | None, engine: AHRAGEngine | None) -> None:
         hide_index=True,
     )
 
-    st.subheader("Route distribution by system")
+    st.markdown("**Route distribution by system**")
     st.dataframe(
         pd.DataFrame(
             [{"system": key, **s.get("route_distribution", {})} for key, s in summaries.items()]

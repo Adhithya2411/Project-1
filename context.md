@@ -101,7 +101,7 @@ previous phase produced misleading results.
 
 | | Demo corpus | Benchmark corpus |
 |---|---|---|
-| Documents | 9 | **6,139** |
+| Documents | 9 | **6,139** (249 enterprise-shaped + 5,890 reference paragraphs) |
 | Chunks | 60 | **7,082** |
 | Eval items | 32 | **965** |
 | ACL classes | 4 | **7** |
@@ -140,9 +140,18 @@ ones:
 - A neural encoder beats the offline LSA default by **+0.022 R@5, p = 0.002** —
   significant at n ≈ 870, and *not* significant at n = 25, which is the clearest
   illustration of why the evaluation set had to grow.
-- Unspecialised retrieval statistics leak: deleting documents a principal
-  cannot read changes their route on **33.3%** of queries. Scope-pure
-  specialisation reduces that to **0%**.
+- The learned router is the best of eight systems on every retrieval metric
+  *and* the fastest: **R@5 0.548** against 0.537 for always-maximal retrieval,
+  at 25% lower latency. The shipped rule-based router (0.524) is significantly
+  worse than five of seven comparators — the architecture holds, the hand-tuned
+  weights do not.
+- Unspecialised retrieval statistics leak: with the route held fixed, deleting
+  documents a principal cannot read changes their evidence ordering on **31.2%**
+  of queries and the top result on **6.2%**. Scope-pure specialisation reduces
+  both to **0%**. (An earlier unpinned version of this measurement reported
+  "33.3% route changes"; that comparison also captured the deliberate
+  `restricted_fraction` signal and should not be used — see `FINDINGS.md` §4.4.)
+- **Zero ACL violations** across all eight systems and 965 queries.
 
 **Known defects, found by the work and not yet fixed.** These are real and
 should be picked up next:
@@ -156,9 +165,14 @@ should be picked up next:
 3. **Four governance mechanisms are inert** on the benchmark corpus: the
    restricted-scope signal, routing freshness penalty, routing conflict signal,
    and authority gate each produce exactly zero change on every metric.
-4. **Freshness compliance is still 1.000 everywhere**, even with enforcement
-   disabled and 15 supersession chains present. The metric does not
-   discriminate.
+4. **Freshness is measured but does not discriminate.** The generated
+   freshness queries were originally unanswerable — all eight systems scored
+   0.000 — which made `freshness_compliance` report a meaningless 1.000. The
+   generator is fixed (0/15 → 15/15 retrieve their gold chunk, 0/15 lead with a
+   superseded chunk) and guarded by
+   `tests/test_evaluation.py::TestBenchmarkEvalSetIntegrity`. All eight systems
+   now score 1.000, so the claim "freshness handling works" is supported and
+   "ours is better than the baselines'" is not.
 
 **Not attempted, and not claimable.** Inter-annotator agreement (§2b) and human
 Likert scoring (§9c) both require a second person. Tooling can be built; the

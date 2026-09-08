@@ -59,6 +59,7 @@ from ahrag.eval.harness import (  # noqa: E402
     load_and_validate,
     resolve_corpus,
 )
+from ahrag.eval.reports import save_report  # noqa: E402
 from ahrag.stats import (  # noqa: E402
     bootstrap_ci,
     cohens_d,
@@ -66,6 +67,10 @@ from ahrag.stats import (  # noqa: E402
     paired_bootstrap,
     significance_marker,
 )
+
+#: Report kind written to data/reports/, where the UI reads it.
+#: See ahrag/eval/reports.py.
+REPORT_KIND = "baselines"
 
 # Per-row keys from ``ahrag.evaluate.run_item``. ``higher_is_better`` matters
 # for reading the sign of a delta; ACL violations are the one metric where a
@@ -155,7 +160,19 @@ def main() -> None:
     parser.add_argument("--by-type", action="store_true",
                         help="Also report Recall@5 per query type (§2d)")
     parser.add_argument("--limit", type=int, default=None)
-    parser.add_argument("--output", type=str, default=None)
+    parser.add_argument(
+        "--ids-file", type=str, default=None,
+        help=(
+            "Restrict the comparison to the query IDs in this file, one per "
+            "line. Needed for an honest P2 comparison: the learned router was "
+            "trained on 40%% of the full suite, so evaluating it there scores "
+            "it partly on its own training data while every other system has "
+            "none. Pass P2's held-out split to remove that advantage."
+        ),
+    )
+    parser.add_argument("--output", type=str, default=None,
+                        help=("Override the report path. By default the report "
+                              "is written to data/reports/ where the UI reads it."))
     args = parser.parse_args()
 
     manifest, eval_set = resolve_corpus(args)
@@ -168,6 +185,19 @@ def main() -> None:
     print("[1/4] Loading corpus...")
     engine = build_seeded_engine(manifest, rebuild_cache=args.rebuild_cache)
     items, label_report = load_and_validate(engine, eval_set)
+    if args.ids_file:
+        wanted = {
+            line.strip()
+            for line in Path(args.ids_file).read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        }
+        before_count = len(items)
+        items = [item for item in items if item.id in wanted]
+        print(f"  restricted to {len(items)} of {before_count} queries "
+              f"from {Path(args.ids_file).name}")
+        if not items:
+            print("  no items matched; check the ID file matches this eval set")
+            sys.exit(1)
     if args.limit:
         items = items[: args.limit]
         print(f"  limited to {len(items)} queries")
@@ -324,40 +354,39 @@ def main() -> None:
             print(f"  {query_type:34s}" + "".join(row_cells) + f"{count:6d}")
         print()
 
-    if args.output:
-        payload = {
-            "corpus": str(manifest) if manifest else "seed",
-            "eval_set": str(eval_set) if eval_set else "seed",
-            "label_report": label_report,
-            "embedder": engine.index.embedder_name,
-            "items": len(items),
-            "aligned_items": int(n_used),
-            "proposed": proposed,
-            "systems": {
-                s.key: {"name": s.name, "description": s.description} for s in systems
-            },
-            "per_system": {
-                s.key: {
-                    metric: dict(
-                        zip(
-                            ("mean", "ci_low", "ci_high"),
-                            bootstrap_ci(vectors_by_metric[metric][s.key]),
-                        )
+    # The report is always written, to the canonical data/reports/
+    # location; --output only overrides the path.
+    payload = {
+        "corpus": str(manifest) if manifest else "seed",
+        "eval_set": str(eval_set) if eval_set else "seed",
+        "label_report": label_report,
+        "embedder": engine.index.embedder_name,
+        "items": len(items),
+        "aligned_items": int(n_used),
+        "proposed": proposed,
+        "systems": {
+            s.key: {"name": s.name, "description": s.description} for s in systems
+        },
+        "per_system": {
+            s.key: {
+                metric: dict(
+                    zip(
+                        ("mean", "ci_low", "ci_high"),
+                        bootstrap_ci(vectors_by_metric[metric][s.key]),
                     )
-                    for metric, _, _ in METRICS
-                    if s.key in vectors_by_metric[metric]
-                    and vectors_by_metric[metric][s.key].size
-                }
-                for s in systems
-            },
-            "comparisons": comparisons,
-            "efficiency": efficiency,
-            "recall_by_query_type": per_type,
-        }
-        Path(args.output).write_text(
-            json.dumps(payload, indent=2, default=str), encoding="utf-8"
-        )
-        print(f"Report written to {args.output}")
+                )
+                for metric, _, _ in METRICS
+                if s.key in vectors_by_metric[metric]
+                and vectors_by_metric[metric][s.key].size
+            }
+            for s in systems
+        },
+        "comparisons": comparisons,
+        "efficiency": efficiency,
+        "recall_by_query_type": per_type,
+    }
+    written = save_report(REPORT_KIND, payload, args.output)
+    print(f"Report written to {written}")
 
 
 if __name__ == "__main__":

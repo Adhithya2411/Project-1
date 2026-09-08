@@ -60,6 +60,7 @@ from ahrag.eval.harness import (  # noqa: E402
     load_and_validate,
     resolve_corpus,
 )
+from ahrag.eval.reports import save_report  # noqa: E402
 from ahrag.stats import (  # noqa: E402
     bootstrap_ci,
     cohens_d,
@@ -67,6 +68,10 @@ from ahrag.stats import (  # noqa: E402
     paired_bootstrap,
     significance_marker,
 )
+
+#: Report kind written to data/reports/, where the UI reads it.
+#: See ahrag/eval/reports.py.
+REPORT_KIND = "embeddings"
 
 # (key, label, Settings overrides). The two neural models are the ones §4(b)
 # names explicitly.
@@ -285,7 +290,9 @@ def main() -> None:
         help="Measure per-fixed-route recall spread per backend (§4b, slower)",
     )
     parser.add_argument("--limit", type=int, default=None)
-    parser.add_argument("--output", type=str, default=None)
+    parser.add_argument("--output", type=str, default=None,
+                        help=("Override the report path. By default the report "
+                              "is written to data/reports/ where the UI reads it."))
     args = parser.parse_args()
 
     manifest, eval_set = resolve_corpus(args)
@@ -431,38 +438,37 @@ def main() -> None:
         print("  which show whether the SVD had enough co-occurrence to learn from.")
         print()
 
-    if args.output:
-        payload = {
-            "corpus": str(manifest) if manifest else "seed",
-            "baseline": baseline_key,
-            "backends": {
-                key: {
-                    "label": entry["label"],
-                    "embedder": entry["embedder"],
-                    "dim": entry["dim"],
-                    "metrics": {
-                        metric: dict(
-                            zip(
-                                ("mean", "ci_low", "ci_high"),
-                                bootstrap_ci(entry["vectors"][metric]),
-                            )
+    # The report is always written, to the canonical data/reports/
+    # location; --output only overrides the path.
+    payload = {
+        "corpus": str(manifest) if manifest else "seed",
+        "baseline": baseline_key,
+        "backends": {
+            key: {
+                "label": entry["label"],
+                "embedder": entry["embedder"],
+                "dim": entry["dim"],
+                "metrics": {
+                    metric: dict(
+                        zip(
+                            ("mean", "ci_low", "ci_high"),
+                            bootstrap_ci(entry["vectors"][metric]),
                         )
-                        for metric, _ in METRICS
-                        if entry["vectors"][metric].size
-                    },
-                    "agreement": entry["agreement"],
-                    "summary": entry["summary"],
-                }
-                for key, entry in results.items()
-            },
-            "comparisons_vs_baseline": comparisons,
-            "route_spread": spreads,
-            "lsa_scaling": scaling,
-        }
-        Path(args.output).write_text(
-            json.dumps(payload, indent=2, default=str), encoding="utf-8"
-        )
-        print(f"Report written to {args.output}")
+                    )
+                    for metric, _ in METRICS
+                    if entry["vectors"][metric].size
+                },
+                "agreement": entry["agreement"],
+                "summary": entry["summary"],
+            }
+            for key, entry in results.items()
+        },
+        "comparisons_vs_baseline": comparisons,
+        "route_spread": spreads,
+        "lsa_scaling": scaling,
+    }
+    written = save_report(REPORT_KIND, payload, args.output)
+    print(f"Report written to {written}")
 
 
 if __name__ == "__main__":

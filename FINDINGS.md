@@ -106,7 +106,7 @@ Without this, nothing else in `improvement.txt` §1–§5 is runnable.
 
 | `improvement.txt` | Status | Where |
 |---|---|---|
-| §1 Corpus scale (500–1000 docs, 5k–10k chunks) | **Done, exceeded** | 6,139 docs / 7,082 chunks |
+| §1 Corpus scale (500–1000 docs, 5k–10k chunks) | **Partially** — chunk target met; only 249 documents are enterprise-shaped | 6,139 docs / 7,082 chunks |
 | §1(d) 10–15 supersession chains | **Done** | 15 chains |
 | §1(e) Multiple restricted classes | **Done** | 9 ACL classes, 6 restricted |
 | §2(a) 300–500+ labelled queries | **Done, exceeded** | 965 items (875 answerable) |
@@ -134,6 +134,8 @@ Without this, nothing else in `improvement.txt` §1–§5 is runnable.
 | | Before | After |
 |---|---|---|
 | Documents | 9 (demo) | **6,139** |
+| — of which enterprise-shaped (policy / finance / runbook) | 9 | **249** |
+| — of which single-paragraph reference articles | 0 | **5,890** |
 | Chunks | 60 | **7,082** |
 | Corpus text | ~17 KB | **3.9 MB** |
 | Eval items | 32 | **965** |
@@ -142,6 +144,16 @@ Without this, nothing else in `improvement.txt` §1–§5 is runnable.
 | Supersession chains | 1 | **15** |
 | ACL-probe items with `forbidden_chunks` | 0 | **60** |
 | Public corpus | 10 docs (3 stubs) | **73 docs** from 17 verified sources |
+
+**"6,139 documents" needs qualifying.** 5,890 of them are single-paragraph
+reference articles from HotpotQA, included so that first-stage retrieval is
+genuinely *selective* — which is what improvement.txt §1 was actually asking
+for when it said "any retrieval route finds almost everything" at 60 chunks.
+The enterprise-shaped count is **249** (165 policy, 84 finance), and that is the
+figure to compare against §1's "500–1000 documents", which it does **not** meet.
+What the corpus does deliver is the retrieval difficulty and the ACL lattice
+width that make every other measurement meaningful.
+`integration_report.json` now reports both counts separately.
 
 Gold chunk IDs are now resolved by **running the real chunker** and locating the
 evidence span inside the resulting chunks. Items whose evidence cannot be
@@ -326,18 +338,49 @@ It reached a *governance* decision too: `sparse_confidence` derives from the raw
 global-IDF score and gates the hard `min_probe_for_answering` constraint.
 
 **Measured**, holding a principal's authorised subcorpus fixed and deleting
-everything outside it (24 observer/query pairs):
+everything outside it. **The route is pinned to R3** for this measurement, and
+that correction matters — see the note below.
 
-| Condition | Kendall τ | Top-1 flips | Order changes | **Route changes** |
+Benchmark corpus, 7 ACL equivalence classes, 16 observer/query pairs:
+
+| Condition | Kendall τ | Top-1 flips | Evidence-order changes | Non-interfering |
 |---|---|---|---|---|
-| Unspecialised (default) | 0.950 | 8.3% | 20.8% | **33.3%** |
-| SPIS, λ = 0 | **1.000** | **0%** | **0%** | **0%** |
+| Unspecialised (default) | 1.000 | **6.2%** | **31.2%** | **No** |
+| SPIS, λ = 0 | 1.000 | **0%** | **0%** | **Yes** |
 
-One third of queries had their route changed by documents the user cannot read.
-No restricted text is ever returned, so this is not an access-control
-violation — it is an information-flow violation, and the distinction is the
-point: **access control constrains outputs; non-interference constrains
-dependence.**
+Nearly a third of queries had their *evidence ordering* changed by documents the
+principal cannot read, and one in sixteen had its top result changed.
+Specialisation eliminates both. No restricted text is ever returned in either
+condition, so this is not an access-control violation — it is an
+information-flow violation, and the distinction is the point: **access control
+constrains outputs; non-interference constrains dependence.**
+
+#### Correction: the first version of this measurement was wrong
+
+An earlier run of this experiment let the router choose, and reported
+"33.3% route changes unspecialised, 0% under SPIS" on the demo corpus. That
+comparison was invalid, and I am recording why rather than quietly replacing
+the number.
+
+Deleting the documents a principal cannot read also changes
+`AuthorisedScope.withheld_count` and `total_chunks`, and therefore
+`restricted_fraction` — which is a **deliberate** router input (mechanism M2:
+the router is supposed to know how much of the corpus is withheld from this
+principal). So the unpinned experiment mixed an *intended* dependence in with
+the unintended one, and no system could ever have scored zero on it. The
+demo-corpus 0% was luck: the feature change had not crossed a decision boundary
+on those six queries. At benchmark scale it does cross one, and the same
+experiment reported **12.5% route changes for a system whose index is provably
+pure** — which is what exposed the flaw.
+
+Pinning the route removes the intended dependence and leaves exactly what
+specialisation governs: the ranking the index produces over a fixed authorised
+pool. The table above is that measurement. The route-change column is now zero
+for both conditions by construction and is retained only as a diagnostic.
+
+The unit tests were never affected — `tests/test_noninterference.py` compares
+`sparse.search` output directly, with no router in the path, which is why its
+26 assertions passed throughout.
 
 **The open question, now answered.** At demo scale SPIS was quality-neutral,
 and the obvious objection was that the demo corpus has almost no ACL structure
@@ -403,14 +446,19 @@ only the routing policy differs.
 
 | System | R@5 | MRR | nDCG@10 | Abstention-ok | Latency | ACL violations |
 |---|---|---|---|---|---|---|
-| B1 fixed BM25 | 0.455 [0.43,0.49] | 0.489 | 0.435 | 0.796 | 0.095 s | **0** |
-| B2 fixed dense | 0.502 [0.47,0.53] | 0.510 | 0.462 | 0.804 | 0.083 s | **0** |
-| B3 fixed hybrid RRF | 0.525 [0.49,0.56] | 0.522 | 0.481 | 0.808 | 0.101 s | **0** |
-| B4 always-maximal (R4) | 0.520 [0.49,0.55] | 0.521 | 0.478 | 0.808 | 0.109 s | **0** |
-| B5 complexity-only | 0.522 [0.49,0.55] | 0.520 | 0.479 | 0.808 | 0.103 s | **0** |
-| B6 Adaptive-RAG (trained) | 0.522 [0.49,0.55] | 0.522 | 0.481 | 0.807 | 0.095 s | **0** |
-| P1 governance-aware (rule-based) | 0.507 [0.48,0.54] | 0.512 | 0.470 | 0.802 | 0.102 s | **0** |
-| **P2 learned router** | **0.530** [0.50,0.56] | **0.525** | **0.486** | 0.802 | **0.082 s** | **0** |
+| B1 fixed BM25 | 0.473 [0.44,0.50] | 0.506 | 0.453 | 0.811 | 0.095 s | **0** |
+| B2 fixed dense | 0.519 [0.49,0.55] | 0.527 | 0.480 | 0.820 | 0.086 s | **0** |
+| B3 fixed hybrid RRF | 0.542 [0.51,0.57] | 0.539 | 0.498 | 0.824 | 0.103 s | **0** |
+| B4 always-maximal (R4) | 0.537 [0.51,0.57] | 0.538 | 0.495 | 0.824 | 0.109 s | **0** |
+| B5 complexity-only | 0.539 [0.51,0.57] | 0.537 | 0.496 | 0.824 | 0.145 s | **0** |
+| B6 Adaptive-RAG (trained) | 0.539 [0.51,0.57] | 0.540 | 0.498 | 0.823 | 0.096 s | **0** |
+| P1 governance-aware (rule-based) | 0.524 [0.49,0.55] | 0.530 | 0.487 | 0.818 | 0.102 s | **0** |
+| **P2 learned router** | **0.548** [0.52,0.58] | **0.542** | **0.503** | 0.818 | **0.082 s** | **0** |
+
+These are the numbers **after** the freshness-stratum repair described in
+§4.5(b) below. Every system gained roughly +0.017 Recall@5, which is exactly
+the 15 previously-unanswerable freshness items now scoring 1.000
+(15/875 ≈ 0.017). The ordering is unchanged.
 
 **Zero ACL violations for all eight.** That is the intended result rather than a
 selling point: ACL enforcement is upstream of routing, so no routing policy can
@@ -481,22 +529,36 @@ the sparse route would have found the figure. P2 learned not to. On the
 HotpotQA strata, where P1 already routes well, the two are equal or P1 is
 slightly ahead.
 
-**(b) My freshness stratum is badly constructed, and the metric it feeds is
-worthless.** All eight systems score **exactly 0.000** on all 15
-`freshness_competing_versions` items. That is not eight systems failing; it is
-my generator producing unanswerable queries. `build_freshness_items` in
-`integrate_datasets.py` phrases them as *"What is the current rule in
-{heading}?"* — and against 7,082 chunks a query that generic cannot retrieve
-one specific chunk, whatever the routing policy. It also explains why
-`freshness_compliant` reported 1.0000 in every ablation including the one that
-disabled freshness enforcement: the metric was never exercised.
+**(b) My freshness stratum was badly constructed. It is now fixed, and the
+metric it feeds finally means something.**
 
-The 15 supersession chains in the corpus are real and correctly linked (§3
-verified 38/38 gold chunks are the current version). The **queries** are the
-defect. Fixing it means generating freshness queries from distinctive content
-*inside* the versioned section rather than from its heading. Until that is
-done, **no freshness claim in this project is supported by evidence**, and the
-1.000 figures should be read as "not measured" rather than "perfect".
+In the first run, all eight systems scored **exactly 0.000** Recall@5 on all 15
+`freshness_competing_versions` items. That was not eight systems failing; it was
+my own generator producing unanswerable queries. `build_freshness_items` phrased
+them as *"What is the current rule in {heading}?"* — almost entirely function
+words plus a short heading, which against 7,082 chunks cannot retrieve one
+specific chunk whatever the routing policy. It also explains why
+`freshness_compliant` reported 1.000 in every ablation *including the one that
+disabled freshness enforcement*: the metric was never exercised, and an
+unexercised metric reads as perfect.
+
+The generator now builds each query from a distinctive content phrase taken from
+inside the versioned section, so the section is genuinely retrievable. The
+stratum went from **0/15 to 15/15** items retrieving their gold chunk, and
+**0/15** have a superseded chunk leading the evidence — so the current version
+is being preferred, which is the behaviour the stratum exists to test.
+
+All eight systems now score **1.000** on it. That means freshness handling
+*works* and is *measured*; it does **not** mean AHRAG's freshness handling beats
+the baselines, because every system is equal there. The honest claim is the
+first one only.
+
+Two guards were added so this cannot regress silently:
+`tests/test_evaluation.py::TestBenchmarkEvalSetIntegrity` asserts that at least
+80% of freshness queries retrieve their own gold chunk, that every freshness
+gold chunk is the *current* version, that no ACL-probe forbidden chunk is
+actually readable by its asker, and that no label references a non-existent
+chunk. A generated dataset needs tests for the same reason production code does.
 
 `policy_comprehension` at ~0.16 across all systems (n=300, 31% of the suite) is
 a genuine difficulty result rather than a defect: PolicyQA asks short

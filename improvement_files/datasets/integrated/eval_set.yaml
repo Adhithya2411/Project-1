@@ -10808,7 +10808,8 @@ items:
   freshness_sensitive: false
   notes: Adversarial variant of fb-financebench_id_00685.
 - id: fresh-71d4796ec9e0
-  query: What is the current rule in Policy Section 000?
+  query: According to the currently effective version of this policy, what does it
+    say about Web Site User Registration User registration required access majority?
   user_id: erin.contractor
   query_type: freshness_competing_versions
   expected_route: R3
@@ -10818,9 +10819,11 @@ items:
   should_abstain: false
   freshness_sensitive: true
   notes: Current version is doc-pqa-8dc6fa0f226d-v2 v2.0; doc-pqa-8dc6fa0f226d-v1
-    is superseded and lexically similar.
+    is superseded and contains near-identical text, so both are retrievable and only
+    freshness handling separates them.
 - id: fresh-56af3a0442e7
-  query: What is the current rule in Policy Section 001?
+  query: According to the currently effective version of this policy, what does it
+    say about Cookies Web Beacons Cookies used store track information cookie?
   user_id: alice.employee
   query_type: freshness_competing_versions
   expected_route: R3
@@ -10830,9 +10833,11 @@ items:
   should_abstain: false
   freshness_sensitive: true
   notes: Current version is doc-pqa-eb8a53893574-v2 v2.0; doc-pqa-eb8a53893574-v1
-    is superseded and lexically similar.
+    is superseded and contains near-identical text, so both are retrievable and only
+    freshness handling separates them.
 - id: fresh-a478d8d431ca
-  query: What is the current rule in Policy Section 002?
+  query: According to the currently effective version of this policy, what does it
+    say about Feedback Commentary Surveys Message Boards Chat Rooms Web site?
   user_id: erin.contractor
   query_type: freshness_competing_versions
   expected_route: R3
@@ -10842,9 +10847,12 @@ items:
   should_abstain: false
   freshness_sensitive: true
   notes: Current version is doc-pqa-65bc953f681b-v2 v2.0; doc-pqa-65bc953f681b-v1
-    is superseded and lexically similar.
+    is superseded and contains near-identical text, so both are retrievable and only
+    freshness handling separates them.
 - id: fresh-403e3991737e
-  query: What is the current rule in Policy Section 003?
+  query: According to the currently effective version of this policy, what does it
+    say about Aggregate information Aggregate information user information linked
+    PIN USE?
   user_id: erin.contractor
   query_type: freshness_competing_versions
   expected_route: R3
@@ -10854,9 +10862,11 @@ items:
   should_abstain: false
   freshness_sensitive: true
   notes: Current version is doc-pqa-322dcc497d10-v2 v2.0; doc-pqa-322dcc497d10-v1
-    is superseded and lexically similar.
+    is superseded and contains near-identical text, so both are retrievable and only
+    freshness handling separates them.
 - id: fresh-6e1fa0bf4c6b
-  query: What is the current rule in Policy Section 004?
+  query: According to the currently effective version of this policy, what does it
+    say about Time Inc sites sometimes offer contests sweepstakes promotions editorial?
   user_id: erin.contractor
   query_type: freshness_competing_versions
   expected_route: R3
@@ -10866,9 +10876,12 @@ items:
   should_abstain: false
   freshness_sensitive: true
   notes: Current version is doc-pqa-bdba33558351-v2 v2.0; doc-pqa-bdba33558351-v1
-    is superseded and lexically similar.
+    is superseded and contains near-identical text, so both are retrievable and only
+    freshness handling separates them.
 - id: fresh-f7f90a4f9ed9
-  query: What is the current rule in Policy Section 005?
+  query: According to the currently effective version of this policy, what does it
+    say about Personalization MediaNews uses PIN CIN collected personalize content
+    advertising?
   user_id: erin.contractor
   query_type: freshness_competing_versions
   expected_route: R3
@@ -10878,9 +10891,12 @@ items:
   should_abstain: false
   freshness_sensitive: true
   notes: Current version is doc-pqa-52465950c411-v2 v2.0; doc-pqa-52465950c411-v1
-    is superseded and lexically similar.
+    is superseded and contains near-identical text, so both are retrievable and only
+    freshness handling separates them.
 - id: fresh-0e36902a1b49
-  query: What is the current rule in Policy Section 006?
+  query: According to the currently effective version of this policy, what does it
+    say about USE PERSONAL INFORMATION CHILDREN MediaNews occasionally offers contest
+    sweepstakes?
   user_id: alice.employee
   query_type: freshness_competing_versions
   expected_route: R3
@@ -10890,9 +10906,12 @@ items:
   should_abstain: false
   freshness_sensitive: true
   notes: Current version is doc-pqa-9d691f5f06f4-v2 v2.0; doc-pqa-9d691f5f06f4-v1
-    is superseded and lexically similar.
+    is superseded and contains near-identical text, so both are retrievable and only
+    freshness handling separates them.
 - id: fresh-dc0090fa3dcc
-  query: What is the current rule in Policy Section 007?
+  query: According to the currently effective version of this policy, what does it
+    say about Information Collected Parent Companies Affiliates use Information collect
+    variety?
   user_id: frank.legal
   query_type: freshness_competing_versions
   expected_route: R3
@@ -10902,9 +10921,11 @@ items:
   should_abstain: false
   freshness_sensitive: true
   notes: Current version is doc-pqa-287dadcc3672-v2 v2.0; doc-pqa-287dadcc3672-v1
-    is superseded and lexically similar.
+    is superseded and contains near-identical text, so both are retrievable and only
+    freshness handling separates them.
 - id: fresh-8c82f6a06fa7
-  query: What is the current rule in Policy Section 008?
+  query: According to the currently effective version of this policy, what does it
+    say about Information Choose Submit visit Services without telling revealing information?
   user_id: carol.hr
   query_type: freshness_competing_versions
   expected_route: R3
@@ -10914,9 +10935,12 @@ items:
   should_abstain: false
   freshness_sensitive: true
   notes: Current version is doc-pqa-d95d0dbf13ee-v2 v2.0; doc-pqa-d95d0dbf13ee-v1
-    is superseded and lexically similar.
+    is superseded and contains near-identical text, so both are retrievable and only
+    freshness handling separates them.
 - id: fresh-68678adca54c
-  query: What is the current rule in Policy Section 009?
+  query: According to the currently effective version of this policy, what does it
+    say about Customers Merchants customer purchases product service Merchant using
+    credit?
   user_id: erin.contractor
   query_type: freshness_competing_versions
   expected_route: R3
@@ -10926,9 +10950,12 @@ items:
   should_abstain: false
   freshness_sensitive: true
   notes: Current version is doc-pqa-ab49cb9e4bc8-v2 v2.0; doc-pqa-ab49cb9e4bc8-v1
-    is superseded and lexically similar.
+    is superseded and contains near-identical text, so both are retrievable and only
+    freshness handling separates them.
 - id: fresh-bf42ba2e999c
-  query: What is the current rule in Policy Section 010?
+  query: According to the currently effective version of this policy, what does it
+    say about Personally identifiable information Certain features Services surveys
+    contests require?
   user_id: erin.contractor
   query_type: freshness_competing_versions
   expected_route: R3
@@ -10938,9 +10965,11 @@ items:
   should_abstain: false
   freshness_sensitive: true
   notes: Current version is doc-pqa-c2171d32b601-v2 v2.0; doc-pqa-c2171d32b601-v1
-    is superseded and lexically similar.
+    is superseded and contains near-identical text, so both are retrievable and only
+    freshness handling separates them.
 - id: fresh-d532e47751fc
-  query: What is the current rule in Policy Section 011?
+  query: According to the currently effective version of this policy, what does it
+    say about USE INFORMATION COLLECTED general MediaNews uses PIN CIN collected?
   user_id: erin.contractor
   query_type: freshness_competing_versions
   expected_route: R3
@@ -10950,9 +10979,12 @@ items:
   should_abstain: false
   freshness_sensitive: true
   notes: Current version is doc-pqa-14412745b299-v2 v2.0; doc-pqa-14412745b299-v1
-    is superseded and lexically similar.
+    is superseded and contains near-identical text, so both are retrievable and only
+    freshness handling separates them.
 - id: fresh-12bbbf706920
-  query: What is the current rule in Policy Section 012?
+  query: According to the currently effective version of this policy, what does it
+    say about User account information including pictures usernames collected displayed
+    order?
   user_id: alice.employee
   query_type: freshness_competing_versions
   expected_route: R3
@@ -10962,9 +10994,12 @@ items:
   should_abstain: false
   freshness_sensitive: true
   notes: Current version is doc-pqa-ee356d001ff3-v2 v2.0; doc-pqa-ee356d001ff3-v1
-    is superseded and lexically similar.
+    is superseded and contains near-identical text, so both are retrievable and only
+    freshness handling separates them.
 - id: fresh-076493af3550
-  query: What is the current rule in Policy Section 013?
+  query: According to the currently effective version of this policy, what does it
+    say about disclose personally identifiable information receive third party sources
+    third?
   user_id: alice.employee
   query_type: freshness_competing_versions
   expected_route: R3
@@ -10974,9 +11009,12 @@ items:
   should_abstain: false
   freshness_sensitive: true
   notes: Current version is doc-pqa-2ac1fc73e361-v2 v2.0; doc-pqa-2ac1fc73e361-v1
-    is superseded and lexically similar.
+    is superseded and contains near-identical text, so both are retrievable and only
+    freshness handling separates them.
 - id: fresh-4d7deee84316
-  query: What is the current rule in Policy Section 014?
+  query: According to the currently effective version of this policy, what does it
+    say about Tulsaworld com tracks collects non-personally identifiable information
+    identify specific?
   user_id: erin.contractor
   query_type: freshness_competing_versions
   expected_route: R3
@@ -10986,4 +11024,5 @@ items:
   should_abstain: false
   freshness_sensitive: true
   notes: Current version is doc-pqa-279b5b19d6b6-v2 v2.0; doc-pqa-279b5b19d6b6-v1
-    is superseded and lexically similar.
+    is superseded and contains near-identical text, so both are retrievable and only
+    freshness handling separates them.

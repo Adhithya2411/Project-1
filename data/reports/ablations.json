@@ -1,0 +1,616 @@
+{
+  "kind": "ablations",
+  "title": "Component ablations",
+  "generated_at": "2026-09-09T02:50:09+0530",
+  "corpus": "/Users/ranganathan.sv/Documents/AEH-BOB/Project-1/improvement_files/datasets/integrated/manifest.yaml",
+  "eval_set": "/Users/ranganathan.sv/Documents/AEH-BOB/Project-1/improvement_files/datasets/integrated/eval_set.yaml",
+  "items": 965,
+  "full_system": {
+    "recall_at_5": {
+      "mean": 0.5072380952380953,
+      "ci_low": 0.4769523809523809,
+      "ci_high": 0.5373333333333333
+    },
+    "mrr": {
+      "mean": 0.5123619047619047,
+      "ci_low": 0.4815804761904762,
+      "ci_high": 0.5435438095238094
+    },
+    "ndcg_at_10": {
+      "mean": 0.4702525910449848,
+      "ci_low": 0.44191115680585263,
+      "ci_high": 0.498869367265715
+    },
+    "abstention_appropriate": {
+      "mean": 0.8020725388601037,
+      "ci_low": 0.7772020725388601,
+      "ci_high": 0.8269430051813471
+    },
+    "citation_coverage": {
+      "mean": 0.43714285714285717,
+      "ci_low": 0.4074285714285714,
+      "ci_high": 0.468
+    },
+    "freshness_compliant": {
+      "mean": 1.0,
+      "ci_low": 1.0,
+      "ci_high": 1.0
+    },
+    "acl_violation": {
+      "mean": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    }
+  },
+  "ablations": {
+    "no_probe": {
+      "label": "\u2212 probe confidence (M3)",
+      "summary": {
+        "route_distribution": {
+          "R0": 924,
+          "R1": 23,
+          "R4": 18
+        },
+        "mean_latency_s": 0.035388808290155435,
+        "mean_cost_usd": 7.319689119170985e-05,
+        "errors": 0
+      },
+      "metrics": {
+        "recall_at_5": {
+          "delta_vs_full": -0.4944761904761905,
+          "p_value": 0.0,
+          "cohens_d": -1.059137587007579,
+          "ablated_mean": 0.01276190476190476,
+          "full_mean": 0.5072380952380953
+        },
+        "mrr": {
+          "delta_vs_full": -0.49940952380952375,
+          "p_value": 0.0,
+          "cohens_d": -1.045925344880587,
+          "ablated_mean": 0.012952380952380951,
+          "full_mean": 0.5123619047619047
+        },
+        "ndcg_at_10": {
+          "delta_vs_full": -0.4585531050496874,
+          "p_value": 0.0,
+          "cohens_d": -1.0515866477278266,
+          "ablated_mean": 0.011699485995297335,
+          "full_mean": 0.4702525910449848
+        },
+        "abstention_appropriate": {
+          "delta_vs_full": -0.6984455958549223,
+          "p_value": 0.0,
+          "cohens_d": -1.5211019183678502,
+          "ablated_mean": 0.10362694300518134,
+          "full_mean": 0.8020725388601037
+        },
+        "citation_coverage": {
+          "delta_vs_full": -0.43142857142857144,
+          "p_value": 0.0,
+          "cohens_d": -0.9380218212772604,
+          "ablated_mean": 0.005714285714285714,
+          "full_mean": 0.43714285714285717
+        },
+        "acl_violation": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.0,
+          "full_mean": 0.0
+        }
+      }
+    },
+    "no_restricted_signal": {
+      "label": "\u2212 restricted-scope signal (M2)",
+      "summary": {
+        "route_distribution": {
+          "R1": 109,
+          "R2": 1,
+          "R3": 782,
+          "R4": 73
+        },
+        "mean_latency_s": 0.10224041450777202,
+        "mean_cost_usd": 0.004828908808290155,
+        "errors": 0
+      },
+      "metrics": {
+        "recall_at_5": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.5072380952380953,
+          "full_mean": 0.5072380952380953
+        },
+        "mrr": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.5123619047619047,
+          "full_mean": 0.5123619047619047
+        },
+        "ndcg_at_10": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.4702525910449848,
+          "full_mean": 0.4702525910449848
+        },
+        "abstention_appropriate": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.8020725388601037,
+          "full_mean": 0.8020725388601037
+        },
+        "citation_coverage": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.43714285714285717,
+          "full_mean": 0.43714285714285717
+        },
+        "freshness_compliant": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 1.0,
+          "full_mean": 1.0
+        },
+        "acl_violation": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.0,
+          "full_mean": 0.0
+        }
+      }
+    },
+    "no_freshness_penalty": {
+      "label": "\u2212 freshness penalty in routing",
+      "summary": {
+        "route_distribution": {
+          "R1": 122,
+          "R2": 1,
+          "R3": 782,
+          "R4": 60
+        },
+        "mean_latency_s": 0.10452880829015544,
+        "mean_cost_usd": 0.004828908808290155,
+        "errors": 0
+      },
+      "metrics": {
+        "recall_at_5": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.5072380952380953,
+          "full_mean": 0.5072380952380953
+        },
+        "mrr": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.5123619047619047,
+          "full_mean": 0.5123619047619047
+        },
+        "ndcg_at_10": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.4702525910449848,
+          "full_mean": 0.4702525910449848
+        },
+        "abstention_appropriate": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.8020725388601037,
+          "full_mean": 0.8020725388601037
+        },
+        "citation_coverage": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.43714285714285717,
+          "full_mean": 0.43714285714285717
+        },
+        "freshness_compliant": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 1.0,
+          "full_mean": 1.0
+        },
+        "acl_violation": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.0,
+          "full_mean": 0.0
+        }
+      }
+    },
+    "no_conflict_signal": {
+      "label": "\u2212 conflict signal in routing",
+      "summary": {
+        "route_distribution": {
+          "R1": 110,
+          "R2": 5,
+          "R3": 777,
+          "R4": 73
+        },
+        "mean_latency_s": 0.10565295336787565,
+        "mean_cost_usd": 0.004824332642487047,
+        "errors": 0
+      },
+      "metrics": {
+        "recall_at_5": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.5072380952380953,
+          "full_mean": 0.5072380952380953
+        },
+        "mrr": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.5123619047619047,
+          "full_mean": 0.5123619047619047
+        },
+        "ndcg_at_10": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.4702525910449848,
+          "full_mean": 0.4702525910449848
+        },
+        "abstention_appropriate": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.8020725388601037,
+          "full_mean": 0.8020725388601037
+        },
+        "citation_coverage": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.43714285714285717,
+          "full_mean": 0.43714285714285717
+        },
+        "freshness_compliant": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 1.0,
+          "full_mean": 1.0
+        },
+        "acl_violation": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.0,
+          "full_mean": 0.0
+        }
+      }
+    },
+    "no_risk_model": {
+      "label": "\u2212 risk term entirely",
+      "summary": {
+        "route_distribution": {
+          "R1": 145,
+          "R2": 22,
+          "R3": 756,
+          "R4": 42
+        },
+        "mean_latency_s": 0.09897108808290155,
+        "mean_cost_usd": 0.00483101347150259,
+        "errors": 0
+      },
+      "metrics": {
+        "recall_at_5": {
+          "delta_vs_full": -0.005523809523809524,
+          "p_value": 0.0318,
+          "cohens_d": -0.07222555659454116,
+          "ablated_mean": 0.5017142857142857,
+          "full_mean": 0.5072380952380953
+        },
+        "mrr": {
+          "delta_vs_full": -0.006380952380952381,
+          "p_value": 0.0116,
+          "cohens_d": -0.086437391608058,
+          "ablated_mean": 0.5059809523809523,
+          "full_mean": 0.5123619047619047
+        },
+        "ndcg_at_10": {
+          "delta_vs_full": -0.005358507289126918,
+          "p_value": 0.0119,
+          "cohens_d": -0.08658607956898165,
+          "ablated_mean": 0.46489408375585783,
+          "full_mean": 0.4702525910449848
+        },
+        "abstention_appropriate": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.8020725388601037,
+          "full_mean": 0.8020725388601037
+        },
+        "citation_coverage": {
+          "delta_vs_full": 0.0005714285714285715,
+          "p_value": 0.7073,
+          "cohens_d": 0.015111664408724386,
+          "ablated_mean": 0.4377142857142857,
+          "full_mean": 0.43714285714285717
+        },
+        "freshness_compliant": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 1.0,
+          "full_mean": 1.0
+        },
+        "acl_violation": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.0,
+          "full_mean": 0.0
+        }
+      }
+    },
+    "no_cost_latency": {
+      "label": "\u2212 cost and latency terms",
+      "summary": {
+        "route_distribution": {
+          "R1": 95,
+          "R3": 777,
+          "R4": 93
+        },
+        "mean_latency_s": 0.10125740932642488,
+        "mean_cost_usd": 0.004818615544041452,
+        "errors": 0
+      },
+      "metrics": {
+        "recall_at_5": {
+          "delta_vs_full": 0.0005714285714285715,
+          "p_value": 0.7122,
+          "cohens_d": 0.015111664408724386,
+          "ablated_mean": 0.5078095238095238,
+          "full_mean": 0.5072380952380953
+        },
+        "mrr": {
+          "delta_vs_full": 0.0003809523809523809,
+          "p_value": 0.6292,
+          "cohens_d": 0.033806170189140665,
+          "ablated_mean": 0.5127428571428572,
+          "full_mean": 0.5123619047619047
+        },
+        "ndcg_at_10": {
+          "delta_vs_full": 0.00012931107744623813,
+          "p_value": 0.8681,
+          "cohens_d": 0.0060472332435665965,
+          "ablated_mean": 0.4703819021224309,
+          "full_mean": 0.4702525910449848
+        },
+        "abstention_appropriate": {
+          "delta_vs_full": -0.0010362694300518134,
+          "p_value": 0.1082,
+          "cohens_d": -0.03219113899898252,
+          "ablated_mean": 0.8010362694300518,
+          "full_mean": 0.8020725388601037
+        },
+        "citation_coverage": {
+          "delta_vs_full": -0.0017142857142857142,
+          "p_value": 0.1383,
+          "cohens_d": -0.045376508796435344,
+          "ablated_mean": 0.43542857142857144,
+          "full_mean": 0.43714285714285717
+        },
+        "freshness_compliant": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 1.0,
+          "full_mean": 1.0
+        },
+        "acl_violation": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.0,
+          "full_mean": 0.0
+        }
+      }
+    },
+    "no_authority_gate": {
+      "label": "\u2212 authority gate in evidence packing",
+      "summary": {
+        "route_distribution": {
+          "R1": 109,
+          "R2": 1,
+          "R3": 782,
+          "R4": 73
+        },
+        "mean_latency_s": 0.10595658031088082,
+        "mean_cost_usd": 0.004828908808290155,
+        "errors": 0
+      },
+      "metrics": {
+        "recall_at_5": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.5072380952380953,
+          "full_mean": 0.5072380952380953
+        },
+        "mrr": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.5123619047619047,
+          "full_mean": 0.5123619047619047
+        },
+        "ndcg_at_10": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.4702525910449848,
+          "full_mean": 0.4702525910449848
+        },
+        "abstention_appropriate": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.8020725388601037,
+          "full_mean": 0.8020725388601037
+        },
+        "citation_coverage": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.43714285714285717,
+          "full_mean": 0.43714285714285717
+        },
+        "freshness_compliant": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 1.0,
+          "full_mean": 1.0
+        },
+        "acl_violation": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.0,
+          "full_mean": 0.0
+        }
+      }
+    },
+    "no_freshness_enforcement": {
+      "label": "\u2212 freshness enforcement in packing",
+      "summary": {
+        "route_distribution": {
+          "R1": 109,
+          "R2": 1,
+          "R3": 782,
+          "R4": 73
+        },
+        "mean_latency_s": 0.10714373056994818,
+        "mean_cost_usd": 0.005073627979274612,
+        "errors": 0
+      },
+      "metrics": {
+        "recall_at_5": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.5072380952380953,
+          "full_mean": 0.5072380952380953
+        },
+        "mrr": {
+          "delta_vs_full": -0.0010666666666666667,
+          "p_value": 0.0623,
+          "cohens_d": -0.05799358991435291,
+          "ablated_mean": 0.5112952380952381,
+          "full_mean": 0.5123619047619047
+        },
+        "ndcg_at_10": {
+          "delta_vs_full": -0.0008300507263210477,
+          "p_value": 0.0542,
+          "cohens_d": -0.06019191596019781,
+          "ablated_mean": 0.4694225403186637,
+          "full_mean": 0.4702525910449848
+        },
+        "abstention_appropriate": {
+          "delta_vs_full": 0.0010362694300518134,
+          "p_value": 0.104,
+          "cohens_d": 0.03219113899898252,
+          "ablated_mean": 0.8031088082901554,
+          "full_mean": 0.8020725388601037
+        },
+        "citation_coverage": {
+          "delta_vs_full": 0.001142857142857143,
+          "p_value": 0.584,
+          "cohens_d": 0.033806170189140665,
+          "ablated_mean": 0.4382857142857143,
+          "full_mean": 0.43714285714285717
+        },
+        "freshness_compliant": {
+          "delta_vs_full": -0.047619047619047616,
+          "p_value": 0.457,
+          "cohens_d": -0.21821789023599236,
+          "ablated_mean": 0.9523809523809523,
+          "full_mean": 1.0
+        },
+        "acl_violation": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.0,
+          "full_mean": 0.0
+        }
+      }
+    },
+    "no_evidence_gate": {
+      "label": "\u2212 evidence sufficiency gate",
+      "summary": {
+        "route_distribution": {
+          "R1": 109,
+          "R2": 1,
+          "R3": 782,
+          "R4": 73
+        },
+        "mean_latency_s": 0.10636445595854921,
+        "mean_cost_usd": 0.007060078756476684,
+        "errors": 0
+      },
+      "metrics": {
+        "recall_at_5": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.5072380952380953,
+          "full_mean": 0.5072380952380953
+        },
+        "mrr": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.5123619047619047,
+          "full_mean": 0.5123619047619047
+        },
+        "ndcg_at_10": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.4702525910449848,
+          "full_mean": 0.4702525910449848
+        },
+        "abstention_appropriate": {
+          "delta_vs_full": 0.10466321243523316,
+          "p_value": 0.0,
+          "cohens_d": 0.19760864208011855,
+          "ablated_mean": 0.9067357512953368,
+          "full_mean": 0.8020725388601037
+        },
+        "citation_coverage": {
+          "delta_vs_full": 0.040190476190476186,
+          "p_value": 0.0,
+          "cohens_d": 0.21319947583956267,
+          "ablated_mean": 0.4773333333333333,
+          "full_mean": 0.43714285714285717
+        },
+        "acl_violation": {
+          "delta_vs_full": 0.0,
+          "p_value": 1.0,
+          "cohens_d": 0.0,
+          "ablated_mean": 0.0,
+          "full_mean": 0.0
+        }
+      }
+    }
+  }
+}

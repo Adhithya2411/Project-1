@@ -1,3 +1,48 @@
+users:
+- user_id: alice.employee
+  display_name: "Alice Nowak \u2014 Support Engineer"
+  roles:
+  - employee
+  - engineering
+  description: General staff with engineering access. No finance, HR or legal.
+- user_id: bob.manager
+  display_name: "Bob Adeyemi \u2014 Delivery Manager"
+  roles:
+  - employee
+  - manager
+  description: Line manager. Reads management-visible material; no runbooks.
+- user_id: carol.hr
+  display_name: "Carol Bianchi \u2014 HR Business Partner"
+  roles:
+  - employee
+  - hr
+  - manager
+  description: HR function, including restricted HR material.
+- user_id: dan.finance
+  display_name: "Dan Oyelaran \u2014 Finance Analyst"
+  roles:
+  - employee
+  - finance
+  description: Finance function. May read restricted finance material.
+- user_id: erin.contractor
+  display_name: "Erin Vasquez \u2014 External Contractor"
+  roles:
+  - employee
+  description: Baseline access only. The narrowest scope in the corpus.
+- user_id: frank.legal
+  display_name: "Frank Osei \u2014 Legal Counsel"
+  roles:
+  - employee
+  - legal
+  - manager
+  description: Legal function. May read restricted legal material.
+- user_id: grace.finlead
+  display_name: "Grace Lam \u2014 Finance Lead"
+  roles:
+  - employee
+  - finance
+  - manager
+  description: Finance leadership. Widest finance scope.
 documents:
 - doc_id: doc-pub-7be434274b72
   path: corpus/doc-pub-7be434274b72.md

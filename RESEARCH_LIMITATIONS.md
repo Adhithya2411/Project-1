@@ -350,10 +350,17 @@ Measured by `improvement_files/evaluation_tools/measure_specialisation.py` (E2),
 holding a principal's authorised subcorpus fixed and deleting everything outside
 it, over 24 observer/query pairs:
 
-| Condition | Kendall tau-b | Top-1 flips | Order changes | Route changes |
-|---|---|---|---|---|
-| Unspecialised (default) | 0.950 | 8.3% | 20.8% | **33.3%** |
-| SPIS, lambda = 0 | **1.000** | **0%** | **0%** | **0%** |
+| Condition | Top-1 flips | Evidence-order changes | Non-interfering |
+|---|---|---|---|
+| Unspecialised (default) | 6.2% | **31.2%** | No |
+| SPIS, lambda = 0 | **0%** | **0%** | Yes |
+
+Benchmark corpus, 7 ACL classes, 16 observer/query pairs, **route pinned**.
+Pinning is required: deleting unreadable documents also changes
+`restricted_fraction`, which the router uses deliberately, so an unpinned
+comparison cannot isolate index behaviour. An earlier unpinned run on the demo
+corpus reported "33.3% route changes / 0% under SPIS"; that comparison was
+invalid and the figures should not be used. See `FINDINGS.md` §4.4.
 
 No restricted text is ever returned in either condition, so this is not an
 access-control violation. It is an information-flow violation, and the

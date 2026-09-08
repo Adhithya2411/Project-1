@@ -1,0 +1,123 @@
+{
+  "kind": "embeddings",
+  "title": "Embedding backend comparison",
+  "generated_at": "2026-09-09T04:14:05+0530",
+  "corpus": "/Users/ranganathan.sv/Documents/AEH-BOB/Project-1/improvement_files/datasets/integrated/manifest.yaml",
+  "baseline": "lsa",
+  "backends": {
+    "lsa": {
+      "label": "LSA / TF-IDF + SVD (offline default)",
+      "embedder": "lsa",
+      "dim": 256,
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.41238095238095235,
+          "ci_low": 0.38380952380952377,
+          "ci_high": 0.4417142857142857
+        },
+        "mrr": {
+          "mean": 0.44230476190476187,
+          "ci_low": 0.411674761904762,
+          "ci_high": 0.47319999999999995
+        },
+        "ndcg_at_10": {
+          "mean": 0.3784703387023091,
+          "ci_low": 0.35221830310763524,
+          "ci_high": 0.4046776806893309
+        },
+        "abstention_appropriate": {
+          "mean": 0.8963730569948186,
+          "ci_low": 0.8766839378238342,
+          "ci_high": 0.9150259067357513
+        }
+      },
+      "agreement": {
+        "mean_sparse_dense_jaccard": 0.1934410724566165,
+        "mean_dense_only_fraction": 0.4032794637716917,
+        "n": 965
+      },
+      "summary": {
+        "route_distribution": {
+          "R1": 70,
+          "R2": 37,
+          "R3": 806,
+          "R4": 52
+        },
+        "errors": 0,
+        "mean_latency_s": 0.04834891191709845
+      }
+    },
+    "minilm": {
+      "label": "all-MiniLM-L6-v2 (neural, 384d)",
+      "embedder": "sentence-transformers:sentence-transformers/all-MiniLM-L6-v2",
+      "dim": 384,
+      "metrics": {
+        "recall_at_5": {
+          "mean": 0.4339047619047619,
+          "ci_low": 0.40533333333333327,
+          "ci_high": 0.463047619047619
+        },
+        "mrr": {
+          "mean": 0.45019047619047614,
+          "ci_low": 0.4206280952380952,
+          "ci_high": 0.48099142857142857
+        },
+        "ndcg_at_10": {
+          "mean": 0.39077256255230813,
+          "ci_low": 0.3650831542140959,
+          "ci_high": 0.4167824961411005
+        },
+        "abstention_appropriate": {
+          "mean": 0.8963730569948186,
+          "ci_low": 0.8766839378238342,
+          "ci_high": 0.9150259067357513
+        }
+      },
+      "agreement": {
+        "mean_sparse_dense_jaccard": 0.20845875483181178,
+        "mean_dense_only_fraction": 0.39577062258409407,
+        "n": 965
+      },
+      "summary": {
+        "route_distribution": {
+          "R1": 94,
+          "R2": 1,
+          "R3": 797,
+          "R4": 73
+        },
+        "errors": 0,
+        "mean_latency_s": 0.06705274611398963
+      }
+    }
+  },
+  "comparisons_vs_baseline": {
+    "minilm": {
+      "recall_at_5": {
+        "delta": 0.02152380952380952,
+        "p_value": 0.002,
+        "cohens_d": 0.10404900928432165,
+        "effect_size": "negligible"
+      },
+      "mrr": {
+        "delta": 0.007885714285714286,
+        "p_value": 0.0147,
+        "cohens_d": 0.08320427585026184,
+        "effect_size": "negligible"
+      },
+      "ndcg_at_10": {
+        "delta": 0.012302223849999024,
+        "p_value": 0.0023,
+        "cohens_d": 0.10570897837296377,
+        "effect_size": "negligible"
+      },
+      "abstention_appropriate": {
+        "delta": 0.0,
+        "p_value": 1.0,
+        "cohens_d": 0.0,
+        "effect_size": "negligible"
+      }
+    }
+  },
+  "route_spread": {},
+  "lsa_scaling": {}
+}

@@ -120,17 +120,22 @@ correctness property, not as IP.
 > constraint, so a restricted principal's *abstention* was a function of
 > documents it could not read.
 >
-> Measured on the seed corpus (`measure_specialisation.py`, E2; 24
-> observer/query pairs over three principals): mean Kendall tau-b **0.950**,
-> top-1 flips **8.3%**, evidence-order changes **20.8%**, and **route changes
-> 33.3%** when unreadable documents are deleted while the authorised subcorpus
-> is held fixed. No restricted content is ever returned, so this is not an
-> access-control violation — it is an information-flow violation.
+> Measured on the benchmark corpus (`measure_specialisation.py`, E2; 16
+> observer/query pairs, 7 ACL equivalence classes, **route pinned**): top-1
+> flips **6.2%** and evidence-order changes **31.2%** when unreadable documents
+> are deleted while the authorised subcorpus is held fixed. No restricted
+> content is ever returned, so this is not an access-control violation — it is
+> an information-flow violation.
 >
-> M7 below closes it, and the same measurement reports tau **1.000** with zero
-> flips, zero order changes, and zero route changes under M7. The claim in M1
-> is therefore **conditional on M7 being enabled**, and the qualified form is
-> the only one that should be relied upon.
+> M7 below closes it: the same measurement reports **0%** flips and **0%**
+> order changes. The claim in M1 is therefore **conditional on M7 being
+> enabled**, and the qualified form is the only one that should be relied upon.
+>
+> The route must be pinned for this measurement to mean anything. Deleting
+> unreadable documents also changes `restricted_fraction`, which M2 uses on
+> purpose, so an unpinned comparison mixes an intended dependence in with the
+> unintended one. An earlier unpinned run reported "33.3% route changes" and
+> that figure should not be used; see `FINDINGS.md` §4.4.
 
 ---
 
