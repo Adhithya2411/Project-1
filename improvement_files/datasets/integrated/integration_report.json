@@ -1,0 +1,15 @@
+{
+  "datasets_integrated": "all",
+  "total_documents": 1125,
+  "total_eval_items": 400,
+  "total_eval_only_items": 100,
+  "total_corpus_chars": 1054851,
+  "eval_types": {
+    "finance_metrics-generated": 50,
+    "finance_domain-relevant": 50,
+    "finance_novel-generated": 50,
+    "policy_comprehension": 150,
+    "hotpotqa_comparison": 21,
+    "hotpotqa_bridge": 79
+  }
+}

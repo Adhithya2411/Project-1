@@ -1,0 +1,212 @@
+Certain of our equity investments do not have readily determinable fair values and are excluded from the tables above. Such investments are 
+measured at cost, less any impairment, plus or minus changes resulting from observable price changes in orderly transactions for an identical 
+or similar investment of the same issuer and are included in Investments in unconsolidated businesses in our consolidated balance sheets. As 
+of December 31, 2021 and December 31, 2020, the carrying amount of our investments without readily determinable fair values were 
+$808 million and $402 million, respectively. During 2021, there were approximately $66 million of adjustments due to observable price 
+changes and insignificant impairment charges. Cumulative adjustments due to observable price changes and impairment charges were 
+approximately $143 million and $63 million, respectively. 
+Verizon has a liability for contingent consideration related to its acquisition of Tracfone, completed in November 2021. The fair value is 
+calculated using a probability-weighted discounted cash flow model and represents a Level 3 measurement. Level 3 instruments include 
+valuation based on unobservable inputs reflecting our own assumptions, consistent with reasonably available assumptions made by other 
+market participants. Subsequent to the acquisition date, at each reporting date, the contingent consideration liability is remeasured to fair 
+value with changes recorded within Selling, general and administrative expense in our consolidated statements of income. 
+Fixed income securities consist primarily of investments in municipal bonds. The valuation of the fixed income securities are based on the 
+quoted prices for similar assets in active markets or identical assets in inactive markets or models that apply inputs from observable market 
+data. The valuation determines that these securities are classified as Level 2. 
+Derivative contracts are valued using models based on readily observable market parameters for all substantial terms of our derivative 
+contracts and thus are classified within Level 2. We use mid-market pricing for fair value measurements of our derivative instruments. Our 
+derivative instruments are recorded on a gross basis. 
+We recognize transfers between levels of the fair value hierarchy as of the end of the reporting period. 
+Fair Value of Short-term and Long-term Debt 
+The fair value of our debt is determined using various methods, including quoted prices for identical debt instruments, which is a Level 1 
+measurement, as well as quoted prices for similar debt instruments with comparable terms and maturities, which is a Level 2 measurement. 
+The fair value of our short-term and long-term debt, excluding finance leases, was as follows: 
+Fair Value 
+(dollars in millions) 
+Carrying 
+Amount
+Level 1
+Level 2
+Level 3
+Total 
+At December 31, 2020
+$ 
+127,778 
+$ 
+103,967 
+$ 
+52,785 
+$ 
+ $ 
+156,752 
+At December 31, 2021
+149,543 
+106,599 
+62,606 
+ 
+169,205 
+Derivative Instruments 
+We enter into derivative transactions primarily to manage our exposure to fluctuations in foreign currency exchange rates and interest rates. 
+We employ risk management strategies, which may include the use of a variety of derivatives including interest rate swaps, cross currency 
+swaps, forward starting interest rate swaps, treasury rate locks, interest rate caps, swaptions and foreign exchange forwards. We do not hold 
+derivatives for trading purposes. 
+The following table sets forth the notional amounts of our outstanding derivative instruments: 
+(dollars in millions) 
+At December 31,
+2021
+2020 
+Interest rate swaps
+$ 
+19,779 
+$ 
+17,768 
+Cross currency swaps
+32,502 
+26,288 
+Forward starting interest rate swaps
+1,000 
+2,000 
+Foreign exchange forwards
+932 
+1,405 
+85
+Verizon 2021 Annual Report on Form 10-K
+
+---
+
+for assets and liabilities. We record these translation adjustments in Accumulated other comprehensive loss, a separate component of Equity, 
+in our consolidated balance sheets. We record exchange gains and losses resulting from the conversion of transaction currency to functional 
+currency as a component of Other income (expense), net. 
+Employee Benefit Plans 
+Pension and postretirement health care and life insurance benefits earned during the year, as well as interest on projected benefit obligations, 
+are accrued. Prior service costs and credits resulting from changes in plan benefits are generally amortized over the average remaining service 
+period of the employees expected to receive benefits. Expected return on plan assets is determined by applying the return on assets 
+assumption to the actual fair value of plan assets. Actuarial gains and losses are recognized in Other income (expense), net in the year in 
+which they occur. These gains and losses are measured annually as of December 31 or upon a remeasurement event. Verizon management 
+employees no longer earn pension benefits or earn service towards the Company retiree medical subsidy. See Note 11 for additional 
+information. 
+We recognize a pension or a postretirement plans funded status as either an asset or liability in the consolidated balance sheets. Also, we 
+measure any unrecognized prior service costs and credits that arise during the period as a component of Accumulated other comprehensive 
+income, net of applicable income tax. 
+Derivative Instruments 
+We enter into derivative transactions primarily to manage our exposure to fluctuations in foreign currency exchange rates and interest rates. 
+We employ risk management strategies, which may include the use of a variety of derivatives including cross currency swaps, forward 
+starting interest rate swaps, interest rate swaps, treasury rate locks, interest rate caps and foreign exchange forwards. We do not hold 
+derivatives for trading purposes. 
+We measure all derivatives at fair value and recognize them as either assets or liabilities in our consolidated balance sheets. Our derivative 
+instruments are valued primarily using models based on readily observable market parameters for all substantial terms of our derivative 
+contracts and thus are classified as Level 2. Changes in the fair values of derivative instruments applied as economic hedges are recognized in 
+earnings in the current period. For fair value hedges, the change in the fair value of the derivative instruments is recognized in earnings, along 
+with the change in the fair value of the hedged item. For cash flow hedges, the change in the fair value of the derivative instruments is 
+reported in Other comprehensive income (loss) and recognized in earnings when the hedged item is recognized in earnings. For net 
+investment hedges of certain of our foreign operations, the change in the fair value of the hedging instruments is reported in Other 
+comprehensive income (loss) as part of the cumulative translation adjustment and partially offsets the impact of foreign currency changes on 
+the value of our net investment. 
+Cash flows from derivatives, which are designated as accounting hedges or applied as economic hedges, are presented consistently with the 
+cash flow classification of the related hedged items. See Note 9 for additional information. 
+Variable Interest Entities 
+VIEs are entities that lack sufficient equity to permit the entity to finance its activities without additional subordinated financial support from 
+other parties, have equity investors that do not have the ability to make significant decisions relating to the entitys operations through voting 
+rights, do not have the obligation to absorb the expected losses, or do not have the right to receive the residual returns of the entity. We 
+consolidate the assets and liabilities of VIEs when we are deemed to be the primary beneficiary. The primary beneficiary is the party that has 
+the power to make the decisions that most significantly affect the economic performance of the VIE and has the obligation to absorb losses or 
+the right to receive benefits that could potentially be significant to the VIE.
+63
+Verizon 2021 Annual Report on Form 10-K
+
+---
+
+fair value is measured using the NAV per share as a practical expedient are not leveled within the fair value hierarchy but are included in total 
+investments. 
+Employer Contributions 
+In 2021, we made no discretionary contribution to our qualified pension plans, $58 million of contributions to our nonqualified pension plans 
+and $885 million of contributions to our other postretirement benefit plans. No qualified pension plans contributions are expected to be made 
+in 2022. Nonqualified pension plans contributions are estimated to be approximately $60 million and contributions to our other postretirement 
+benefit plans are estimated to be approximately $860 million in 2022. 
+Estimated Future Benefit Payments 
+The benefit payments to retirees are expected to be paid as follows: 
+(dollars in millions) 
+Year
+Pension Benefits 
+Health Care and Life 
+2022
+$ 
+2,049 
+$ 
+906 
+2023
+1,648 
+883 
+2024
+1,097 
+862 
+2025
+1,066 
+850 
+2026
+1,034 
+840 
+2027 to 2031
+5,097 
+4,139 
+Savings Plan and Employee Stock Ownership Plans 
+We maintain four leveraged employee stock ownership plans (ESOP). We match a certain percentage of eligible employee contributions to 
+certain savings plans with shares of our common stock from this ESOP. At December 31, 2021, the number of allocated shares of common 
+stock in this ESOP was 44 million. There were no unallocated shares of common stock in this ESOP at December 31, 2021. All leveraged 
+ESOP shares are included in earnings per share computations. 
+Total savings plan costs were $690 million in 2021, $730 million in 2020 and $897 million in 2019. 
+Severance Benefits 
+The following table provides an analysis of our severance liability: 
+(dollars in millions) 
+Year 
+Beginning of 
+Year 
+Charged to 
+Expense
+Payments
+Other
+End of Year 
+2019
+$ 
+2,156 
+$ 
+260 
+$ 
+(1,847) $ 
+(4) $
+565 
+2020
+565 
+309 
+(248)
+(24)
+602 
+2021
+602 
+233 
+(258)
+(29)
+548 
+Severance, Pension and Benefits (Credits) Charges 
+During 2021, in accordance with our accounting policy to recognize actuarial gains and losses in the period in which they occur, we recorded 
+net pre-tax pension and benefits credits of $2.4 billion in our pension and postretirement benefit plans. The credits were recorded in Other 
+income (expense), net in our consolidated statement of income and were primarily driven by a credit of $1.1 billion due to an increase in our 
+discount rate assumption used to determine the current year liabilities of our pension plans and postretirement benefit plans from a weighted-
+average of 2.6% at December 31, 2020 to a weighted-average of 2.9% at December 31, 2021, a credit of $847 million due to the difference 
+between our estimated and our actual return on assets and a credit of $453 million due to other actuarial assumption adjustments. During 
+2021, we also recorded net pre-tax severance charges of $233 million in Selling, general and administrative expense in our consolidated 
+statements of income. 
+During 2020, we recorded net pre-tax pension and benefits charges of $1.6 billion in our pension and postretirement benefit plans. The 
+charges were recorded in Other income (expense), net in our consolidated statement of income and were primarily driven by a charge of 
+$3.2 billion due to a decrease in our discount rate assumption used to determine the current year liabilities of our pension plans and 
+postretirement benefit plans from a weighted-average of 3.3% at December 31, 2019 to a weighted-average of 2.6% at December 31, 2020, 
+partially offset by a credit of $1.6 billion due to the difference between our estimated and our actual return on assets. During 2020, we also 
+recorded net pre-tax severance charges of $309 million in Selling, general and administrative expense in our consolidated statements of 
+income. 
+During 2019, we recorded net pre-tax pension and benefits charges of $126 million in our pension and postretirement benefit plans. The 
+charges were recorded in Other income (expense), net in our consolidated statement of income and were primarily driven by a charge of 
+$4.3 billion due to a decrease in our discount rate assumption used to determine the current year liabilities of our pension plans and 
+postretirement benefits plans from a weighted-average of 4.4% at December 31, 2018 to a weighted-average of 3.3% at December 31, 2019, 
+partially offset by a credit of $2.3 billion due to the difference between our estimated return on assets and our actual return on assets and a 
+94
+Verizon 2021 Annual Report on Form 10-K

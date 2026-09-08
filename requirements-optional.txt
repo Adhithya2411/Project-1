@@ -1,0 +1,18 @@
+# Optional upgrades. NONE of these are required to run AHRAG.
+# Each is detected at runtime; if missing, a deterministic offline fallback is used
+# and the active backend is reported in the UI and in `GET /api/health`.
+
+# Real neural embeddings (bi-encoder) + cross-encoder reranker.
+# Default model ids are set in .env.example and are small (~90MB / ~80MB).
+sentence-transformers>=2.7
+
+# Persistent vector store. Without it, AHRAG uses an in-process numpy store
+# (exact cosine search) which is adequate for corpora of this size.
+chromadb>=0.5
+
+# LLM generation adapter. Only used when ANTHROPIC_API_KEY is set.
+anthropic>=0.40
+
+# Learned router training and evaluation.
+xgboost>=2.0
+scikit-learn>=1.4

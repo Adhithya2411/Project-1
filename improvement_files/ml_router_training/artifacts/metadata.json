@@ -1,0 +1,52 @@
+{
+  "total_examples": 532,
+  "seeded_examples": 32,
+  "hotpotqa_examples": 500,
+  "train_examples": 425,
+  "validation_examples": 107,
+  "validation_accuracy": 0.9719626168224299,
+  "feature_names": [
+    "query_length",
+    "identifier_signal",
+    "numeric_signal",
+    "temporal_signal",
+    "lexical_specificity",
+    "semantic_ambiguity",
+    "mixed_signal",
+    "comparison_signal",
+    "hop_signal",
+    "followup_signal",
+    "unsupported_signal",
+    "conflict_likelihood",
+    "restricted_fraction",
+    "intent_lookup",
+    "intent_explanation",
+    "intent_comparison",
+    "intent_summarisation",
+    "intent_procedural",
+    "intent_temporal",
+    "sparse_confidence",
+    "dense_confidence",
+    "probe_agreement",
+    "query_length_tokens"
+  ],
+  "route_names": [
+    "R0",
+    "R1",
+    "R2",
+    "R3",
+    "R4"
+  ],
+  "label_policy": "Seeded queries: expected_route from eval_set.yaml (should_abstain \u2192 R0). HotpotQA: comparison \u2192 R4, hard multi-hop \u2192 R4, hard single \u2192 R3, easy single-fact \u2192 R1, easy multi-fact \u2192 R2, medium \u2192 R3.",
+  "model_params": {
+    "n_estimators": 200,
+    "max_depth": 5,
+    "learning_rate": 0.1,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8
+  },
+  "corpus_info": {
+    "documents": 30,
+    "chunks": 435
+  }
+}

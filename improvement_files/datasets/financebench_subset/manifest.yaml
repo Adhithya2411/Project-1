@@ -1,0 +1,366 @@
+users:
+- user_id: finance.analyst
+  display_name: Finance analyst
+  roles:
+  - finance
+documents:
+- doc_id: doc-financebench-db431fa1a477
+  path: doc-financebench-db431fa1a477.txt
+  title: AMD 2022 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-c27c055ea429
+  path: doc-financebench-c27c055ea429.txt
+  title: AMERICANEXPRESS 2022 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-067dd9394b37
+  path: doc-financebench-067dd9394b37.txt
+  title: BOEING 2022 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-73ac1ecdc17b
+  path: doc-financebench-73ac1ecdc17b.txt
+  title: PEPSICO 2022 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-bd538fc4adec
+  path: doc-financebench-bd538fc4adec.txt
+  title: AMCOR 2023 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-800131b23fd4
+  path: doc-financebench-800131b23fd4.txt
+  title: ULTABEAUTY 2023Q4 EARNINGS
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-c941f8b20c94
+  path: doc-financebench-c941f8b20c94.txt
+  title: 3M 2022 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-81078038aeb6
+  path: doc-financebench-81078038aeb6.txt
+  title: 3M 2023Q2 10Q
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-d3c3f90ade1d
+  path: doc-financebench-d3c3f90ade1d.txt
+  title: AES 2022 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-528b50a98a89
+  path: doc-financebench-528b50a98a89.txt
+  title: BESTBUY 2023 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-3635bf190f7c
+  path: doc-financebench-3635bf190f7c.txt
+  title: BESTBUY 2024Q2 10Q
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-4de78cc32843
+  path: doc-financebench-4de78cc32843.txt
+  title: CVSHEALTH 2022 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-3ebe0bf875ed
+  path: doc-financebench-3ebe0bf875ed.txt
+  title: JOHNSON JOHNSON 2022 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-ef1c1f120f2e
+  path: doc-financebench-ef1c1f120f2e.txt
+  title: JOHNSON JOHNSON 2023 8K dated-2023-08-30
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-747aad5dd951
+  path: doc-financebench-747aad5dd951.txt
+  title: MGMRESORTS 2022Q4 EARNINGS
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-4da391e4fcd1
+  path: doc-financebench-4da391e4fcd1.txt
+  title: PFIZER 2021 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-9ca4aef656a5
+  path: doc-financebench-9ca4aef656a5.txt
+  title: Pfizer 2023Q2 10Q
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-98574ce6c94d
+  path: doc-financebench-98574ce6c94d.txt
+  title: VERIZON 2022 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-772c0ad228f8
+  path: doc-financebench-772c0ad228f8.txt
+  title: 3M 2018 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-0ddaa0a901ac
+  path: doc-financebench-0ddaa0a901ac.txt
+  title: ACTIVISIONBLIZZARD 2019 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-be3587553e05
+  path: doc-financebench-be3587553e05.txt
+  title: ADOBE 2022 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-3bc47a3f2014
+  path: doc-financebench-3bc47a3f2014.txt
+  title: AMAZON 2017 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-33f60f794915
+  path: doc-financebench-33f60f794915.txt
+  title: AMCOR 2023Q4 EARNINGS
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-1902e6bc0425
+  path: doc-financebench-1902e6bc0425.txt
+  title: BLOCK 2020 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-f298812da620
+  path: doc-financebench-f298812da620.txt
+  title: CORNING 2022 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-92e468b11062
+  path: doc-financebench-92e468b11062.txt
+  title: GENERALMILLS 2020 10K
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-f8b51f257b5d
+  path: doc-financebench-f8b51f257b5d.txt
+  title: JOHNSON JOHNSON 2022Q4 EARNINGS
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-fb39f16ca113
+  path: doc-financebench-fb39f16ca113.txt
+  title: JPMORGAN 2021Q1 10Q
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-f02a1272bc04
+  path: doc-financebench-f02a1272bc04.txt
+  title: PEPSICO 2023 8K dated-2023-05-30
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5
+- doc_id: doc-financebench-47f0dd9ef230
+  path: doc-financebench-47f0dd9ef230.txt
+  title: PEPSICO 2023Q1 EARNINGS
+  doc_type: finance
+  owner: financebench
+  acl_roles:
+  - finance
+  - admin
+  created_date: '2022-01-01'
+  effective_date: '2022-01-01'
+  version: '1.0'
+  authority_score: 5

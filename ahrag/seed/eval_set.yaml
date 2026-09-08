@@ -1,0 +1,340 @@
+# ==============================================================================
+# AHRAG labelled evaluation suite.
+#
+# 32 items across the strata the research draft names: exact lookup, semantic
+# lookup, procedural, comparison, multi-hop, temporal/freshness, unanswerable,
+# and permission-constrained.
+#
+# HOW THE LABELS WERE MADE — this matters for reading the results honestly:
+#
+#   * gold_chunks were assigned by reading the seeded corpus and identifying the
+#     passages that actually contain the answer. They were NOT produced by
+#     running any retriever, so they do not favour sparse, dense, or hybrid.
+#   * expected_route is a *hypothesis* about which route should win, used only
+#     for the route-agreement diagnostic. It is NOT used to score any retrieval
+#     or answer metric, and no system is rewarded for matching it.
+#   * should_abstain marks items where the correct behaviour is refusal:
+#     either the user lacks authorisation, or the corpus does not contain the
+#     answer at all.
+#   * freshness_sensitive marks items where a superseded source would be a wrong
+#     answer even though it is topically relevant.
+#
+# The suite is small and single-annotator. It is a functional regression suite
+# for this prototype, not a benchmark, and it cannot support claims about
+# general performance. See RESEARCH_LIMITATIONS.md.
+# ==============================================================================
+
+items:
+  # --- Exact identifier lookup ------------------------------------------------
+  - id: eq-001
+    query: "What is the remediation for ERR-5041?"
+    user_id: alice.employee
+    query_type: exact_lookup
+    expected_route: R1
+    gold_chunks: [doc-eng-payments-runbook::c002]
+    should_abstain: false
+    freshness_sensitive: false
+
+  - id: eq-002
+    query: "What does error code ERR-4012 mean?"
+    user_id: alice.employee
+    query_type: exact_lookup
+    expected_route: R1
+    gold_chunks: [doc-eng-payments-runbook::c003]
+    should_abstain: false
+    freshness_sensitive: false
+
+  - id: eq-003
+    query: "What should I do about ERR-5503?"
+    user_id: alice.employee
+    query_type: exact_lookup
+    expected_route: R1
+    gold_chunks: [doc-eng-payments-runbook::c004]
+    should_abstain: false
+    freshness_sensitive: false
+
+  - id: eq-004
+    query: "What is error code SEC-3301?"
+    user_id: alice.employee
+    query_type: exact_lookup
+    expected_route: R1
+    gold_chunks: [doc-sec-incident-runbook::c003]
+    should_abstain: false
+    freshness_sensitive: false
+
+  - id: eq-005
+    query: "Which policy code covers annual leave?"
+    user_id: carol.hr
+    query_type: exact_lookup
+    expected_route: R1
+    gold_chunks: [doc-hr-leave-v2::c006]
+    should_abstain: false
+    freshness_sensitive: false
+
+  - id: eq-006
+    query: "What is the PagerDuty service for payments escalation?"
+    user_id: alice.employee
+    query_type: exact_lookup
+    expected_route: R1
+    gold_chunks: [doc-eng-payments-runbook::c006]
+    should_abstain: false
+    freshness_sensitive: false
+
+  # --- Semantic / conceptual --------------------------------------------------
+  - id: sem-001
+    query: "How many days must hybrid staff attend the office?"
+    user_id: alice.employee
+    query_type: semantic_lookup
+    expected_route: R2
+    gold_chunks: [doc-hr-remote::c002]
+    should_abstain: false
+    freshness_sensitive: false
+
+  - id: sem-002
+    query: "Can I work from another country and for how long?"
+    user_id: bob.manager
+    query_type: semantic_lookup
+    expected_route: R2
+    gold_chunks: [doc-hr-remote::c004]
+    should_abstain: false
+    freshness_sensitive: false
+
+  - id: sem-003
+    query: "What happens to my unused holiday when I leave the company?"
+    user_id: carol.hr
+    query_type: semantic_lookup
+    expected_route: R2
+    gold_chunks: [doc-hr-leave-v2::c005]
+    should_abstain: false
+    freshness_sensitive: false
+
+  - id: sem-004
+    query: "Is alcohol covered when I am travelling for business?"
+    user_id: bob.manager
+    query_type: semantic_lookup
+    expected_route: R2
+    gold_chunks: [doc-fin-expenses::c005]
+    should_abstain: false
+    freshness_sensitive: false
+
+  - id: sem-005
+    query: "What happens if I fall ill while I am on holiday?"
+    user_id: carol.hr
+    query_type: semantic_lookup
+    expected_route: R2
+    gold_chunks: [doc-hr-leave-v2::c004]
+    should_abstain: false
+    freshness_sensitive: false
+
+  - id: sem-006
+    query: "How much can I claim for a hotel in London?"
+    user_id: bob.manager
+    query_type: semantic_lookup
+    expected_route: R2
+    gold_chunks: [doc-fin-expenses::c004]
+    should_abstain: false
+    freshness_sensitive: false
+
+  # --- Procedural -------------------------------------------------------------
+  - id: proc-001
+    query: "How do I perform a rolling restart of the payments service?"
+    user_id: alice.employee
+    query_type: procedural
+    expected_route: R3
+    gold_chunks: [doc-eng-payments-runbook::c005]
+    should_abstain: false
+    freshness_sensitive: false
+
+  - id: proc-002
+    query: "What are the first steps when a security incident is declared?"
+    user_id: alice.employee
+    query_type: procedural
+    expected_route: R3
+    gold_chunks: [doc-sec-incident-runbook::c002]
+    should_abstain: false
+    freshness_sensitive: false
+
+  - id: proc-003
+    query: "How do I request more than five consecutive days of leave?"
+    user_id: carol.hr
+    query_type: procedural
+    expected_route: R3
+    gold_chunks: [doc-hr-leave-v2::c003]
+    should_abstain: false
+    freshness_sensitive: true
+
+  - id: proc-004
+    query: "How do I escalate a disputed expense claim?"
+    user_id: bob.manager
+    query_type: procedural
+    expected_route: R3
+    gold_chunks: [doc-fin-expenses::c007]
+    should_abstain: false
+    freshness_sensitive: false
+
+  # --- Comparison / multi-document -------------------------------------------
+  - id: cmp-001
+    query: "Compare the annual leave carry-over rules between the current policy and the 2023 edition"
+    user_id: carol.hr
+    query_type: comparison
+    expected_route: R4
+    gold_chunks:
+      - doc-hr-leave-v2::c002
+      - doc-hr-leave-v1::c003
+    should_abstain: false
+    freshness_sensitive: true
+
+  - id: cmp-002
+    query: "What is the difference between the old and new annual leave entitlement?"
+    user_id: carol.hr
+    query_type: comparison
+    expected_route: R4
+    gold_chunks:
+      - doc-hr-leave-v2::c001
+      - doc-hr-leave-v1::c002
+    should_abstain: false
+    freshness_sensitive: true
+
+  - id: cmp-003
+    query: "How did the leave approval notice period change between the 2023 policy and the current one?"
+    user_id: carol.hr
+    query_type: comparison
+    expected_route: R4
+    gold_chunks:
+      - doc-hr-leave-v2::c003
+      - doc-hr-leave-v1::c004
+    should_abstain: false
+    freshness_sensitive: true
+
+  # --- Multi-hop across documents --------------------------------------------
+  - id: hop-001
+    query: "Which Atlas risk is the on-call rota expansion intended to address and when does it take effect?"
+    user_id: alice.employee
+    query_type: multi_hop
+    expected_route: R4
+    gold_chunks:
+      - doc-pmo-atlas-q2::c003
+      - doc-eng-capacity-h2::c001
+    should_abstain: false
+    freshness_sensitive: false
+
+  - id: hop-002
+    query: "What is causing the raised ERR-5041 rate and when is the fix scheduled?"
+    user_id: alice.employee
+    query_type: multi_hop
+    expected_route: R4
+    gold_chunks:
+      - doc-pmo-atlas-q2::c003
+      - doc-eng-capacity-h2::c005
+    should_abstain: false
+    freshness_sensitive: false
+
+  - id: hop-003
+    query: "Which Atlas milestones are at risk and what extension is being requested?"
+    user_id: bob.manager
+    query_type: multi_hop
+    expected_route: R4
+    gold_chunks:
+      - doc-pmo-atlas-q2::c002
+      - doc-pmo-atlas-q2::c005
+    should_abstain: false
+    freshness_sensitive: false
+
+  # --- Temporal / freshness-sensitive ----------------------------------------
+  - id: fresh-001
+    query: "What is the current annual leave entitlement now?"
+    user_id: carol.hr
+    query_type: temporal
+    expected_route: R3
+    gold_chunks: [doc-hr-leave-v2::c001]
+    should_abstain: false
+    freshness_sensitive: true
+
+  - id: fresh-002
+    query: "How many days of leave can I carry over under the latest policy?"
+    user_id: bob.manager
+    query_type: temporal
+    expected_route: R3
+    gold_chunks: [doc-hr-leave-v2::c002]
+    should_abstain: false
+    freshness_sensitive: true
+
+  - id: fresh-003
+    query: "What is the effective hybrid working attendance expectation as of now?"
+    user_id: alice.employee
+    query_type: temporal
+    expected_route: R3
+    gold_chunks: [doc-hr-remote::c002]
+    should_abstain: false
+    freshness_sensitive: true
+
+  # --- Permission-constrained: correct behaviour is abstention ----------------
+  - id: acl-001
+    query: "What is the Q3 2026 revenue forecast and gross margin?"
+    user_id: alice.employee
+    query_type: permission_constrained
+    expected_route: R0
+    gold_chunks: []
+    forbidden_chunks:
+      - doc-fin-q3-forecast::c001
+      - doc-fin-q3-forecast::c002
+    should_abstain: true
+    freshness_sensitive: false
+
+  - id: acl-002
+    query: "How much unallocated contingency does Finance hold?"
+    user_id: bob.manager
+    query_type: permission_constrained
+    expected_route: R0
+    gold_chunks: []
+    forbidden_chunks: [doc-fin-q3-forecast::c004]
+    should_abstain: true
+    freshness_sensitive: false
+
+  - id: acl-003
+    query: "What is the remediation for ERR-5041?"
+    user_id: erin.contractor
+    query_type: permission_constrained
+    expected_route: R0
+    gold_chunks: []
+    forbidden_chunks: [doc-eng-payments-runbook::c002]
+    should_abstain: true
+    freshness_sensitive: false
+
+  - id: acl-004
+    query: "What is the engineering headcount forecast for Q4?"
+    user_id: alice.employee
+    query_type: permission_constrained
+    expected_route: R0
+    gold_chunks: []
+    forbidden_chunks: [doc-fin-q3-forecast::c003]
+    should_abstain: true
+    freshness_sensitive: false
+
+  # --- Genuinely unanswerable: correct behaviour is abstention ----------------
+  - id: una-001
+    query: "What is the airspeed velocity of an unladen swallow?"
+    user_id: erin.contractor
+    query_type: unanswerable
+    expected_route: R0
+    gold_chunks: []
+    should_abstain: true
+    freshness_sensitive: false
+
+  - id: una-002
+    query: "How do I configure the Kubernetes ingress controller for the mail gateway?"
+    user_id: alice.employee
+    query_type: unanswerable
+    expected_route: R0
+    gold_chunks: []
+    should_abstain: true
+    freshness_sensitive: false
+
+  - id: una-003
+    query: "What is the parental leave entitlement for adoptive parents?"
+    user_id: carol.hr
+    query_type: unanswerable
+    expected_route: R0
+    gold_chunks: []
+    should_abstain: true
+    freshness_sensitive: false

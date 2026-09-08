@@ -1,0 +1,157 @@
+================================================================================
+KEY RESEARCH PAPERS — Download Links and Summaries
+================================================================================
+These papers are the ones AHRAG cites or needs to benchmark against.
+Download them from the links below and keep them as references.
+
+================================================================================
+1. BASELINE PAPERS (Compete Against These)
+================================================================================
+
+ADAPTIVE-RAG (Jeong et al., NAACL 2024)
+  Title: "Adaptive-RAG: Learning to Adapt Retrieval-Augmented Large Language
+          Models through Question Complexity"
+  PDF:   https://aclanthology.org/2024.naacl-long.389.pdf
+  Code:  https://github.com/starsuzi/Adaptive-RAG  [CLONED → baseline_code/]
+  Key:   Uses T5-large classifier trained on query complexity labels to route
+         between no-retrieval, single-step, and iterative retrieval. This is
+         the system your project's B5 baseline is modeled after. You need to
+         properly reproduce this or compare against their published results.
+
+SELF-RAG (Asai et al., ICLR 2024 — Oral, top 1%)
+  Title: "Self-RAG: Learning to Retrieve, Generate, and Critique through
+          Self-Reflection"
+  PDF:   https://openreview.net/pdf?id=hSyW5go0v8
+  Code:  https://github.com/AkariAsai/self-rag  [CLONED → baseline_code/]
+  Key:   Trains a single LM to emit special "reflection tokens" that control
+         when to retrieve and evaluate generation quality. Strong baseline
+         for adaptive retrieval.
+
+CORRECTIVE RAG (Yan et al., 2024)
+  Title: "Corrective Retrieval Augmented Generation"
+  PDF:   https://arxiv.org/pdf/2401.15884.pdf
+  Code:  https://github.com/HuskyInSalt/CRAG  [CLONED → baseline_code/]
+  Key:   Adds a retrieval evaluator that assesses document quality and triggers
+         web search for low-confidence retrievals.
+
+
+================================================================================
+2. FOUNDATIONAL RAG PAPERS (Already Cited in AHRAG)
+================================================================================
+
+RAG (Lewis et al., NeurIPS 2020)
+  Title: "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+  PDF:   https://arxiv.org/pdf/2005.11401.pdf
+
+DPR (Karpukhin et al., EMNLP 2020)
+  Title: "Dense Passage Retrieval for Open-Domain Question Answering"
+  PDF:   https://arxiv.org/pdf/2004.04906.pdf
+
+RRF (Cormack, Clarke & Büttcher, SIGIR 2009)
+  Title: "Reciprocal Rank Fusion Outperforms Condorcet and Individual Rank
+          Learning Methods"
+  PDF:   https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf
+
+
+================================================================================
+3. EVALUATION FRAMEWORK PAPERS
+================================================================================
+
+RAGAS (Es et al., EACL Demos 2024)
+  Title: "RAGAS: Automated Evaluation of Retrieval Augmented Generation"
+  PDF:   https://aclanthology.org/2024.eacl-demo.16.pdf
+  Code:  https://github.com/explodinggradients/ragas  [CLONED → evaluation_tools/]
+  Pip:   pip install ragas
+
+ARES (Saad-Falcon et al., 2023)
+  Title: "ARES: An Automated Evaluation Framework for Retrieval-Augmented
+          Generation Systems"
+  PDF:   https://arxiv.org/pdf/2311.09476.pdf
+  Code:  https://github.com/stanford-futuredata/ARES
+
+RAGChecker (Ru et al., 2024)
+  Title: "RAGChecker: A Fine-grained Framework for Diagnosing RAG"
+  PDF:   https://arxiv.org/pdf/2408.08067.pdf
+  Code:  https://github.com/amazon-science/RAGChecker
+
+
+================================================================================
+4. DATASET PAPERS
+================================================================================
+
+HotpotQA (Yang et al., EMNLP 2018)
+  Title: "HotpotQA: A Dataset for Diverse, Explainable Multi-Hop Question
+          Answering"
+  PDF:   https://arxiv.org/pdf/1809.09600.pdf
+  Site:  https://hotpotqa.github.io/
+  Data:  HuggingFace → hotpotqa/hotpot_qa  [USE download_hotpotqa.py]
+
+Natural Questions (Kwiatkowski et al., TACL 2019)
+  Title: "Natural Questions: a Benchmark for Question Answering Research"
+  PDF:   https://storage.googleapis.com/pub-tools-public-publication-data/pdf/1f7b46b5a17f0a1e753a2c93e0ca36e611b9e94e.pdf
+  Site:  https://ai.google.com/research/NaturalQuestions
+  Data:  gs://natural_questions/v1.0-simplified/simplified-nq-train.jsonl.gz
+
+FinanceBench (Islam et al., 2023)
+  Title: "FinanceBench: A New Benchmark for Financial Question Answering"
+  PDF:   https://arxiv.org/pdf/2311.11944.pdf
+  Data:  HuggingFace → PatronusAI/financebench  [DOWNLOADED → datasets/]
+
+CRAG Benchmark (Facebook Research, KDD Cup 2024)
+  Title: "CRAG — Comprehensive RAG Benchmark"
+  Code:  https://github.com/facebookresearch/CRAG  [CLONED → datasets/]
+
+ConflictQA (Xie et al., 2023)
+  Title: "Adaptive Chameleon or Stubborn Sloth: Revealing the Behavior of
+          Large Language Models in Knowledge Conflicts"
+  PDF:   https://arxiv.org/pdf/2305.13300.pdf
+  Data:  HuggingFace → osunlp/ConflictQA
+
+PolicyQA (Ahmad et al., 2020)
+  Title: "PolicyQA: A Reading Comprehension Dataset for Privacy Policies"
+  PDF:   https://aclanthology.org/2020.findings-emnlp.66.pdf
+  Data:  HuggingFace → alzoubi36/policy_qa  [DOWNLOADED → datasets/]
+
+
+================================================================================
+5. ML ROUTER REFERENCES
+================================================================================
+
+XGBoost (Chen & Guestrin, KDD 2016)
+  Title: "XGBoost: A Scalable Tree Boosting System"
+  PDF:   https://arxiv.org/pdf/1603.02754.pdf
+  Pip:   pip install xgboost
+
+LightGBM (Ke et al., NeurIPS 2017)
+  Title: "LightGBM: A Highly Efficient Gradient Boosting Decision Tree"
+  PDF:   https://papers.nips.cc/paper/2017/file/6449f44a102fde848669bdd9eb6b76fa-Paper.pdf
+  Pip:   pip install lightgbm
+
+
+================================================================================
+6. ADDITIONAL RAG ROUTING PAPERS (Recent Work to Cite)
+================================================================================
+
+HyPA-RAG (Kalra et al., CustomNLP4U 2024)
+  Title: "HyPA-RAG: A Hybrid Parameter Adaptive RAG"
+  PDF:   https://aclanthology.org/2024.customnlp4u-1.5.pdf
+  Key:   Cited by AHRAG. Combines multiple retrieval parameters.
+
+Routing in RAG (Survey)
+  Search: "query routing retrieval augmented generation survey 2024"
+  Key:   Look for survey papers that cover routing/adaptive strategies.
+
+
+================================================================================
+HOW TO DOWNLOAD THE PDFs
+================================================================================
+Most PDFs can be downloaded directly from the arxiv/ACL links above.
+Use your browser or run:
+
+  Invoke-WebRequest -Uri "URL" -OutFile "research_papers/filename.pdf"
+
+Example:
+  Invoke-WebRequest -Uri "https://arxiv.org/pdf/2005.11401.pdf" `
+    -OutFile "improvement_files/research_papers/RAG_lewis_2020.pdf"
+
+================================================================================

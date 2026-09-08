@@ -1,0 +1,4567 @@
+items:
+- id: fb-financebench_id_03029
+  query: What is the FY2018 capital expenditure amount (in USD millions) for 3M? Give
+    a response to the question by relying on the details shown in the cash flow statement.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-772c0ad228f8::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $1577.00...'
+- id: fb-financebench_id_04672
+  query: 'Assume that you are a public equities analyst. Answer the following question
+    by primarily using information that is shown in the balance sheet: what is the
+    year end FY2018 net PPNE for 3M? Answer in USD billions.'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-772c0ad228f8::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $8.70...'
+- id: fb-financebench_id_00499
+  query: Is 3M a capital-intensive business based on FY2022 data?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-c941f8b20c94::c000
+  - doc-fb-c941f8b20c94::c001
+  - doc-fb-c941f8b20c94::c002
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: No, the company is managing
+    its CAPEX and Fixed Assets pretty efficiently, which is evident from bel...'
+- id: fb-financebench_id_01226
+  query: What drove operating margin change as of FY2022 for 3M? If operating margin
+    is not a useful metric for a company like this, then please state that and explain
+    why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-c941f8b20c94::c003
+  should_abstain: false
+  freshness_sensitive: false
+  notes: "FinanceBench domain-relevant. Reference answer: Operating Margin for 3M\
+    \ in FY2022 has decreased by 1.7% primarily due to: \n-Decrease in gross Margin..."
+- id: fb-financebench_id_01865
+  query: If we exclude the impact of M&A, which segment has dragged down 3M's overall
+    growth in 2022?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-c941f8b20c94::c004
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: The consumer segment shrunk
+    by 0.9% organically....'
+- id: fb-financebench_id_00807
+  query: Does 3M have a reasonably healthy liquidity profile based on its quick ratio
+    for Q2 of FY2023? If the quick ratio is not relevant to measure liquidity, please
+    state that and explain why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-81078038aeb6::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: No. The quick ratio for
+    3M was 0.96 by Jun''23 close, which needs a bit of an improvement to touch th...'
+- id: fb-financebench_id_00941
+  query: Which debt securities are registered to trade on a national securities exchange
+    under 3M's name as of Q2 of 2023?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-81078038aeb6::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Following debt securities
+    registered under 3M''s name are listed to trade on the New York Stock Excha...'
+- id: fb-financebench_id_01858
+  query: Does 3M maintain a stable trend of dividend distribution?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-81078038aeb6::c002
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Yes, not only they distribute
+    the dividends on a routine basis, 3M has also been increasing the per ...'
+- id: fb-financebench_id_02987
+  query: 'What is the FY2019 fixed asset turnover ratio for Activision Blizzard? Fixed
+    asset turnover ratio is defined as: FY2019 revenue / (average PP&E between FY2018
+    and FY2019). Round your answer to two decimal places. Base your judgments on the
+    information provided primarily in the statement of income and the statement of
+    financial position.'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-0ddaa0a901ac::c000
+  - doc-fb-0ddaa0a901ac::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 24.26...'
+- id: fb-financebench_id_07966
+  query: What is the FY2017 - FY2019 3 year average of capex as a % of revenue for
+    Activision Blizzard? Answer in units of percents and round to one decimal place.
+    Calculate (or extract) the answer from the statement of income and the cash flow
+    statement.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-0ddaa0a901ac::c001
+  - doc-fb-0ddaa0a901ac::c002
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 1.9%...'
+- id: fb-financebench_id_04735
+  query: 'You are an investment banker and your only resource(s) to answer the following
+    question is (are): the statement of financial position and the cash flow statement.
+    Here''s the question: what is the FY2015 operating cash flow ratio for Adobe?
+    Operating cash flow ratio is defined as: cash from operations / total current
+    liabilities. Round your answer to two decimal places.'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-b8052d17d9da::c000
+  - doc-fb-b8052d17d9da::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 0.66...'
+- id: fb-financebench_id_07507
+  query: What is Adobe's year-over-year change in unadjusted operating income from
+    FY2015 to FY2016 (in units of percents and round to one decimal place)? Give a
+    solution to the question by using the income statement.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-40799f0c12ff::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 65.4%...'
+- id: fb-financebench_id_03856
+  query: 'What is the FY2017 operating cash flow ratio for Adobe? Operating cash flow
+    ratio is defined as: cash from operations / total current liabilities. Round your
+    answer to two decimal places. Please utilize information provided primarily within
+    the balance sheet and the cash flow statement.'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-c862e467d305::c000
+  - doc-fb-c862e467d305::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 0.83...'
+- id: fb-financebench_id_00438
+  query: Does Adobe have an improving operating margin profile as of FY2022? If operating
+    margin is not a useful metric for a company like this, then state that and explain
+    why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-be3587553e05::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: No the operating margins
+    of Adobe have recently declined from 36.8% in FY 2021 to 34.6% in FY2022. A...'
+- id: fb-financebench_id_00591
+  query: Does Adobe have an improving Free cashflow conversion as of FY2022?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-be3587553e05::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Yes, the FCF conversion
+    (using net income as the denominator) for Adobe has improved by ~13% from 14...'
+- id: fb-financebench_id_01319
+  query: What is the quantity of restructuring costs directly outlined in AES Corporation's
+    income statements for FY2022? If restructuring costs are not explicitly outlined
+    then state 0.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-d3c3f90ade1d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: 0...'
+- id: fb-financebench_id_00540
+  query: Roughly how many times has AES Corporation sold its inventory in FY2022?
+    Calculate inventory turnover ratio for the FY2022; if conventional inventory management
+    is not meaningful for the company then state that and explain why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-d3c3f90ade1d::c001
+  - doc-fb-d3c3f90ade1d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: AES has converted inventory
+    9.5 times in FY 2022....'
+- id: fb-financebench_id_10420
+  query: 'Based on the information provided primarily in the statement of financial
+    position and the statement of income, what is AES''s FY2022 return on assets (ROA)?
+    ROA is defined as: FY2022 net income / (average total assets between FY2021 and
+    FY2022). Round your answer to two decimal places.'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-d3c3f90ade1d::c001
+  - doc-fb-d3c3f90ade1d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: -0.02...'
+- id: fb-financebench_id_06655
+  query: 'What is Amazon''s FY2017 days payable outstanding (DPO)? DPO is defined
+    as: 365 * (average accounts payable between FY2016 and FY2017) / (FY2017 COGS
+    + change in inventory between FY2016 and FY2017). Round your answer to two decimal
+    places. Address the question by using the line items and information shown within
+    the balance sheet and the P&L statement.'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-3bc47a3f2014::c000
+  - doc-fb-3bc47a3f2014::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 93.86...'
+- id: fb-financebench_id_08135
+  query: What is Amazon's year-over-year change in revenue from FY2016 to FY2017 (in
+    units of percents and round to one decimal place)? Calculate what was asked by
+    utilizing the line items clearly shown in the statement of income.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-3bc47a3f2014::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 30.8%...'
+- id: fb-financebench_id_08286
+  query: By drawing conclusions from the information stated only in the income statement,
+    what is Amazon's FY2019 net income attributable to shareholders (in USD millions)?
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-4799782cb37c::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $11588.00...'
+- id: fb-financebench_id_03882
+  query: What is Amcor's year end FY2020 net AR (in USD millions)? Address the question
+    by adopting the perspective of a financial analyst who can only use the details
+    shown within the balance sheet.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-b707317ec3e1::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $1616.00...'
+- id: fb-financebench_id_01935
+  query: What was the key agenda of the AMCOR's 8k filing dated 1st July 2022?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-53762027eca0::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Amcor Finance (USA), Inc.
+    and Amcor Flexibles North America, Inc., entered into supplemental indentu...'
+- id: fb-financebench_id_00799
+  query: Has AMCOR's quick ratio improved or declined between FY2023 and FY2022? If
+    the quick ratio is not something that a financial analyst would ask about a company
+    like this, then state that and explain why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-bd538fc4adec::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: The quick ratio has slightly
+    improved from 0.67 times to 0.69 times between FY 2023 and FY 2022.(3.4...'
+- id: fb-financebench_id_01079
+  query: What are major acquisitions that AMCOR has done in FY2023, FY2022 and FY2021?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-bd538fc4adec::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Amcor completed these acquisitions
+    during FY2023:
+
+    -100% equity interest of a flexibles manufacturing...'
+- id: fb-financebench_id_01148
+  query: What industry does AMCOR primarily operate in?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R4
+  gold_chunks:
+  - doc-fb-bd538fc4adec::c002
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Amcor is a global leader
+    in packaging production for various use cases....'
+- id: fb-financebench_id_00684
+  query: Does AMCOR have an improving gross margin profile as of FY2023? If gross
+    margin is not a useful metric for a company like this, then state that and explain
+    why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-bd538fc4adec::c003
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: No. For AMCOR there has
+    been a slight decline in gross margins by 0.8%....'
+- id: fb-financebench_id_01936
+  query: What is the nature & purpose of AMCOR's restructuring liability as oF Q2
+    of FY2023 close?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-0cf10fc04f49::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: 87% of the total restructuring
+    liability is related Employee liabilities....'
+- id: fb-financebench_id_01928
+  query: What Was AMCOR's Adjusted Non GAAP EBITDA for FY 2023
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-33f60f794915::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: AMCOR''s Adj. EBITDA was
+    $2,018mn in FY 2023...'
+- id: fb-financebench_id_01930
+  query: How much was the Real change in Sales for AMCOR in FY 2023 vs FY 2022, if
+    we exclude the impact of FX movement, passthrough costs and one-off items?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-33f60f794915::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: The Real Growth was flat
+    in FY 2023 vs FY 2022....'
+- id: fb-financebench_id_03069
+  query: Answer the following question as if you are an equity research analyst and
+    have lost internet connection so you do not have access to financial metric providers.
+    According to the details clearly outlined within the P&L statement and the statement
+    of cash flows, what is the FY2015 depreciation and amortization (D&A from cash
+    flow statement) % margin for AMD?
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-431e3f327ac4::c000
+  - doc-fb-431e3f327ac4::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 4.2%...'
+- id: fb-financebench_id_00222
+  query: Does AMD have a reasonably healthy liquidity profile based on its quick ratio
+    for FY22? If the quick ratio is not relevant to measure liquidity, please state
+    that and explain why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-db431fa1a477::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Yes. The quick ratio is
+    1.57, calculated as (cash and cash equivalents+Short term investments+Accoun...'
+- id: fb-financebench_id_00995
+  query: What are the major products and services that AMD sells as of FY22?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-db431fa1a477::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: AMD sells server microprocessors
+    (CPUs) and graphics processing units (GPUs), data processing units ...'
+- id: fb-financebench_id_01198
+  query: What drove revenue change as of the FY22 for AMD?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-db431fa1a477::c002
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: In 2022, AMD reported Higher
+    sales of their EPYC server processors, higher semi-custom product sales...'
+- id: fb-financebench_id_00917
+  query: What drove operating margin change as of the FY22 for AMD? If operating margin
+    is not a useful metric for a company like this, then please state that and explain
+    why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-db431fa1a477::c002
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: The decrease in AMD''s operating
+    income was primarily driven by amortization of intangible assets ass...'
+- id: fb-financebench_id_01279
+  query: Among operations, investing, and financing activities, which brought in the
+    most (or lost the least) cash flow for AMD in FY22?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-db431fa1a477::c003
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: In 2022, AMD brought in
+    the most cashflow from Operations...'
+- id: fb-financebench_id_00563
+  query: From FY21 to FY22, excluding Embedded, in which AMD reporting segment did
+    sales proportionally increase the most?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-db431fa1a477::c004
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Data Center...'
+- id: fb-financebench_id_00757
+  query: Did AMD report customer concentration in FY22?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-db431fa1a477::c005
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Yes, one customer accounted
+    for 16% of consolidated net revenue...'
+- id: fb-financebench_id_00476
+  query: Which debt securities are registered to trade on a national securities exchange
+    under American Express' name as of 2022?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-c27c055ea429::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: There are none...'
+- id: fb-financebench_id_01028
+  query: What are the geographies that American Express primarily operates in as of
+    2022?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-c27c055ea429::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: United States, EMEA, APAC,
+    and LACC...'
+- id: fb-financebench_id_00723
+  query: Does AMEX have an improving operating margin profile as of 2022? If operating
+    margin is not a useful metric for a company like this, then state that and explain
+    why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-c27c055ea429::c002
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Performance is not measured
+    through operating margin...'
+- id: fb-financebench_id_00720
+  query: What drove gross margin change as of the FY2022 for American Express? If
+    gross margin is not a useful metric for a company like this, then please state
+    that and explain why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-c27c055ea429::c002
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Performance is not measured
+    through gross margin...'
+- id: fb-financebench_id_01351
+  query: How much has the effective tax rate of American Express changed between FY2021
+    and FY2022?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-c27c055ea429::c003
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: The effective tax rate for
+    American Express has changed/dropped from 24.6% in FY 2021 to 21.6% in FY...'
+- id: fb-financebench_id_01964
+  query: What was the largest liability in American Express's Balance Sheet in 2022?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-c27c055ea429::c004
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Customer deposits...'
+- id: fb-financebench_id_01981
+  query: Was American Express able to retain card members during 2022?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-c27c055ea429::c005
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Yes...'
+- id: fb-financebench_id_05718
+  query: How much (in USD billions) did American Water Works pay out in cash dividends
+    for FY2020? Compute or extract the answer by primarily using the details outlined
+    in the statement of cash flows.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-9b021d14a073::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $0.40...'
+- id: fb-financebench_id_04254
+  query: Basing your judgments off of the cash flow statement and the income statement,
+    what is American Water Works's FY2021 unadjusted operating income + depreciation
+    and amortization from the cash flow statement (unadjusted EBITDA) in USD millions?
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-98f7d6ebb312::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $1832.00...'
+- id: fb-financebench_id_00070
+  query: Does American Water Works have positive working capital based on FY2022 data?
+    If working capital is not a useful or relevant metric for this company, then please
+    state that and explain why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-93a60501729a::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: No, American Water Works
+    had negative working capital of -$1561M in FY 2022....'
+- id: fb-financebench_id_02608
+  query: In agreement with the information outlined in the income statement, what
+    is the FY2015 - FY2017 3 year average net profit margin (as a %) for Best Buy?
+    Answer in units of percents and round to one decimal place.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-a3c193dff0b9::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 2.8%...'
+- id: fb-financebench_id_04417
+  query: What is the year end FY2019 total amount of inventories for Best Buy? Answer
+    in USD millions. Base your judgments on the information provided primarily in
+    the balance sheet.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-abde79be72a4::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $5409.00...'
+- id: fb-financebench_id_00685
+  query: Are Best Buy's gross margins historically consistent (not fluctuating more
+    than roughly 2% each year)? If gross margins are not a relevant metric for a company
+    like this, then please state that and explain why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-528b50a98a89::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Yes, the margins have been
+    consistent, there has been a minor decline of 1.1% in gross margins betwe...'
+- id: fb-financebench_id_01077
+  query: What are major acquisitions that Best Buy has done in FY2023, FY2022 and
+    FY2021?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-528b50a98a89::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Best Buy closed two acquisitions,
+    both these companies were already partially owned by Best Buy, but...'
+- id: fb-financebench_id_01275
+  query: Among operations, investing, and financing activities, which brought in the
+    most (or lost the least) cash flow for Best Buy in FY2023?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-528b50a98a89::c002
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Best Buy generated the most
+    cash flow from operating activities in FY 2023 ($1.8 bn)...'
+- id: fb-financebench_id_00288
+  query: Was there any drop in Cash & Cash equivalents between FY 2023 and Q2 of FY2024?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-3635bf190f7c::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Yes, there was a decline
+    of ~42% between FY2023 and Q2 of FY 2024....'
+- id: fb-financebench_id_00460
+  query: Was there any change in the number of Best Buy stores between Q2 of FY2024
+    and FY2023?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-3635bf190f7c::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Yes, there is decline in
+    number stores by 1.32% from 982 stores in Q2 FY 2023 to 969 by the end of Q...'
+- id: fb-financebench_id_01902
+  query: Which Best Buy product category performed the best (by top line) in the domestic
+    (USA) Market during Q2 of FY2024?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-3635bf190f7c::c002
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: The entertainment segment
+    experienced the highest growth of 9% during Q2 FY2024, primarily from gami...'
+- id: fb-financebench_id_04660
+  query: Considering the data in the balance sheet, what is Block's (formerly known
+    as Square) FY2016 working capital ratio? Define working capital ratio as total
+    current assets divided by total current liabilities. Round your answer to two
+    decimal places.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-180f164743b9::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 1.73...'
+- id: fb-financebench_id_03838
+  query: What is the FY2019 - FY2020 total revenue growth rate for Block (formerly
+    known as Square)? Answer in units of percents and round to one decimal place.
+    Approach the question asked by assuming the standpoint of an investment banking
+    analyst who only has access to the statement of income.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-1902e6bc0425::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 101.5%...'
+- id: fb-financebench_id_07661
+  query: 'Using the cash flow statement, answer the following question to the best
+    of your abilities: how much did Block (formerly known as Square) generate in cash
+    flow from operating activities in FY2020? Answer in USD millions.'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-1902e6bc0425::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $382.00...'
+- id: fb-financebench_id_10285
+  query: 'We need to calculate a financial metric by using information only provided
+    within the balance sheet. Please answer the following question: what is Boeing''s
+    year end FY2018 net property, plant, and equipment (in USD millions)?'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-0fd6af4a2093::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $12645.00...'
+- id: fb-financebench_id_00517
+  query: Are there any product categories / service categories that represent more
+    than 20% of Boeing's revenue for FY2022?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-067dd9394b37::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Yes. Boeing has product
+    and service categories that represent more than 20% of Boeing''s revenue for ...'
+- id: fb-financebench_id_01091
+  query: Has Boeing reported any materially important ongoing legal battles from FY2022?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-067dd9394b37::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Yes. Multiple lawsuits have
+    been filed against Boeing resulting from a 2018 Lion Air crash and a 201...'
+- id: fb-financebench_id_00678
+  query: Does Boeing have an improving gross margin profile as of FY2022? If gross
+    margin is not a useful metric for a company like this, then state that and explain
+    why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-067dd9394b37::c002
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Yes. Boeing has an improving
+    gross margin profile as of FY2022. Gross profit improved from $3,017 mi...'
+- id: fb-financebench_id_01290
+  query: Who are the primary customers of Boeing as of FY2022?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R4
+  gold_chunks:
+  - doc-fb-067dd9394b37::c003
+  - doc-fb-067dd9394b37::c004
+  - doc-fb-067dd9394b37::c005
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Boeing''s primary customers
+    as of FY2022 are a limited number of commercial airlines and the US gover...'
+- id: fb-financebench_id_00464
+  query: Is Boeing's business subject to cyclicality?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-067dd9394b37::c003
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Yes, Boeing''s business
+    is subject to cyclicality due to its exposure to the airline industry which i...'
+- id: fb-financebench_id_00494
+  query: What production rate changes is Boeing forecasting for FY2023?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-067dd9394b37::c006
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Boeing forecasts an increase
+    in the production rates for the 737, 777X and 787 aircrafts in 2023....'
+- id: fb-financebench_id_00585
+  query: How does Boeing's effective tax rate in FY2022 compare to FY2021?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-067dd9394b37::c002
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Effective tax rate in FY2022
+    was 0.62%, compared to  -14.76% in FY2021....'
+- id: fb-financebench_id_03473
+  query: 'What is the FY2017 return on assets (ROA) for Coca Cola? ROA is defined
+    as: FY2017 net income / (average total assets between FY2016 and FY2017). Round
+    your answer to two decimal places. Give a response to the question by relying
+    on the details shown in the balance sheet and the P&L statement.'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-b8ab1425d920::c000
+  - doc-fb-b8ab1425d920::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 0.01...'
+- id: fb-financebench_id_09724
+  query: What is Coca Cola's FY2021 COGS % margin? Calculate what was asked by utilizing
+    the line items clearly shown in the income statement.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-fb6f43964081::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 39.7%...'
+- id: fb-financebench_id_06272
+  query: What is Coca Cola's FY2022 dividend payout ratio (using total cash dividends
+    paid and net income attributable to shareholders)? Round answer to two decimal
+    places. Answer the question asked by assuming you only have access to information
+    clearly displayed in the cash flow statement and the income statement.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-2dfde2c74547::c000
+  - doc-fb-2dfde2c74547::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 0.8...'
+- id: fb-financebench_id_10130
+  query: 'Based on the information provided primarily in the balance sheet and the
+    statement of income, what is FY2020 days payable outstanding (DPO) for Corning?
+    DPO is defined as: 365 * (average accounts payable between FY2019 and FY2020)
+    / (FY2020 COGS + change in inventory between FY2019 and FY2020). Round your answer
+    to two decimal places.'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-d65c088a2125::c000
+  - doc-fb-d65c088a2125::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 63.86...'
+- id: fb-financebench_id_02981
+  query: Taking into account the information outlined in the income statement, what
+    is the FY2019 - FY2021 3 year average unadjusted operating income % margin for
+    Corning? Answer in units of percents and round to one decimal place.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-437de035fed8::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 10.3%...'
+- id: fb-financebench_id_01346
+  query: How much has the effective tax rate of Corning changed between FY2021 and
+    FY2022?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-f298812da620::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: The effective tax rate of
+    Corning has changed from 20% in FY2021 to 23% in FY 2022....'
+- id: fb-financebench_id_00005
+  query: Does Corning have positive working capital based on FY2022 data? If working
+    capital is not a useful or relevant metric for this company, then please state
+    that and explain why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-f298812da620::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Yes. Corning had a positive
+    working capital amount of $831 million by FY 2022 close. This answer con...'
+- id: fb-financebench_id_04209
+  query: Using only the information within the balance sheet, how much total assets
+    did Costco have at the end of FY2021? Answer in USD millions.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-63f3548f1b8f::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $59268.00...'
+- id: fb-financebench_id_05915
+  query: 'What is the FY2018 fixed asset turnover ratio for CVS Health? Fixed asset
+    turnover ratio is defined as: FY2018 revenue / (average PP&E between FY2017 and
+    FY2018). Round your answer to two decimal places. Calculate what was asked by
+    utilizing the line items clearly shown in the P&L statement and the balance sheet.'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-2f85d49180c8::c000
+  - doc-fb-2f85d49180c8::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 17.98...'
+- id: fb-financebench_id_00790
+  query: Is CVS Health a capital-intensive business based on FY2022 data?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-4de78cc32843::c000
+  - doc-fb-4de78cc32843::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Yes, CVS Health requires
+    an extensive asset base to operate, which is evident from its ROA of only 1...'
+- id: fb-financebench_id_01107
+  query: Has CVS Health reported any materially important ongoing legal battles from
+    2022, 2021 and 2020?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-4de78cc32843::c002
+  - doc-fb-4de78cc32843::c003
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Yes, CVS Health has been
+    involved in multiple ongoing legal battles. Some notable legal dispute area...'
+- id: fb-financebench_id_01244
+  query: Has CVS Health paid dividends to common shareholders in Q2 of FY2022?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-4de78cc32843::c004
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Yes, CVS paid a $ 0.55 dividend
+    per share every quarter in FY2022...'
+- id: fb-financebench_id_00839
+  query: Does Foot Locker's new CEO have previous CEO experience in a similar company
+    to Footlocker?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-dc8468974c01::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Yes. She was previous CEO
+    of Ulta Beauty which means she had to manage a large retail company that h...'
+- id: fb-financebench_id_00822
+  query: Were there any board member nominees who had substantially more votes against
+    joining than the other nominees?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-2753539f5c57::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Yes, his name is Richard
+    A. Johnson...'
+- id: fb-financebench_id_04103
+  query: 'What is the FY2019 cash conversion cycle (CCC) for General Mills? CCC is
+    defined as: DIO + DSO - DPO. DIO is defined as: 365 * (average inventory between
+    FY2018 and FY2019) / (FY2019 COGS). DSO is defined as: 365 * (average accounts
+    receivable between FY2018 and FY2019) / (FY2019 Revenue). DPO is defined as: 365
+    * (average accounts payable between FY2018 and FY2019) / (FY2019 COGS + change
+    in inventory between FY2018 and FY2019). Round your answer to two decimal places.
+    Address the question by using the line items and information shown within the
+    income statement and the balance sheet.'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-63bb701ffdd2::c000
+  - doc-fb-63bb701ffdd2::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: -3.7...'
+- id: fb-financebench_id_03471
+  query: By drawing conclusions from the information stated only in the statement
+    of financial position, what is General Mills's FY2020 working capital ratio? Define
+    working capital ratio as total current assets divided by total current liabilities.
+    Round your answer to two decimal places.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-92e468b11062::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 0.68...'
+- id: fb-financebench_id_04854
+  query: 'According to the information provided in the statement of cash flows, what
+    is the FY2020 free cash flow (FCF) for General Mills? FCF here is defined as:
+    (cash from operations - capex). Answer in USD millions.'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-92e468b11062::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $3215.00...'
+- id: fb-financebench_id_10136
+  query: 'We want to calculate a financial metric. Please help us compute it by basing
+    your answers off of the cash flow statement and the income statement. Here''s
+    the question: what is the FY2022 retention ratio (using total cash dividends paid
+    and net income attributable to shareholders) for General Mills? Round answer to
+    two decimal places.'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-f2e96f13fed3::c000
+  - doc-fb-f2e96f13fed3::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 0.54...'
+- id: fb-financebench_id_00956
+  query: Are JnJ's FY2022 financials that of a high growth company?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-3ebe0bf875ed::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: No, JnJ''s FY2022 financials
+    are not of a high growth company as sales grew by 1.3% in FY2022....'
+- id: fb-financebench_id_00669
+  query: What drove gross margin change as of FY2022 for JnJ? If gross margin is not
+    a useful metric for a company like this, then please state that and explain why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-3ebe0bf875ed::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: For FY22, JnJ had changes
+    in gross margin due to: One-time COVID-19 vaccine manufacturing exit relat...'
+- id: fb-financebench_id_00711
+  query: Roughly how many times has JnJ sold its inventory in FY2022? Calculate inventory
+    turnover ratio for FY2022; if conventional inventory management is not meaningful
+    for the company then state that and explain why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-3ebe0bf875ed::c002
+  - doc-fb-3ebe0bf875ed::c003
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: JnJ sold its inventory 2.7
+    times in FY2022....'
+- id: fb-financebench_id_00651
+  query: Is growth in JnJ's adjusted EPS expected to accelerate in FY2023?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-f8b51f257b5d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: No, rate of growth in adjusted
+    EPS is expected to decelerate slightly from 3.6% in FY2022 to 3.5% in...'
+- id: fb-financebench_id_01484
+  query: How did JnJ's US sales growth compare to international sales growth in FY2022?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-f8b51f257b5d::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: US sales increased 3.0%
+    vs international sales decline of 0.6%....'
+- id: fb-financebench_id_01488
+  query: Which business segment of JnJ will be treated as a discontinued operation
+    from August 30, 2023 onward?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-ef1c1f120f2e::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: The Consumer Health business
+    segment will be treated as a discontinued operation from August 30, 202...'
+- id: fb-financebench_id_01490
+  query: What is the amount of the gain accruing to JnJ as a result of the separation
+    of its Consumer Health business segment, as of August 30, 2023?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-ef1c1f120f2e::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: JnJ will make a gain of
+    approximately $20 billion from the separation of its Consumer Health busines...'
+- id: fb-financebench_id_01491
+  query: What is the amount of the cash proceeds that JnJ realised from the separation
+    of Kenvue (formerly Consumer Health business segment), as of August 30, 2023?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-ef1c1f120f2e::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: JnJ realised $13.2 billion
+    in cash proceeds from the separation of Kenvue....'
+- id: fb-financebench_id_01487
+  query: Did JnJ's net earnings as a percent of sales increase in Q2 of FY2023 compared
+    to Q2 of FY2022?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-51bac1c59112::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Yes, net earnings as a percent
+    of sales increased from 20% in Q2 of FY2022 to 20.1% in Q2 of FY2023....'
+- id: fb-financebench_id_00299
+  query: Which of JPM's business segments had the lowest net revenue in 2021 Q1?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-fb39f16ca113::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Corporate. Its net revenue
+    was -$473 million....'
+- id: fb-financebench_id_02119
+  query: If JPM went bankrupted by the end by 2021 Q1 and liquidated all of its assets
+    to pay its shareholders, how much could each shareholder get?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-fb39f16ca113::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: They could receive $66.56
+    per share....'
+- id: fb-financebench_id_00206
+  query: Are JPM's gross margins historically consistent (not fluctuating more than
+    roughly 2% each year)? If gross margins are not a relevant metric for a company
+    like this, then please state that and explain why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-2cf028ee1add::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Since JPM is a financial
+    institution, gross margin is not a relevant metric....'
+- id: fb-financebench_id_00394
+  query: In 2022 Q2, which of JPM's business segments had the highest net income?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-e04545391744::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Corporate & Investment Bank.
+    Its net income was $3725 million....'
+- id: fb-financebench_id_02049
+  query: Looking at VaR, did the risk that JPM faced in the second fiscal quarter
+    of 2023 decrease compared to the same period in the prior year?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-b234cc777a15::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Yes. It decreased....'
+- id: fb-financebench_id_10499
+  query: 'What is Kraft Heinz''s FY2019 inventory turnover ratio? Inventory turnover
+    ratio is defined as: (FY2019 COGS) / (average inventory between FY2018 and FY2019).
+    Round your answer to two decimal places. Please base your judgments on the information
+    provided primarily in the balance sheet and the P&L statement.'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-9c5b0ea51f79::c000
+  - doc-fb-9c5b0ea51f79::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 6.25...'
+- id: fb-financebench_id_04412
+  query: 'We need to calculate a reasonable approximation (or exact number if possible)
+    of a financial metric. Basing your judgment by information plainly provided in
+    the balance sheet and the P&L statement, what is Lockheed Martin''s FY2020 asset
+    turnover ratio? Asset turnover ratio is defined as: FY2020 revenue / (average
+    total assets between FY2019 and FY2020). Round your answer to two decimal places.'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-01e666fa71f2::c000
+  - doc-fb-01e666fa71f2::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 1.33...'
+- id: fb-financebench_id_03031
+  query: What is Lockheed Martin's FY2021 net working capital? Define net working
+    capital as total current assets less total current liabilities. Answer in USD
+    millions. Respond to the question by assuming the perspective of an investment
+    analyst who can only use the details shown within the balance sheet.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-c74e88c36b1d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $5818.00...'
+- id: fb-financebench_id_03718
+  query: What is Lockheed Martin's 2 year total revenue CAGR from FY2020 to FY2022
+    (in units of percents and round to one decimal place)? Provide a response to the
+    question by primarily using the statement of income.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-b818652f0975::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 0.4%...'
+- id: fb-financebench_id_04171
+  query: Basing your judgments off of the balance sheet, what is the year end FY2018
+    amount of accounts payable for MGM Resorts? Answer in USD millions.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-f1af1309ed36::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $303.00...'
+- id: fb-financebench_id_03849
+  query: What is the FY2018 - FY2020 3 year average of capex as a % of revenue for
+    MGM Resorts? Answer in units of percents and round to one decimal place. Please
+    utilize information provided primarily within the statement of cash flows and
+    the statement of income.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-1047d7021910::c000
+  - doc-fb-1047d7021910::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 7.9%...'
+- id: fb-financebench_id_01254
+  query: Has MGM Resorts paid dividends to common shareholders in FY2022?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-90def8bc329d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Yes. MGM maintained 0.01$
+    per share annual dividend through out FY 2022....'
+- id: fb-financebench_id_00382
+  query: Which region had the Highest EBITDAR Contribution for MGM during FY2022?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-747aad5dd951::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Las Vegas resorts contributed
+    ~90% of company level EBITDAR during FY2022....'
+- id: fb-financebench_id_01911
+  query: What was MGM's interest coverage ratio using FY2022 Adjusted EBIT as the
+    numerator and annual Interest Expense as the denominator?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-747aad5dd951::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: As adjusted EBIT is negative,
+    coverage ratio is zero...'
+- id: fb-financebench_id_01912
+  query: Which region had the worst topline performance for MGM during FY2022?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-747aad5dd951::c002
+  - doc-fb-747aad5dd951::c003
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: MGM China experienced the
+    worst topline performance amongst the other regions presented. Its revenue...'
+- id: fb-financebench_id_00407
+  query: Which type of debt received the largest investment among the short term investments
+    for MGM in H1 FY2023?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-1c9409556194::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: the biggest short term investment
+    is in corporate bonds (almost 82% of the total investment)...'
+- id: fb-financebench_id_04700
+  query: What is the FY2016 COGS for Microsoft? Please state answer in USD millions.
+    Provide a response to the question by primarily using the statement of income.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-3b26a695a28d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $32780.00...'
+- id: fb-financebench_id_00552
+  query: Has Microsoft increased its debt on balance sheet between FY2023 and the
+    FY2022 period?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-ba48cdf05ef9::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: No. Microsoft decreased
+    its debt by $2.5bn in FY 2023 vs FY 2022....'
+- id: fb-financebench_id_04458
+  query: 'We want to calculate a financial metric. Please help us compute it by basing
+    your answers off of the statement of income and the statement of cash flows. Here''s
+    the question: what is the FY2015 unadjusted EBITDA % margin for Netflix? Calculate
+    unadjusted EBITDA using unadjusted operating income and D&A (from cash flow statement).'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-925ee9050658::c000
+  - doc-fb-925ee9050658::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 5.4%...'
+- id: fb-financebench_id_03282
+  query: What is Netflix's year end FY2017 total current liabilities (in USD millions)?
+    Base your judgments on the information provided primarily in the balance sheet.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-49ad32310987::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $5466.00...'
+- id: fb-financebench_id_04302
+  query: We need to calculate a reasonable approximation (or exact number if possible)
+    of a financial metric. Basing your judgment by information plainly provided in
+    the statement of income, what is Nike's three year average of cost of goods sold
+    as a % of revenue from FY2016 to FY2018? Answer in units of percents and round
+    to one decimal place.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-e5b0327c1b41::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 55.1%...'
+- id: fb-financebench_id_03531
+  query: According to the details clearly outlined within the balance sheet, how much
+    total current assets did Nike have at the end of FY2019? Answer in USD millions.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-83775d43d8af::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $16525.00...'
+- id: fb-financebench_id_04080
+  query: 'When primarily referencing the income statement and the statement of financial
+    position, what is the FY2021 inventory turnover ratio for Nike? Inventory turnover
+    ratio is defined as: (FY2021 COGS) / (average inventory between FY2020 and FY2021).
+    Round your answer to two decimal places.'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-d48f03896e40::c000
+  - doc-fb-d48f03896e40::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 3.46...'
+- id: fb-financebench_id_01163
+  query: Among operations, investing, and financing activities, which brought in the
+    most (or lost the least) cash flow for Nike in FY2023?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-d805144805a8::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Among the three, cash flow
+    from operations was the highest for Nike in FY2023....'
+- id: fb-financebench_id_00080
+  query: Does Paypal have positive working capital based on FY2022 data? If working
+    capital is not a useful or relevant metric for this company, then please state
+    that and explain why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-cf8e27ff5188::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Yes. Paypal has a positive
+    working capital of $ 1.6Bn as of FY2022 end....'
+- id: fb-financebench_id_04980
+  query: What is the FY2021 capital expenditure amount (in USD billions) for PepsiCo?
+    Respond to the question by assuming the perspective of an investment analyst who
+    can only use the details shown within the statement of cash flows.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-c5cc80318543::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $4.60...'
+- id: fb-financebench_id_01009
+  query: What are the geographies that Pepsico primarily operates in as of FY2022?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-73ac1ecdc17b::c000
+  - doc-fb-73ac1ecdc17b::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: As of FY2022, Pepsico primarily
+    operates in the following geographies: North America, Latin America,...'
+- id: fb-financebench_id_00735
+  query: Has Pepsico reported any materially important ongoing legal battles from
+    FY2022 and FY2021?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-73ac1ecdc17b::c002
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: No, Pepsico is not involved
+    in material legal battles....'
+- id: fb-financebench_id_01328
+  query: What is the quantity of restructuring costs directly outlined in Pepsico's
+    income statements for FY2022? If restructuring costs are not explicitly outlined
+    then state 0.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-73ac1ecdc17b::c003
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Pepsico''s restructuring
+    costs in FY2022 amounted to $411 million ....'
+- id: fb-financebench_id_03620
+  query: What is the FY2022 unadjusted EBITDA less capex for PepsiCo? Define unadjusted
+    EBITDA as unadjusted operating income + depreciation and amortization [from cash
+    flow statement]. Answer in USD millions. Respond to the question by assuming the
+    perspective of an investment analyst who can only use the details shown within
+    the statement of cash flows and the income statement.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-73ac1ecdc17b::c004
+  - doc-fb-73ac1ecdc17b::c005
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: $9068.00...'
+- id: fb-financebench_id_04481
+  query: What is the FY2022 unadjusted EBITDA % margin for PepsiCo? Calculate unadjusted
+    EBITDA using unadjusted operating income and D&A (from cash flow statement). Give
+    a response to the question by relying on the details shown in the statement of
+    cash flows and the P&L statement.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-73ac1ecdc17b::c004
+  - doc-fb-73ac1ecdc17b::c005
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 16.5%...'
+- id: fb-financebench_id_01482
+  query: At the Pepsico AGM held on May 3, 2023, what was the outcome of the shareholder
+    vote on the shareholder proposal for a congruency report by Pepsico on net-zero
+    emissions policies?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-28be10084ebf::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: The shareholder proposal
+    for a congruency report by Pepsico on net-zero emissions policies was defea...'
+- id: fb-financebench_id_00705
+  query: By how much did Pepsico increase its unsecured five year revolving credit
+    agreement on May 26, 2023?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-f02a1272bc04::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: $400,000,000 increase....'
+- id: fb-financebench_id_00882
+  query: As of May 26, 2023, what is the total amount Pepsico may borrow under its
+    unsecured revolving credit agreements?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-f02a1272bc04::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Total amount Pepsico may
+    borrow under unsecured revolving credit agreements = $8,400,000,000....'
+- id: fb-financebench_id_01474
+  query: As of FY2023Q1, why did Pepsico raise full year guidance for FY2023?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-47f0dd9ef230::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Pepsico experienced a strong
+    start to FY2023....'
+- id: fb-financebench_id_01476
+  query: As of FY2023Q1, by how many percentage points did Pepsico raise full year
+    guidance in respect of core constant currency EPS growth?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-47f0dd9ef230::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Pepsico raised full year
+    guidance in respect of core constant currency EPS growth by 1 percentage po...'
+- id: fb-financebench_id_00302
+  query: Did Pfizer grow its PPNE between FY20 and FY21?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-4da391e4fcd1::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Yes, change in PPNE was
+    positive year over year...'
+- id: fb-financebench_id_00702
+  query: Were there any potential events that are not in Pfizer's standard business
+    operations that substantially increased net income in 2019?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-4da391e4fcd1::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Yes, the gain on completion
+    of Consumer Healthcare JV Transaction...'
+- id: fb-financebench_id_02416
+  query: What are three main companies acquired by Pfizer mentioned in this 10K report?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-4da391e4fcd1::c002
+  - doc-fb-4da391e4fcd1::c003
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Trillium, Array, and Therachon...'
+- id: fb-financebench_id_00283
+  query: How much does Pfizer expect to pay to spin off Upjohn in the future in USD
+    million?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-9ca4aef656a5::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: 77.78...'
+- id: fb-financebench_id_00724
+  query: For Pfizer, which geographic region had the biggest drop in Q22023 year over
+    year revenues (on a percentage basis)?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-9ca4aef656a5::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Developed Rest of the World...'
+- id: fb-financebench_id_02419
+  query: As of Q2'2023, is Pfizer spinning off any large business segments?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-9ca4aef656a5::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Yes, it''s spinning off
+    Upjohn....'
+- id: fb-financebench_id_00746
+  query: Which debt securities are registered to trade on a national securities exchange
+    under Ulta Beauty's name as of FY2023?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-e93effb6af6f::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: There are none...'
+- id: fb-financebench_id_00521
+  query: What are major acquisitions that Ulta Beauty has done in FY2023 and FY2022?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R1
+  gold_chunks:
+  - doc-fb-e93effb6af6f::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Ulta Beauty did not make
+    any acquisitions in FY2023 and FY2022....'
+- id: fb-financebench_id_00601
+  query: What drove the reduction in SG&A expense as a percent of net sales in FY2023?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-800131b23fd4::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Lower marketing expenses
+    and leverage of incentive compensation due to higher sales. The answer here...'
+- id: fb-financebench_id_00603
+  query: What drove the increase in Ulta Beauty's merchandise inventories balance
+    at end of FY2023?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-800131b23fd4::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Increase in Merchandise
+    inventories balance was driven by the opening of 47 new stores. The answer h...'
+- id: fb-financebench_id_00605
+  query: What percent of Ulta Beauty's total spend on stock repurchases for FY 2023
+    occurred in Q4 of FY2023?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-800131b23fd4::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: 36%. The answer here assumes
+    FY2023 refers to the 12 months ended on January 28, 2023 (although the ...'
+- id: fb-financebench_id_00606
+  query: Did Ulta Beauty's wages expense as a percent of net sales increase or decrease
+    in FY2023?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-800131b23fd4::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Wages expense as a percent
+    of net sales increased in FY2023. The answer here assumes FY2023 refers t...'
+- id: fb-financebench_id_00859
+  query: Among all of the derivative instruments that Verizon used to manage the exposure
+    to fluctuations of foreign currencies exchange rates or interest rates, which
+    one had the highest notional value in FY 2021?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-be8c7651cc40::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: Cross currency swaps. Its
+    notional value was $32,502 million....'
+- id: fb-financebench_id_02024
+  query: As of FY 2021, how much did Verizon expect to pay for its retirees in 2024?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-be8c7651cc40::c001
+  - doc-fb-be8c7651cc40::c002
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench novel-generated. Reference answer: The estimated pension benefits
+    were $1097 million, and the estimated health care and life insurance ...'
+- id: fb-financebench_id_00216
+  query: Does Verizon have a reasonably healthy liquidity profile based on its quick
+    ratio for FY 2022? If the quick ratio is not relevant to measure liquidity, please
+    state that and explain why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-98574ce6c94d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: No. The quick ratio was
+    approximately 0.54 for Verizon. It indicated that Verizon does not have a he...'
+- id: fb-financebench_id_00215
+  query: Is Verizon a capital intensive business based on FY 2022 data?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-98574ce6c94d::c000
+  - doc-fb-98574ce6c94d::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: Yes. Verizon''s capital
+    intensity ratio was approximately 2.774729. This means that it took approxima...'
+- id: fb-financebench_id_00566
+  query: Has Verizon increased its debt on balance sheet between 2022 and the 2021
+    fiscal period?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-98574ce6c94d::c002
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench domain-relevant. Reference answer: No. Verizon''s debt decreased
+    by $229 million....'
+- id: fb-financebench_id_06247
+  query: 'What is FY2018 days payable outstanding (DPO) for Walmart? DPO is defined
+    as: 365 * (average accounts payable between FY2017 and FY2018) / (FY2018 COGS
+    + change in inventory between FY2017 and FY2018). Round your answer to two decimal
+    places. Please base your judgments on the information provided primarily in the
+    statement of financial position and the P&L statement.'
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-7721f7fa9de1::c000
+  - doc-fb-7721f7fa9de1::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 42.69...'
+- id: fb-financebench_id_04784
+  query: Based on the information provided primarily in the statement of income, what
+    is the FY2018 - FY2019 change in unadjusted operating income % margin for Walmart?
+    Answer in units of percents and round to one decimal place.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-330da3eed0c7::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 0.2%...'
+- id: fb-financebench_id_06741
+  query: What is the FY2018 - FY2020 3 year average unadjusted EBITDA % margin for
+    Walmart? Define unadjusted EBITDA as unadjusted operating income + depreciation
+    and amortization from the cash flow statement. Answer in units of percents and
+    round to one decimal place. Calculate what was asked by utilizing the line items
+    clearly shown in the P&L statement and the cash flow statement.
+  user_id: finance.analyst
+  query_type: finance_metrics-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-fb-ca1bf2ce644d::c000
+  - doc-fb-ca1bf2ce644d::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'FinanceBench metrics-generated. Reference answer: 6.2%...'
+- id: pqa-a2a1497eab3b
+  query: Do I need to consent before the website collects or uses my data?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-8dc6fa0f226d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: opt-in'
+- id: pqa-47926da01458
+  query: Does the user's choice applicable to data used by a third party?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-8dc6fa0f226d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: offers sent to you'
+- id: pqa-653fc0d2530f
+  query: What type of user does the choice/control apply to?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-8dc6fa0f226d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: registration'
+- id: pqa-deb6165ce154
+  query: Do you collect any information about me that I am not aware of?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-eb8a53893574::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Cookies'
+- id: pqa-1c86f1b611a6
+  query: Does the company collect user's information directly on their website?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-eb8a53893574::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: from Web sites'
+- id: pqa-228c5d3d4854
+  query: What type of my information is collected by the website?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-eb8a53893574::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: cookie'
+- id: pqa-c66004b520de
+  query: Do you collect data about users explicitly?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-65bc953f681b::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: required to provide additional PIN'
+- id: pqa-dd50c9539e5c
+  query: Does the website collect any information when I visit it?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-65bc953f681b::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Web site'
+- id: pqa-e8fefc131925
+  query: Do you keep a record of my demographic information?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-65bc953f681b::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: demographic information'
+- id: pqa-2107b5fa6a64
+  query: Who do you share my information with?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-322dcc497d10::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: third parties such as advertisers and business partners'
+- id: pqa-f6b6c7627a95
+  query: Does the user's choice applicable to third party collection of data?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-322dcc497d10::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: share'
+- id: pqa-69952229ad6c
+  query: Is my information shared with others for targeted advertisements?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-322dcc497d10::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: advertisers'
+- id: pqa-b402de5edffd
+  query: What scope does the user choice apply to?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-bdba33558351::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: information that you voluntarily submit may be provided'
+- id: pqa-beac0ae9837e
+  query: Where do you collect my information?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-bdba33558351::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: By virtue of your participation in such activities or
+    offerings, your IP address'
+- id: pqa-513790ecce93
+  query: Do you keep track of my IP address or device IDs?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-bdba33558351::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: your IP address'
+- id: pqa-2bf9e460d016
+  query: What type of information do you collect from me to use?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-52465950c411::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: PIN'
+- id: pqa-0c1944d97c9e
+  query: Does the collected data reveal my identity?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-52465950c411::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: PIN'
+- id: pqa-a620743e7e99
+  query: Will they use the data collected from me?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-52465950c411::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: uses'
+- id: pqa-92ecba9bc440
+  query: How do you deal with children's data?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-9d691f5f06f4::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: MediaNews occasionally offers contest and sweepstakes,
+    which may be entered onli'
+- id: pqa-2e2873487778
+  query: Is my information secured and protected?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-9d691f5f06f4::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: securely maintained'
+- id: pqa-3e1ed8c03c7d
+  query: Do they retain any type of my personal info?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-9d691f5f06f4::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: personal information'
+- id: pqa-7e0671414527
+  query: How does the website collect information about me?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-287dadcc3672::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Other Information Collected by Us. We, and/or our Parent
+    Companies and Affiliate'
+- id: pqa-66fdc6c61d41
+  query: Why do you collect my information?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-287dadcc3672::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Preparing statistics reports'
+- id: pqa-05c07328fc5f
+  query: What types of user profile information does the company collect?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-287dadcc3672::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Allowing you to participate in the public areas and/or
+    other features of the Sit'
+- id: pqa-93035d379cca
+  query: How do they collect information about users?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-d95d0dbf13ee::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: you are required to provide'
+- id: pqa-a20d7fa633f0
+  query: Do you collect or use my information? If yes, then what type?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-d95d0dbf13ee::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Personal Information'
+- id: pqa-5679c2a46cc4
+  query: Do you use my information?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-d95d0dbf13ee::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: We use'
+- id: pqa-d7d339d9249a
+  query: Do you collect any information about me that I am not aware of?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-ab49cb9e4bc8::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Our Merchants may transmit certain parts of this information
+    to Chase Paymentech'
+- id: pqa-05bf89ad625c
+  query: Does the website provide any choices to users for data collection?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-ab49cb9e4bc8::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: may transmit'
+- id: pqa-975fed2f2560
+  query: How does the website collect information about me?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-ab49cb9e4bc8::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Our Merchants may transmit certain parts of this information
+    to Chase Paymentech'
+- id: pqa-7a0dbad2ed03
+  query: Do you collect data about users explicitly?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-c2171d32b601::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: you provide'
+- id: pqa-7be3d2109f65
+  query: Do you collect any personally identifiable data?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-c2171d32b601::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Personally identifiable information'
+- id: pqa-38dba5905079
+  query: Do you track my location data?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-c2171d32b601::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: zip code'
+- id: pqa-2e7c2e3c2cf9
+  query: What type of information do you collect from me to use?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-14412745b299::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: PIN information'
+- id: pqa-14cfbac07c54
+  query: Does the company collect any data that is personally identifiable?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-14412745b299::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: PIN'
+- id: pqa-94aec1ad8ef1
+  query: Do you use my information?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-14412745b299::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: uses'
+- id: pqa-a56eafddaa52
+  query: Does the company share user's data to provide them additional services?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-ee356d001ff3::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: in order to enrich the user experience and facilitate
+    user interaction'
+- id: pqa-2df1dcbd000e
+  query: Do you share user's profile with others? If yes, what type of data?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-ee356d001ff3::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: User account information'
+- id: pqa-83fa18fe15fc
+  query: Does the website collect any information when I visit it?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-ee356d001ff3::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: may also be collected'
+- id: pqa-5f0451d27f5c
+  query: Who do you share my information with?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-2ac1fc73e361::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: third parties'
+- id: pqa-7c62cf0d51ff
+  query: Do you share my information with others for promotional services?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-2ac1fc73e361::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: market products or services to you.'
+- id: pqa-5cc76c90a92f
+  query: Do the third parties receive my personal data from you?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-2ac1fc73e361::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: personally identifiable information'
+- id: pqa-a406cece66cb
+  query: Do you collect any information about me that I am not aware of?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-279b5b19d6b6::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: automatically collect this information when you visit
+    our Website through the us'
+- id: pqa-f1baabd7b9d8
+  query: Do you use my data collected on other sites?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-279b5b19d6b6::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Tulsaworld.com also tracks and collects non-personally
+    identifiable information '
+- id: pqa-e3e1d9938f70
+  query: What types of user's information do you keep track of?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-279b5b19d6b6::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Non-personally identifiable information may include the
+    Uniform Resource Locator'
+- id: pqa-ba460b58fac8
+  query: Do you explicitly ask for information from users?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-d3379396c4e6::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: When you submit an application'
+- id: pqa-2d08ac5f538f
+  query: What scope does the user choice apply to?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-d3379396c4e6::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: provide us with'
+- id: pqa-bd9ecec9e247
+  query: Do you provide choices to the users with regards to your data collection?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-d3379396c4e6::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: When you submit an application to obtain'
+- id: pqa-dc431710736d
+  query: Who exactly do you share my information with?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-ae5250ff1c7d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Network advertisers are third parties that display advertisements
+    based on your '
+- id: pqa-b7d7911b7cb9
+  query: Do I have choice for my data collected or used by a third party?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-ae5250ff1c7d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: set and access their own cookies on your computer'
+- id: pqa-d6dc72b94128
+  query: Does the company share user's information with a third party for advertisements?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-ae5250ff1c7d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Third-party ad serving enables us to target advertisements
+    to you for products o'
+- id: pqa-02c9aca2dd0d
+  query: How do you collect my information for use?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-346d1d1f7775::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: These tracking technologies may be deployed by us and/or
+    by our service provider'
+- id: pqa-dbd8e2a6ea1f
+  query: Does the company collect user's information directly on their website?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-346d1d1f7775::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: These tracking technologies may be deployed by us and/or
+    by our service provider'
+- id: pqa-6a139b4b06c3
+  query: What type of information do you collect from me to use?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-346d1d1f7775::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: These technologies enable us to assign a unique number
+    to you, and relate your S'
+- id: pqa-3dc0d6ce8e77
+  query: Do you collect data about users implicitly?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-a143bf5590a1::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Automated'
+- id: pqa-d2d9b8694293
+  query: What type of information do you collect about me?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-a143bf5590a1::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: IP addresses'
+- id: pqa-ab9cae6bbefd
+  query: Will you use any form of aggregated or annoymized data?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-a143bf5590a1::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: for aggregate use.'
+- id: pqa-53a37147435e
+  query: Is my information visible to the public?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-4ece644b09f2::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: general public'
+- id: pqa-f94d7b7784a8
+  query: What scope does the user choice or control apply to?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-4ece644b09f2::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: release information'
+- id: pqa-e22e4eb66f47
+  query: Does the company share user's data to comply with legal requirements?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-4ece644b09f2::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: comply with FERPA'
+- id: pqa-f84fac695a9e
+  query: Do you collect data about users explicitly?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-b6e2a1249685::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: For instance, when you enter a sweepstakes or contest,
+    complete a survey, partic'
+- id: pqa-67a36f142d72
+  query: What scope does the user choice apply to?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-b6e2a1249685::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: collects'
+- id: pqa-fe8935b9cf57
+  query: Where do you collect my information?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-b6e2a1249685::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: For instance, when you enter a sweepstakes or contest,
+    complete a survey, partic'
+- id: pqa-592b994a10e5
+  query: Do you collect data about users explicitly?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-609e5ea3d1c9::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Information requested as part of the online registration
+    process may include a u'
+- id: pqa-48b2c28347bf
+  query: Does the website provide any choices to users for data collection?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-609e5ea3d1c9::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: The Information requested'
+- id: pqa-5f1ff855e755
+  query: Will you collect my data? If yes, how?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-609e5ea3d1c9::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: either by registering on the Site or via their wireless
+    device.'
+- id: pqa-c2b949f65d14
+  query: Does the company make any of the user information public available?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-9ff9de0d404c::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: may publish'
+- id: pqa-b0598773d3ff
+  query: Does the user's choice applicable to third party collection of data?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-9ff9de0d404c::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: we may publish'
+- id: pqa-af964713993f
+  query: What types of user's information do you share with others?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-9ff9de0d404c::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: name, screen name'
+- id: pqa-77ec0b6e4e19
+  query: How do they collect information about users?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-eb30beaabf56::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: If you supply Tulsaworld.com with your e-mail address,'
+- id: pqa-5ebd3c4a154a
+  query: Does the website collect any information when I visit it?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-eb30beaabf56::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Tulsaworld.com with your e-mail address, either by registering
+    on the site, by c'
+- id: pqa-0014f1fc7eb6
+  query: Do you ask for my contact information?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-eb30beaabf56::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: your e-mail address'
+- id: pqa-023b2429983e
+  query: What is the company's policy towards children?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-f450ca4e52f8::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: We provide a safe online environment for children and
+    follow COPPA principles.'
+- id: pqa-b727bfb10395
+  query: Do you explicitly ask for information from users?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-f450ca4e52f8::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: you voluntarily provide'
+- id: pqa-f7492b991d17
+  query: Does the website provide any choices to users for data collection?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-f450ca4e52f8::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: collect'
+- id: pqa-0bc1b89e4a23
+  query: Do you collect data about users implicitly?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-175d7726d949::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Hearst uses cookies to understand site usage and to improve
+    the content and offe'
+- id: pqa-ca13d83d272f
+  query: Will you collect my data? If yes, how?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-175d7726d949::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: We may use cookies to control the display of ads, to track
+    usage patterns on the'
+- id: pqa-c41bb92af0a4
+  query: Does the company collect any data that is personally identifiable?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-175d7726d949::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: may contain Personally Identifiable Information'
+- id: pqa-aeac8a910964
+  query: Will you collect my data? If yes, how?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-feb1994132c5::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: is collected during the registration process'
+- id: pqa-c519ab9a9226
+  query: What type of information about me does the website collect?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-feb1994132c5::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: personally identifiable information'
+- id: pqa-cd15e46d058f
+  query: Will you use non-personally identifiable data about me?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-feb1994132c5::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: personally identifiable'
+- id: pqa-a5ae144b3567
+  query: Do you collect data about users explicitly?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-165bfa3fb7bc::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: you supply'
+- id: pqa-cd0d0975c563
+  query: Will you give me choices for my data collection?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-165bfa3fb7bc::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: you supply'
+- id: pqa-bf8b14e3203e
+  query: Do you collect my information on your website?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-165bfa3fb7bc::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: attribute your comments, letters to the editor and/or
+    other submissions to the S'
+- id: pqa-16a7534e7ee6
+  query: Do you collect my information on your website?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-1de15ae512a4::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: either directly with JibJab'
+- id: pqa-65a6d809461b
+  query: For what type of users do you collect their data?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-1de15ae512a4::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Registered Users and Members'
+- id: pqa-9645ba4759d4
+  query: For what purpose do you use my data?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-1de15ae512a4::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: To enrich user experience'
+- id: pqa-c204c16f5048
+  query: What type of personal info you ask from me?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-1e5ad3acec83::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: personal information'
+- id: pqa-69135def5901
+  query: Will they use the data collected from me?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-1e5ad3acec83::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: We use'
+- id: pqa-4065757447e1
+  query: Does the website collect user's information to provide basic services?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-1e5ad3acec83::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: to allow you to make product purchases, to fulfill your
+    requests'
+- id: pqa-2a7da8f7ea4e
+  query: Do you collect data about users implicitly?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-cb89b2e6ef20::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: of'
+- id: pqa-37361346c33f
+  query: Do you collect or use my information? If yes, then what type?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-cb89b2e6ef20::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Information'
+- id: pqa-e4c79392b2d8
+  query: Does this website collect my information?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-cb89b2e6ef20::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Use'
+- id: pqa-f8d1209b73b8
+  query: How do you collect my information for use?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-4303652443d4::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: expressly'
+- id: pqa-29c81e636449
+  query: Will you collect my data? If yes, how?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-4303652443d4::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: we may request'
+- id: pqa-a5d7a384732c
+  query: Do you ask for my contact information?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-4303652443d4::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: name, zip code and telephone number'
+- id: pqa-8c3c247c7b9d
+  query: Do you collect any information about me that I am not aware of?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-f2a0f63ded97::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Automatic Collection of Information'
+- id: pqa-84b20b211937
+  query: Does the website provide any choices to users for data collection?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-f2a0f63ded97::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: we will receive and store'
+- id: pqa-c12b42180cd8
+  query: Where do you collect my information?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-f2a0f63ded97::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: If you purchase any products online, or have any other
+    interaction with our Webs'
+- id: pqa-74771c6c2ede
+  query: Do you collect data about users explicitly?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-bd40e4ffbd71::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Personally Identifiable Information you provide in connection
+    with the transacti'
+- id: pqa-dc85e6da3e37
+  query: Does the website provide any choices to users for data collection?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-bd40e4ffbd71::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: collected'
+- id: pqa-c191696c43e5
+  query: Does the company collect user's information directly on their website?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-bd40e4ffbd71::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: transactions may take place on a Covered Site'
+- id: pqa-8dcb45709981
+  query: Does the website mention the name of third parities, who gets my data?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-ce7e485a6a7b::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: our third-party suppliers and/or the web sites and services
+    of advertisers and m'
+- id: pqa-6dd19a5e9eb3
+  query: Why do you share my info with third parties?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-ce7e485a6a7b::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: for auditing purposes and to collect information from
+    the web sites of certain a'
+- id: pqa-99fc56e00da7
+  query: Does the website allow a third party to collect data using cookies?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-ce7e485a6a7b::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: cookies and web beacons'
+- id: pqa-584abf98a02e
+  query: Does the company collect or protect information from children?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-92870dc48f9d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: MediaNews does not ask children to disclose more personal
+    information than is ne'
+- id: pqa-eb1f31a94483
+  query: What types of location data do you collect?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-92870dc48f9d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: city, state, zip code and country of residence)'
+- id: pqa-1aed72d5bf84
+  query: Will you use non-personally identifiable data about me?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-92870dc48f9d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: non-personally identifiable information'
+- id: pqa-c80eb34bf7ef
+  query: What are the ways you are going to collect my data?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-a56fac52f01d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: We use "cookies," Web beacons, HTML5 local storage and
+    other similar technologie'
+- id: pqa-bc72483d3b75
+  query: What type of my information is collected by the website?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-a56fac52f01d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Cookies, Beacons, Local Storage and Other Similar Technologies.
+    We use "cookies,'
+- id: pqa-b65a8bb40eda
+  query: Does the company use user's information for customized services?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-a56fac52f01d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: These technologies allow us to manage access to and use
+    of the SIDEARM Services,'
+- id: pqa-342a5b38bd13
+  query: Do I have choice for my data collected or used by the website?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-08bb8cb19335::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: will be stored locally on your device, which will then
+    be used by the app. If yo'
+- id: pqa-cb88c32e4abb
+  query: Does the company collects user's information on their mobile app?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-08bb8cb19335::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Some of our mobile applications can deliver content based
+    on your current locati'
+- id: pqa-44688ca649d4
+  query: Does the company collect user's location information?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-08bb8cb19335::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: your current location'
+- id: pqa-3f0bcc3f3ddd
+  query: Does the website collect any information when I visit it?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-8e8e987a68bb::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Military Web pages and the Web pages of our partners'
+- id: pqa-3f1ac27b814c
+  query: Are cookies or any tracking elements are used to collect my information?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-8e8e987a68bb::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Military Web pages and the Web pages of our partners also
+    utilize electronic ima'
+- id: pqa-743da4745cc9
+  query: Why do you collect my information?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-8e8e987a68bb::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: that allow us to collect certain information about users''
+    visits to these Web pa'
+- id: pqa-3c7085f18bb9
+  query: Does users need to opt-in before their data can be collected?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-9064a9162eeb::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Participation is voluntary and you will have the opportunity
+    to decide whether o'
+- id: pqa-0a49a5038b0d
+  query: What scope does the user choice or control apply to?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-9064a9162eeb::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Participation is voluntary and you will have the opportunity
+    to decide whether o'
+- id: pqa-8702ce4b9a4c
+  query: Do they allow users to control the data used in additional services?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-9064a9162eeb::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Contests or Sweepstakes: We periodically operate contests
+    and sweepstakes throug'
+- id: pqa-efc5fb8ed649
+  query: How do you collect my information for use?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-4b67ecab2aad::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: collect personal information from you unless you provide
+    it to us'
+- id: pqa-4d0b29d36d24
+  query: Will you give me choices for my data collection?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-4b67ecab2aad::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: collect personal information from you unless you provide
+    it to us'
+- id: pqa-d0e6c47d1f44
+  query: Do we need to consent before data can be collected by the website?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-4b67ecab2aad::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: unless you provide it to us'
+- id: pqa-12831f3f7594
+  query: How do you collect my information for use?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-2d74f6688487::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Cookies'
+- id: pqa-0c1d2feebd2b
+  query: Will you give me choices for my data collection?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-2d74f6688487::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: do not tell us your e-mail address'
+- id: pqa-07fab48a17f9
+  query: Do you ask for my contact information?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-2d74f6688487::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: e-mail address'
+- id: pqa-a8cea486d42c
+  query: What scope does the user choice apply to?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-185c1d1cccf8::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: to accept or decline cookies'
+- id: pqa-ab8d1222b8c3
+  query: Does the website collect any information when I visit it?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-185c1d1cccf8::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: when you visit a website'
+- id: pqa-dc130fb3deb1
+  query: What type of my information is collected by the website?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-185c1d1cccf8::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Cookies'
+- id: pqa-2136299bf3b7
+  query: What scope does the user choice or control apply to?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-3e5b385401c5::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: use these technologies, see www.aboutads.info, and to
+    opt out of such advertisin'
+- id: pqa-202e44cec2a2
+  query: Does the company collect user's information directly on their website?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-3e5b385401c5::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: FSD and our service providers may use the information
+    we collect from or about y'
+- id: pqa-5ffa0ef98eea
+  query: What is the opt-out link if I want to unsubscribe the company's services?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-3e5b385401c5::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: To find out more about third party advertising networks
+    and similar entities tha'
+- id: pqa-9ba245ef834b
+  query: Do you explicitly ask for information from users?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-fe3d97a9ddce::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Information you submit via an inquiry is collected only
+    with your knowledge and '
+- id: pqa-b32148cf1f32
+  query: Does the choice related to first party data use or collection?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-fe3d97a9ddce::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: may be used'
+- id: pqa-8507b62b6847
+  query: Where do you collect my information?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-fe3d97a9ddce::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Your Inquiries. When you complete and submit a form on
+    our website, send us an e'
+- id: pqa-c316417259f5
+  query: Do you collect or use my information? If yes, then what type?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-e9267d2a77fb::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: non-personally identifiable information, for example,
+    annual income, buying pref'
+- id: pqa-8c2c4e571a31
+  query: Will you use any form of aggregated or annoymized data?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-e9267d2a77fb::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: aggregated, anonymous'
+- id: pqa-3b2eb2a4df8f
+  query: Does the company use user's information for analytics or research?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-e9267d2a77fb::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: We may use this data to improve our site'
+- id: pqa-a697d6b2aa53
+  query: Do you explicitly ask for information from users?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-4c12701fb6c5::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: you give us'
+- id: pqa-5eaa1f86652e
+  query: Does the website collect any information when I visit it?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-4c12701fb6c5::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: We receive and store'
+- id: pqa-53974bf81b30
+  query: Does the company collect user's financial information?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-4c12701fb6c5::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: credit card information'
+- id: pqa-990f6fa64737
+  query: Does users need to opt-in before their data can be collected?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-2bbdb03999d0::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: If you subscribe to one of our SMS, WAP or Mobile Services,
+    you thereby agree to'
+- id: pqa-a8ad8dbb1065
+  query: Do the choices apply to the use of information by the company?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-2bbdb03999d0::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: agree to receive services and messages'
+- id: pqa-7afaa9922005
+  query: Is my information shared with others? If yes, then who?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-2bbdb03999d0::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Your wireless carrier and other service providers'
+- id: pqa-728e8228c062
+  query: Does the website collect any information that I do not provide explicitly?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-c0404b68bdb1::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: collect'
+- id: pqa-11fb95469d8b
+  query: Does the company collect user's location information?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-c0404b68bdb1::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: GPS-based functionality on mobile devices used to access
+    the Services'
+- id: pqa-632101e6eb5c
+  query: Does the first party provide privacy control to the users?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-c0404b68bdb1::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: If you access the Services through a mobile device and
+    you do not want your devi'
+- id: pqa-fc77e5b0c9fc
+  query: Will you give me choices for my data collection?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-b4a3e64f6ce2::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: collected'
+- id: pqa-ad60e7c5c0d7
+  query: Does the company collect user's information directly on their website?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-b4a3e64f6ce2::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: Through Time Inc. publications, websites'
+- id: pqa-f05f14ef5abc
+  query: Do you collect or use my information? If yes, then what type?
+  user_id: alice.employee
+  query_type: policy_comprehension
+  expected_route: R2
+  gold_chunks:
+  - doc-pqa-b4a3e64f6ce2::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'PolicyQA. Answer: name, address,'
+- id: hqa-5dda555f7bbd
+  query: Were Scott Derrickson and Ed Wood of the same nationality?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-a6f7cff63787::c000
+  - doc-hqa-2e364fd422a6::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: yes'
+- id: hqa-61137c25525c
+  query: What government position was held by the woman who portrayed Corliss Archer
+    in the film Kiss and Tell?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-48b996dfd126::c000
+  - doc-hqa-6a05c2847b9a::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Chief of Protocol'
+- id: hqa-c727af252f4a
+  query: What science fantasy young adult series, told in first person, has a set
+    of companion books narrating the stories of enslaved worlds and alien species?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-22bcdf83adfc::c000
+  - doc-hqa-0f341b6edd94::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Animorphs'
+- id: hqa-0db9cfa6230f
+  query: Are the Laleli Mosque and Esma Sultan Mansion located in the same neighborhood?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-7a3932278999::c000
+  - doc-hqa-00796d25171f::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: no'
+- id: hqa-94e21d6ecc92
+  query: The director of the romantic comedy "Big Stone Gap" is based in what New
+    York city?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-c7e41da14900::c000
+  - doc-hqa-f6cd889d2a68::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Greenwich Village, New York City'
+- id: hqa-ae98843779b1
+  query: 2014 S/S is the debut album of a South Korean boy group that was formed by
+    who?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-f4a95c30fb55::c000
+  - doc-hqa-96c189f462ea::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: YG Entertainment'
+- id: hqa-588ece00a8cc
+  query: Who was known by his stage name Aladin and helped organizations improve their
+    performance as a consultant?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-354c05759c06::c000
+  - doc-hqa-ac25d19fc1e3::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Eenasul Fateh'
+- id: hqa-2d3570085e4a
+  query: The arena where the Lewiston Maineiacs played their home games can seat how
+    many people?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-66e24ba45a10::c000
+  - doc-hqa-53190230f3a3::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: 3,677 seated'
+- id: hqa-2c91008ad2b2
+  query: Who is older, Annie Morton or Terry Richardson?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-012f8f9212a5::c000
+  - doc-hqa-3a3cccd260d6::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Terry Richardson'
+- id: hqa-aab3f5c947ce
+  query: Are Local H and For Against both from the United States?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-6a23ee8cfc53::c000
+  - doc-hqa-147a8df1cd51::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: yes'
+- id: hqa-ab49968cdf55
+  query: What is the name of the fight song of the university whose main campus is
+    in Lawrence, Kansas and whose branch campuses are in the Kansas City metropolitan
+    area?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-b1dfc13b0f10::c000
+  - doc-hqa-8a90868327ea::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Kansas Song'
+- id: hqa-de8ac210493e
+  query: "What screenwriter with credits for \"Evolution\" co-wrote a film starring\
+    \ Nicolas Cage and T\xE9a Leoni?"
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-2edbed0b37b8::c000
+  - doc-hqa-92f650f71b04::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: David Weissman'
+- id: hqa-d6a7f49af081
+  query: What year did Guns N Roses perform a promo for a movie starring Arnold Schwarzenegger
+    as a former New York Police detective?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-c2e4a3acdd02::c000
+  - doc-hqa-2ae658e21185::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: 1999'
+- id: hqa-a8c4aee95a4c
+  query: Are Random House Tower and 888 7th Avenue both used for real estate?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-605919914a25::c000
+  - doc-hqa-11b1082fb09f::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: no'
+- id: hqa-e63a3eb69357
+  query: The football manager who recruited David Beckham managed Manchester United
+    during what timeframe?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-946134a9e195::c000
+  - doc-hqa-65f2858f9f02::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: from 1986 to 2013'
+- id: hqa-4303d30b1dc0
+  query: Brown State Fishing Lake is in a country that has a population of how many
+    inhabitants ?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-3da9027643df::c000
+  - doc-hqa-d47937b95b6b::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: 9,984'
+- id: hqa-e66d3feb3f21
+  query: The Vermont Catamounts men's soccer team currently competes in a conference
+    that was formerly known as what from 1988 to 1996?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-dbb05a88d349::c000
+  - doc-hqa-a5e24451c265::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: the North Atlantic Conference'
+- id: hqa-298a36f0291e
+  query: Are Giuseppe Verdi and Ambroise Thomas both Opera composers ?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-407248099f94::c000
+  - doc-hqa-b6be12c4d499::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: yes'
+- id: hqa-aa26e0550aa6
+  query: Roger O. Egeberg was Assistant Secretary for Health and Scientific Affairs
+    during the administration of a president that served during what years?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-2bc2952acc90::c000
+  - doc-hqa-eb7d335a202a::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: 1969 until 1974'
+- id: hqa-075fa4986864
+  query: Which writer was from England, Henry Roth or Robert Erskine Childers?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-bd73be055503::c000
+  - doc-hqa-a78414a175ee::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: Robert Erskine Childers DSC'
+- id: hqa-a225d4622577
+  query: Which other Mexican Formula One race car driver has held the podium besides
+    the Force India driver born in 1990?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-190de1fdc5e2::c000
+  - doc-hqa-be6b695451c6::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: "HotpotQA bridge/hard. Answer: Pedro Rodr\xEDguez"
+- id: hqa-0607161c63c2
+  query: This singer of A Rather Blustery Day also voiced what hedgehog?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-13c3bfb0fd8b::c000
+  - doc-hqa-8f12441f00be::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Sonic'
+- id: hqa-3e443c18495e
+  query: Aside from the Apple Remote, what other device can control the program Apple
+    Remote was originally designed to interact with?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-48ec6fe83dc3::c000
+  - doc-hqa-b7e4624f5299::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: keyboard function keys'
+- id: hqa-231508bc9af6
+  query: Which performance act has a higher instrument to person ratio, Badly Drawn
+    Boy or Wolf Alice?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-8f2f2503be2a::c000
+  - doc-hqa-79044f7d4644::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: Badly Drawn Boy'
+- id: hqa-1917c17f04c2
+  query: What was the father of Kasper Schmeichel voted to be by the IFFHS in 1992?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-93fa6e480916::c000
+  - doc-hqa-420db253e301::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: World''s Best Goalkeeper'
+- id: hqa-252c5e8c929a
+  query: Who was the writer of These Boots Are Made for Walkin' and who died in 2007?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-ccba0d9e37cf::c000
+  - doc-hqa-a2bc5de61942::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Barton Lee Hazlewood'
+- id: hqa-f09020bc5b16
+  query: "The 2011\u201312 VCU Rams men's basketball team, led by third year head\
+    \ coach Shaka Smart, represented Virginia Commonwealth University which was founded\
+    \ in what year?"
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-b1cea7feb7de::c000
+  - doc-hqa-b005fa2f909a::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: 1838'
+- id: hqa-625079e68aa4
+  query: Are both Dictyosperma, and Huernia described as a genus?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-f585b94c10f6::c000
+  - doc-hqa-f05cd7a7d1e3::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: yes'
+- id: hqa-d6c4f489315a
+  query: Kaiser Ventures corporation was founded by an American industrialist who
+    became known as the father of modern American shipbuilding?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-7cace6542b8b::c000
+  - doc-hqa-2667c0cf2fd1::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Henry J. Kaiser'
+- id: hqa-bf20f8ba2db7
+  query: What is the name for the adventure in "Tunnels and Trolls", a game designed
+    by Ken St. Andre?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-8c3878857ca7::c000
+  - doc-hqa-b77721189f5e::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Arena of Khazan'
+- id: hqa-eaf4651587f4
+  query: When was Poison's album "Shut Up, Make Love" released?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-b97b52d85431::c000
+  - doc-hqa-be4082b20d4f::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: 2000'
+- id: hqa-53c9a1ef5ad5
+  query: Hayden is a singer-songwriter from Canada, but where does Buck-Tick hail
+    from?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-df08b9822ce3::c000
+  - doc-hqa-3fde20308974::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: Fujioka, Gunma'
+- id: hqa-edc413bfb2d0
+  query: Which  French ace pilot and adventurer fly L'Oiseau Blanc
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-4c3d335e5c25::c000
+  - doc-hqa-4003c9e8326e::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: "HotpotQA bridge/hard. Answer: Charles Eug\xE8ne"
+- id: hqa-a63acd32aefb
+  query: Are Freakonomics and In the Realm of the Hackers both American documentaries?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-248c84454800::c000
+  - doc-hqa-43161bdd8086::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: no'
+- id: hqa-15e02ed4630a
+  query: Which band, Letters to Cleo or Screaming Trees, had more members?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-221dd92365a1::c000
+  - doc-hqa-aa189a6f80eb::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: Letters to Cleo'
+- id: hqa-c3beb7c605cd
+  query: Alexander Kerensky was defeated and destroyed by the Bolsheviks in the course
+    of a civil war that ended when ?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-a58f5b7deb50::c000
+  - doc-hqa-1ffcc2156099::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: October 1922'
+- id: hqa-505aec8eb3c3
+  query: Seven Brief Lessons on Physics was written by an Italian physicist that has
+    worked in France since what year?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-a849dfe69bb3::c000
+  - doc-hqa-c152ff3d7520::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: 2000'
+- id: hqa-252c6c03bc56
+  query: The Livesey Hal War Memorial commemorates the fallen of which war, that had
+    over 60 million casualties?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-6a9d81e7ce0a::c000
+  - doc-hqa-54ffc25bec1f::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: World War II'
+- id: hqa-748cfdcae5ff
+  query: Are both Elko Regional Airport and Gerald R. Ford International Airport located
+    in Michigan?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-ea050c84a965::c000
+  - doc-hqa-e0c49a45e6b4::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: no'
+- id: hqa-252acf9e0217
+  query: Ralph Hefferline was a psychology professor at a university that is located
+    in what city?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-f50ae5b924ff::c000
+  - doc-hqa-0386721f29c7::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: New York City'
+- id: hqa-72ad0205df52
+  query: 'Which dog''s ancestors include Gordon and Irish Setters: the Manchester
+    Terrier or the Scotch Collie?'
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-16028271883c::c000
+  - doc-hqa-d9bbb649f61a::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: Scotch Collie'
+- id: hqa-21531caaafd2
+  query: Where is the company that Sachin Warrier worked for as a software engineer
+    headquartered?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-9f5267153c92::c000
+  - doc-hqa-d96fd5ae5237::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Mumbai'
+- id: hqa-e7d462129663
+  query: A Japanese manga series based on a 16 year old high school student Ichitaka
+    Seto, is written and illustrated by someone born in what year?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-77bd6af2923c::c000
+  - doc-hqa-b59f966eb00d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: 1962'
+- id: hqa-b3f287d93942
+  query: The battle in which Giuseppe Arimondi lost his life secured what for Ethiopia?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-d18471996e86::c000
+  - doc-hqa-be06b923750c::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: sovereignty'
+- id: hqa-2c2706a81ff4
+  query: Alfred Balk served as the secretary of the Committee on the Employment of
+    Minority Groups in the News Media under which United States Vice President?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-b105e140c05a::c000
+  - doc-hqa-40f0442140a9::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Nelson Rockefeller'
+- id: hqa-c3f02d10fd30
+  query: A medieval fortress in Dirleton, East Lothian, Scotland borders on the south
+    side of what coastal area?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-01be35b8cf4b::c000
+  - doc-hqa-dc26c84c67a5::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Yellowcraig'
+- id: hqa-40fbab85d30a
+  query: Who is the writer of this song that was inspired by words on a tombstone
+    and was the first track on the box set Back to Mono?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-33422c1b47b3::c000
+  - doc-hqa-5bbc2ba51ea5::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Phil Spector'
+- id: hqa-05574e5123a8
+  query: What type of forum did a former Soviet statesman initiate?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-e3c8fe8b21d5::c000
+  - doc-hqa-9a556c72853d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Organizations could come together to address
+    global issues'
+- id: hqa-d1539dfdf032
+  query: Are Ferocactus and Silene both types of plant?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-c5c07d763d42::c000
+  - doc-hqa-5632603ec70d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: yes'
+- id: hqa-9870710eb57e
+  query: Which British first-generation jet-powered medium bomber was used in the
+    South West Pacific theatre of World War II?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-a5314d21be42::c000
+  - doc-hqa-913c7728340e::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: English Electric Canberra'
+- id: hqa-3bb8b26de242
+  query: Which year and which conference was the 14th season for this conference as
+    part of the NCAA Division that the Colorado Buffaloes played in with a record
+    of 2-6 in conference play?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-deb92b7a31a4::c000
+  - doc-hqa-ab25b9f23e95::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: 2009 Big 12 Conference'
+- id: hqa-8a5318f8447b
+  query: "In 1991 Euromarch\xE9 was bought by a chain that operated how any hypermarkets\
+    \ at the end of 2016?"
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-956c60331b64::c000
+  - doc-hqa-23bab1684680::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: 1,462'
+- id: hqa-cb5c61b6d92b
+  query: What race track in the midwest hosts a 500 mile race eavery May?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-70f87dc8504a::c000
+  - doc-hqa-93c76aa1d694::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Indianapolis Motor Speedway'
+- id: hqa-3050dd208ac0
+  query: In what city did the "Prince of tenors" star in a film based on an opera
+    by Giacomo Puccini?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-f0a4e19cc263::c000
+  - doc-hqa-9a850187bda5::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Rome'
+- id: hqa-372560d8b002
+  query: Ellie Goulding worked with what other writers on her third studio album,
+    Delirium?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-174fce9522fb::c000
+  - doc-hqa-e86e56aad355::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Max Martin, Savan Kotecha and Ilya Salmanzadeh'
+- id: hqa-944668484337
+  query: Which Australian city founded in 1838 contains a boarding school opened by
+    a Prime Minister of Australia and named after a school in London of the same name.
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-70e6b75aaa56::c000
+  - doc-hqa-b84e36b7d4eb::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Marion, South Australia'
+- id: hqa-5936c7970be7
+  query: D1NZ is a series based on what oversteering technique?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-59f20f72bad1::c000
+  - doc-hqa-6924782091b4::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Drifting'
+- id: hqa-1fe5db5b3aeb
+  query: who is younger Keith Bostic or Jerry Glanville ?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-c343dfe9cfa5::c000
+  - doc-hqa-94d9697fc2ff::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Keith Bostic'
+- id: hqa-a6fafa6cdb47
+  query: According to the 2001 census, what was the population of the city in which
+    Kirton End is located?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-9846d3f5dbb9::c000
+  - doc-hqa-528469688d11::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: 35,124'
+- id: hqa-6844e3afc745
+  query: Are both Cypress and Ajuga genera?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-84c44516e1d4::c000
+  - doc-hqa-1fc11b5be5a5::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: no'
+- id: hqa-c298ce00d14e
+  query: What distinction is held by the former NBA player who was a member of the
+    Charlotte Hornets during their 1992-93 season and was head coach for the WNBA
+    team Charlotte Sting?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-3341bfa01db2::c000
+  - doc-hqa-530a459502ab::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: shortest player ever to play in the National
+    Basketball Asso'
+- id: hqa-62faba6f2140
+  query: What is the name of the executive producer of the film that has a score composed
+    by Jerry Goldsmith?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-1956cabeaf9a::c000
+  - doc-hqa-ad098b14471b::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Ronald Shusett'
+- id: hqa-d2cfba54dabc
+  query: Who was born earlier, Emma Bull or Virginia Woolf?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-46020a9fff42::c000
+  - doc-hqa-bbaf90bfa51f::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: Adeline Virginia Woolf'
+- id: hqa-506e9db9fbbe
+  query: What was the Roud Folk Song Index of the nursery rhyme inspiring What Are
+    Little Girls Made Of?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-545db7a24f83::c000
+  - doc-hqa-f20c16c52b6b::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: 821'
+- id: hqa-1a3fd0374bc5
+  query: Scott Parkin has been a vocal critic of Exxonmobil and another corporation
+    that has operations in how many countries ?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-1962cbb28045::c000
+  - doc-hqa-d7b7debf0361::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: more than 70 countries'
+- id: hqa-a168656fdb6b
+  query: What WB supernatrual drama series was Jawbreaker star Rose Mcgowan best known
+    for being in?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-b0313f809842::c000
+  - doc-hqa-3fd24d9c4340::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Charmed'
+- id: hqa-92c6730e52cd
+  query: Vince Phillips held a junior welterweight title by an organization recognized
+    by what larger Hall of Fame?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-3fc6e21d02ac::c000
+  - doc-hqa-f6cd13bfbb45::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: International Boxing Hall of Fame'
+- id: hqa-a86885e24d01
+  query: What is the name of the singer who's song was released as the lead single
+    from the album "Confessions", and that had popular song stuck behind for eight
+    consecutive weeks?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-10224685ad7c::c000
+  - doc-hqa-f1e6d397c7dc::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Usher'
+- id: hqa-a7d4a81b48b1
+  query: who is the younger brother of The episode guest stars of The Hard Easy
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-0b09f46b5851::c000
+  - doc-hqa-0c890dd0ee19::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Bill Murray'
+- id: hqa-3d9292bbf654
+  query: "The 2017\u201318 Wigan Athletic F.C. season will be a year in which the\
+    \ team competes in the league cup known as what for sponsorship reasons?"
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-3135ef532bec::c000
+  - doc-hqa-026e345a4620::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Carabao Cup'
+- id: hqa-2cc860550e1b
+  query: Which of Tara Strong major voice role in animated series is an American animated
+    television series based on the DC Comics fictional superhero team, the "Teen Titans"?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-c1864d72adbf::c000
+  - doc-hqa-76204a3d70fb::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Teen Titans Go!'
+- id: hqa-8d9f87ef1ad8
+  query: What is the inhabitant of the city where  122nd SS-Standarte was formed in2014
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-8c9935029f2a::c000
+  - doc-hqa-a89f8fc72497::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: 276,170 inhabitants'
+- id: hqa-83bfa8da896e
+  query: What color clothing do people of the Netherlands wear during Oranjegekte
+    or to celebrate the national holiday Koningsdag?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-27ea669ca1c6::c000
+  - doc-hqa-4acc6072a7ed::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: orange'
+- id: hqa-c5463ad1866a
+  query: What was the name of the 1996 loose adaptation of William Shakespeare's "Romeo
+    & Juliet" written by James Gunn?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-b05f51e78129::c000
+  - doc-hqa-58770552a143::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Tromeo and Juliet'
+- id: hqa-c2fc630a2652
+  query: Robert Suettinger was the national intelligence officer under which former
+    Governor of Arkansas?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-1d3e8b1e501f::c000
+  - doc-hqa-b1ca39e190c7::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: William Jefferson Clinton'
+- id: hqa-acdd9db6b237
+  query: What American professional Hawaiian surfer born 18 October 1992 won the Rip
+    Curl Pro Portugal?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-dbde3db50bc8::c000
+  - doc-hqa-e1a05e4788db::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: John John Florence'
+- id: hqa-141867c27c09
+  query: What is the middle name of the actress who plays Bobbi Bacha in Suburban
+    Madness?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-ad772fbb554b::c000
+  - doc-hqa-e535b85ecd03::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Ann'
+- id: hqa-3d8283db8678
+  query: Alvaro Mexia had a diplomatic mission with which tribe of indigenous people?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-a1c854f7f530::c000
+  - doc-hqa-61a52929f762::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Apalachees'
+- id: hqa-b9e1585b5ad8
+  query: What nationality were social anthropologists Alfred Gell and Edmund Leach?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-5f98663a13b8::c000
+  - doc-hqa-2d7c5ada254c::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: British'
+- id: hqa-836aeb200c4e
+  query: In which year was the King who made the 1925 Birthday Honours born?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-60cf5a311e2d::c000
+  - doc-hqa-9d6b29caad83::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: 1865'
+- id: hqa-7b4fdb8005b3
+  query: What is the county seat of the county where East Lempster, New Hampshire
+    is located?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-ccbb7ce0621a::c000
+  - doc-hqa-a2b1fac306bf::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Newport'
+- id: hqa-d998c56a3c18
+  query: The Album Against the Wind was the 11th Album of a Rock singer Robert C Seger
+    born may 6 1945. What was the Rock singers stage name ?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-44e8aa3759db::c000
+  - doc-hqa-4c68dd6b4e54::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Bob Seger'
+- id: hqa-f2b13606c80d
+  query: Rostker v. Goldberg held that the practice of what way of filling armed forces
+    vacancies was consitutional?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-a77ceb816c65::c000
+  - doc-hqa-a2ef6710be44::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Conscription'
+- id: hqa-eb8ac5b065a0
+  query: Handi-Snacks are a snack food product line sold by what American multinational
+    confectionery, food, and beverage company that is based in Illinois?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-42d29686e7b3::c000
+  - doc-hqa-e7341627cd03::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Mondelez International, Inc.'
+- id: hqa-7241114fa85f
+  query: 'What was the name of a woman from the book titled "Their Lives: The Women
+    Targeted by the Clinton Machine " and was also a former white house intern?'
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-2f6e436ba71c::c000
+  - doc-hqa-f83b68327652::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Monica Lewinsky'
+- id: hqa-3322a7583294
+  query: When was the American lawyer, lobbyist and political consultant who was a
+    senior member of the presidential campaign of Donald Trump born?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-1dd6b61d7e72::c000
+  - doc-hqa-87eb3c93842a::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: April 1, 1949'
+- id: hqa-27566ab93b57
+  query: "In what year was the novel that Louren\xE7o Mutarelli based \"Nina\" on\
+    \ based first published?"
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-a723fdbe0044::c000
+  - doc-hqa-4761c1e221f3::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: 1866'
+- id: hqa-867ca1fd7a1a
+  query: Where are Teide National Park and Garajonay National Park located?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-9e3585752648::c000
+  - doc-hqa-afa9f07bb239::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: Canary Islands, Spain'
+- id: hqa-2ebaec787d09
+  query: How many copies of Roald Dahl's variation on a popular anecdote sold?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-3033f3a739fb::c000
+  - doc-hqa-b12a5e4733ea::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: 250 million'
+- id: hqa-d82ea0a816db
+  query: What occupation do Chris Menges and Aram Avakian share?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-d465843b5bd4::c000
+  - doc-hqa-ad3bb12361f0::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: director'
+- id: hqa-2e857e3b2290
+  query: Andrew Jaspan was the co-founder of what not-for-profit media outlet?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-bf9678213990::c000
+  - doc-hqa-89c42ab91a35::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: The Conversation'
+- id: hqa-ac37d1f09998
+  query: Which American film director hosted the 18th Independent Spirit Awards in
+    2002?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-028112d4251d::c000
+  - doc-hqa-88e7f81245e2::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: John Waters'
+- id: hqa-91e25705fa02
+  query: Where does the hotel and casino located in which Bill Cosby's third album
+    was recorded?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-23629b900524::c000
+  - doc-hqa-666a0dc5f4db::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Las Vegas Strip in Paradise'
+- id: hqa-486646fcd95f
+  query: Do the drinks Gibson and Zurracapote both contain gin?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-0ba846ae57ab::c000
+  - doc-hqa-1be2f2ff03c4::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: no'
+- id: hqa-920320844c4e
+  query: In what month is the annual documentary film festival, that is presented
+    by the fortnightly published British journal of literary essays, held?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-b6f2dfe77620::c000
+  - doc-hqa-21a1d6557b86::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: March and April'
+- id: hqa-bfb075173400
+  query: Tysons Galleria is located in what county?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-f626b78bb795::c000
+  - doc-hqa-2d55f6f693eb::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Fairfax County'
+- id: hqa-cf2748433944
+  query: Bordan Tkachuk was the CEO of a company that provides what sort of products?
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-fcf441135e29::c000
+  - doc-hqa-60834e8ec136::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: IT products and services'
+- id: hqa-e3ac9e4f984b
+  query: Which filmmaker was known for animation, Lev Yilmaz or Pamela B. Green?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-970c07e4b693::c000
+  - doc-hqa-459876f06a86::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: Levni Yilmaz'
+- id: hqa-4d8dd91d2230
+  query: "In which city is the ambassador of the Rabat-Sal\xE9-K\xE9nitra administrative\
+    \ region to China based?"
+  user_id: alice.employee
+  query_type: hotpotqa_bridge
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-58dfc044861d::c000
+  - doc-hqa-e2b4555233b1::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA bridge/hard. Answer: Beijing'
+- id: hqa-479ac9b28caa
+  query: Are Yingkou and Fuding the same level of city?
+  user_id: alice.employee
+  query_type: hotpotqa_comparison
+  expected_route: R4
+  gold_chunks:
+  - doc-hqa-d55ca58ef630::c000
+  - doc-hqa-85f5a8d331d3::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HotpotQA comparison/hard. Answer: no'

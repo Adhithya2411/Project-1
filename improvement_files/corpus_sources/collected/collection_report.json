@@ -1,0 +1,66 @@
+{
+  "total_documents": 10,
+  "total_chars": 120638,
+  "sources": {
+    "Node.js Code of Conduct": {
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/CODE_OF_CONDUCT.md",
+      "license": "MIT",
+      "chars": 203,
+      "doc_type": "policy"
+    },
+    "Node.js Contributing Guide": {
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/CONTRIBUTING.md",
+      "license": "MIT",
+      "chars": 4654,
+      "doc_type": "policy"
+    },
+    "Node.js Security Policy": {
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/SECURITY.md",
+      "license": "MIT",
+      "chars": 37240,
+      "doc_type": "policy"
+    },
+    "Rust Code of Conduct": {
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/master/CODE_OF_CONDUCT.md",
+      "license": "MIT/Apache 2.0",
+      "chars": 131,
+      "doc_type": "policy"
+    },
+    "Rust Contributing Guide": {
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/master/CONTRIBUTING.md",
+      "license": "MIT/Apache 2.0",
+      "chars": 3110,
+      "doc_type": "policy"
+    },
+    "CPython Project Overview": {
+      "url": "https://raw.githubusercontent.com/python/cpython/main/README.rst",
+      "license": "PSF-2.0",
+      "chars": 8907,
+      "doc_type": "wiki"
+    },
+    "VS Code Contributing Guide": {
+      "url": "https://raw.githubusercontent.com/microsoft/vscode/main/CONTRIBUTING.md",
+      "license": "MIT",
+      "chars": 5703,
+      "doc_type": "policy"
+    },
+    "Go Contributing Guide": {
+      "url": "https://raw.githubusercontent.com/golang/go/master/CONTRIBUTING.md",
+      "license": "BSD-3-Clause",
+      "chars": 1337,
+      "doc_type": "policy"
+    },
+    "Go Security Policy": {
+      "url": "https://raw.githubusercontent.com/golang/go/master/SECURITY.md",
+      "license": "BSD-3-Clause",
+      "chars": 426,
+      "doc_type": "policy"
+    },
+    "NIST SP 800-63B: Authentication and Lifecycle Management": {
+      "url": "https://raw.githubusercontent.com/usnistgov/800-63-3/master/sp800-63b/sec5_authenticators.md",
+      "license": "Public Domain (US Government)",
+      "chars": 58927,
+      "doc_type": "policy"
+    }
+  }
+}

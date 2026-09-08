@@ -1,0 +1,387 @@
+items:
+- id: financebench-financebench_id_00499
+  query: Is 3M a capital-intensive business based on FY2022 data?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-c941f8b20c94::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00941
+  query: Which debt securities are registered to trade on a national securities exchange
+    under 3M's name as of Q2 of 2023?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-81078038aeb6::c005
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_01858
+  query: Does 3M maintain a stable trend of dividend distribution?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-81078038aeb6::c009
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00540
+  query: Roughly how many times has AES Corporation sold its inventory in FY2022?
+    Calculate inventory turnover ratio for the FY2022; if conventional inventory management
+    is not meaningful for the company then state that and explain why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-d3c3f90ade1d::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_01148
+  query: What industry does AMCOR primarily operate in?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-bd538fc4adec::c010
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00684
+  query: Does AMCOR have an improving gross margin profile as of FY2023? If gross
+    margin is not a useful metric for a company like this, then state that and explain
+    why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-bd538fc4adec::c016
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_01930
+  query: How much was the Real change in Sales for AMCOR in FY 2023 vs FY 2022, if
+    we exclude the impact of FX movement, passthrough costs and one-off items?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-33f60f794915::c004
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00995
+  query: What are the major products and services that AMD sells as of FY22?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-db431fa1a477::c008
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00563
+  query: From FY21 to FY22, excluding Embedded, in which AMD reporting segment did
+    sales proportionally increase the most?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-db431fa1a477::c021
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00757
+  query: Did AMD report customer concentration in FY22?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-db431fa1a477::c024
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00476
+  query: Which debt securities are registered to trade on a national securities exchange
+    under American Express' name as of 2022?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-c27c055ea429::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_01981
+  query: Was American Express able to retain card members during 2022?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-c27c055ea429::c026
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00685
+  query: Are Best Buy's gross margins historically consistent (not fluctuating more
+    than roughly 2% each year)? If gross margins are not a relevant metric for a company
+    like this, then please state that and explain why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-528b50a98a89::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00517
+  query: Are there any product categories / service categories that represent more
+    than 20% of Boeing's revenue for FY2022?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-067dd9394b37::c001
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00678
+  query: Does Boeing have an improving gross margin profile as of FY2022? If gross
+    margin is not a useful metric for a company like this, then state that and explain
+    why.
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-067dd9394b37::c009
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_01290
+  query: Who are the primary customers of Boeing as of FY2022?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-067dd9394b37::c015
+  - doc-financebench-067dd9394b37::c019
+  - doc-financebench-067dd9394b37::c024
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00464
+  query: Is Boeing's business subject to cyclicality?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-067dd9394b37::c012
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00494
+  query: What production rate changes is Boeing forecasting for FY2023?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-067dd9394b37::c034
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00585
+  query: How does Boeing's effective tax rate in FY2022 compare to FY2021?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-067dd9394b37::c009
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_01346
+  query: How much has the effective tax rate of Corning changed between FY2021 and
+    FY2022?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-f298812da620::c005
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_01107
+  query: Has CVS Health reported any materially important ongoing legal battles from
+    2022, 2021 and 2020?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-4de78cc32843::c010
+  - doc-financebench-4de78cc32843::c019
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_01244
+  query: Has CVS Health paid dividends to common shareholders in Q2 of FY2022?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-4de78cc32843::c024
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00956
+  query: Are JnJ's FY2022 financials that of a high growth company?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-3ebe0bf875ed::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_01484
+  query: How did JnJ's US sales growth compare to international sales growth in FY2022?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-f8b51f257b5d::c006
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_02119
+  query: If JPM went bankrupted by the end by 2021 Q1 and liquidated all of its assets
+    to pay its shareholders, how much could each shareholder get?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-fb39f16ca113::c003
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00382
+  query: Which region had the Highest EBITDAR Contribution for MGM during FY2022?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-747aad5dd951::c002
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_01912
+  query: Which region had the worst topline performance for MGM during FY2022?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-747aad5dd951::c013
+  - doc-financebench-747aad5dd951::c014
+  - doc-financebench-747aad5dd951::c015
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_01009
+  query: What are the geographies that Pepsico primarily operates in as of FY2022?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-73ac1ecdc17b::c005
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00735
+  query: Has Pepsico reported any materially important ongoing legal battles from
+    FY2022 and FY2021?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-73ac1ecdc17b::c014
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00302
+  query: Did Pfizer grow its PPNE between FY20 and FY21?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-4da391e4fcd1::c000
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00283
+  query: How much does Pfizer expect to pay to spin off Upjohn in the future in USD
+    million?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-9ca4aef656a5::c003
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00724
+  query: For Pfizer, which geographic region had the biggest drop in Q22023 year over
+    year revenues (on a percentage basis)?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-9ca4aef656a5::c014
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_02419
+  query: As of Q2'2023, is Pfizer spinning off any large business segments?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-9ca4aef656a5::c003
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00603
+  query: What drove the increase in Ulta Beauty's merchandise inventories balance
+    at end of FY2023?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-800131b23fd4::c005
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00605
+  query: What percent of Ulta Beauty's total spend on stock repurchases for FY 2023
+    occurred in Q4 of FY2023?
+  user_id: finance.analyst
+  query_type: finance_novel-generated
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-800131b23fd4::c006
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.
+- id: financebench-financebench_id_00215
+  query: Is Verizon a capital intensive business based on FY 2022 data?
+  user_id: finance.analyst
+  query_type: finance_domain-relevant
+  expected_route: R3
+  gold_chunks:
+  - doc-financebench-98574ce6c94d::c009
+  should_abstain: false
+  freshness_sensitive: false
+  notes: Evidence-linked from FinanceBench open-source annotation.

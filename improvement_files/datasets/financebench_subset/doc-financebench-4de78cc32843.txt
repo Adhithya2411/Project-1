@@ -1,0 +1,432 @@
+Index to Consolidated Financial Statements
+Consolidated Statements of Operations
+For the Years Ended December 31,
+In millions, except per share amounts
+2022
+2021
+2020
+Revenues:
+ 
+ 
+ 
+Products
+$
+226,616 $
+203,738 $
+190,688 
+Premiums
+85,330 
+76,132 
+69,364 
+Services
+9,683 
+11,042 
+7,856 
+Net investment income
+838 
+1,199 
+798 
+Total revenues
+322,467 
+292,111 
+268,706 
+Operating costs:
+Cost of products sold
+196,892 
+175,803 
+163,981 
+Benefit costs
+71,281 
+64,260 
+55,679 
+Opioid litigation charges
+5,803 
+ 
+ 
+Loss on assets held for sale
+2,533 
+ 
+ 
+Store impairments
+ 
+1,358 
+ 
+Goodwill impairment
+ 
+431 
+ 
+Operating expenses
+38,212 
+37,066 
+35,135 
+Total operating costs
+314,721 
+278,918 
+254,795 
+Operating income
+7,746 
+13,193 
+13,911 
+Interest expense
+2,287 
+2,503 
+2,907 
+Loss on early extinguishment of debt
+ 
+452 
+1,440 
+Other income
+(169)
+(182)
+(206)
+Income before income tax provision
+5,628 
+10,420 
+9,770 
+Income tax provision
+1,463 
+2,522 
+2,569 
+Income from continuing operations
+4,165 
+7,898 
+7,201 
+Loss from discontinued operations, net of tax
+ 
+ 
+(9)
+Net income
+4,165 
+7,898 
+7,192 
+Net (income) loss attributable to noncontrolling interests
+(16)
+12 
+(13)
+Net income attributable to CVS Health
+$
+4,149 $
+7,910 $
+7,179 
+Basic earnings per share:
+Income from continuing operations attributable to CVS Health
+$
+3.16 $
+6.00 $
+5.49 
+Loss from discontinued operations attributable to CVS Health
+$
+ $
+ $
+(0.01)
+Net income attributable to CVS Health
+$
+3.16 $
+6.00 $
+5.48 
+Weighted average basic shares outstanding
+1,312 
+1,319 
+1,309 
+Diluted earnings per share:
+Income from continuing operations attributable to CVS Health
+$
+3.14 $
+5.95 $
+5.47 
+Loss from discontinued operations attributable to CVS Health
+$
+ $
+ $
+(0.01)
+Net income attributable to CVS Health
+$
+3.14 $
+5.95 $
+5.46 
+Weighted average diluted shares outstanding
+1,323 
+1,329 
+1,314 
+Dividends declared per share
+$
+2.20 $
+2.00 $
+2.00 
+See accompanying notes to consolidated financial statements.
+106
+
+Index to Consolidated Financial Statements
+Consolidated Balance Sheets
+At December 31,
+In millions, except per share amounts
+2022
+2021
+Assets:
+ 
+Cash and cash equivalents
+$
+12,945 $
+9,408 
+Investments
+2,778 
+3,117 
+Accounts receivable, net
+27,276 
+24,431 
+Inventories
+19,090 
+17,760 
+Assets held for sale
+908 
+ 
+Other current assets
+2,685 
+5,292 
+Total current assets
+65,682 
+60,008 
+Long-term investments
+21,096 
+23,025 
+Property and equipment, net
+12,873 
+12,896 
+Operating lease right-of-use assets
+17,872 
+19,122 
+Goodwill
+78,150 
+79,121 
+Intangible assets, net
+24,754 
+29,026 
+Separate accounts assets
+3,228 
+5,087 
+Other assets
+4,620 
+4,714 
+Total assets
+$
+228,275 $
+232,999 
+Liabilities:
+Accounts payable
+$
+14,838 $
+12,544 
+Pharmacy claims and discounts payable
+19,423 
+17,330 
+Health care costs payable
+10,406 
+8,808 
+Policyholders funds
+1,500 
+4,301 
+Accrued expenses
+18,745 
+17,670 
+Other insurance liabilities
+1,140 
+1,303 
+Current portion of operating lease liabilities
+1,678 
+1,646 
+Current portion of long-term debt
+1,778 
+4,205 
+Liabilities held for sale
+228 
+ 
+Total current liabilities
+69,736 
+67,807 
+Long-term operating lease liabilities
+16,800 
+18,177 
+Long-term debt
+50,476 
+51,971 
+Deferred income taxes
+3,880 
+6,270 
+Separate accounts liabilities
+3,228 
+5,087 
+Other long-term insurance liabilities
+6,108 
+6,402 
+Other long-term liabilities
+6,732 
+1,904 
+Total liabilities
+156,960 
+157,618 
+Commitments and contingencies (Note 16)
+Shareholders equity:
+Preferred stock, par value $0.01: 0.1 shares authorized; none issued or outstanding
+ 
+ 
+Common stock, par value $0.01: 3,200 shares authorized; 1,758 shares issued and 1,300 shares outstanding at
+December 31, 2022 and 1,744 shares issued and 1,322 shares outstanding at December 31, 2021 and capital
+surplus
+48,193 
+47,377 
+Treasury stock, at cost: 458 and 422 shares at December 31, 2022 and 2021
+(31,858)
+(28,173)
+Retained earnings
+56,145 
+54,906 
+Accumulated other comprehensive income (loss)
+(1,465)
+965 
+Total CVS Health shareholders equity
+71,015 
+75,075 
+Noncontrolling interests
+300 
+306 
+Total shareholders equity
+71,315 
+75,381 
+Total liabilities and shareholders equity
+$
+228,275 $
+232,999 
+See accompanying notes to consolidated financial statements.
+108
+
+to be class actions and/or involve parties seeking large and/or indeterminate amounts, including punitive or exemplary damages, and may remain unresolved
+for several years. The Company also may be named from time to time in qui tam actions initiated by private third parties that could also be separately pursued
+by a governmental body. The results of legal proceedings, including government investigations, are often uncertain and difficult to predict, and the costs
+incurred in these matters can be substantial, regardless of the outcome.
+The Company records accruals for outstanding legal matters when it believes it is probable that a loss will be incurred and the amount can be reasonably
+estimated. The Company evaluates, on a quarterly basis, developments in legal matters that could affect the amount of any accrual and developments that
+would make a loss contingency both probable and reasonably estimable. If a loss contingency is not both probable and reasonably estimable, the Company
+does not establish an accrued liability. None of the Companys accruals for outstanding legal matters are material individually or in the aggregate to the
+Companys financial condition.
+Except as otherwise noted, the Company cannot predict with certainty the timing or outcome of the legal matters described below, and the Company is unable
+to reasonably estimate a possible loss or range of possible loss in excess of amounts already accrued for these matters. The Company believes that its defenses
+and assertions in pending legal proceedings have merit and does not believe that any of these pending matters, after consideration of applicable reserves and
+rights to indemnification, will have a material adverse effect on the Companys financial position. Substantial unanticipated verdicts, fines and rulings,
+however, do sometimes occur, which could result in judgments against the Company, entry into settlements or a revision to its expectations regarding the
+outcome of certain matters, and such developments could have a material adverse effect on its results of operations. In addition, as a result of governmental
+investigations or proceedings, the Company may be subject to damages, civil or criminal fines or penalties, or other sanctions including possible suspension or
+loss of licensure and/or exclusion from participating in government programs. The outcome of such governmental investigations of proceedings could be
+material to the Company.
+Usual and Customary Pricing Litigation
+The Company and certain current and former directors and officers are named as a defendant in a number of lawsuits that allege that the Companys retail
+pharmacies overcharged for prescription drugs by not submitting the correct usual and customary price during the claims adjudication process. These actions
+are brought by a number of different types of plaintiffs, including plan members, private payors, government payors, and shareholders based on different legal
+theories. Some of these cases are brought as putative class actions, and in some instances, classes have been certified. In October 2022, one of the litigating
+shareholders made a litigation demand to the Board related to these and other issues after his amended derivative complaint was dismissed for failing to
+demonstrate demand futility. The Company is defending itself against these claims.
+PBM Litigation and Investigations
+The Company is named as a defendant in a number of lawsuits and is subject to a number of investigations concerning its PBM practices.
+The Company is facing multiple lawsuits, including by state Attorneys General, governmental subdivisions and several putative class actions, regarding drug
+pricing and its rebate arrangements with drug manufacturers. These complaints, brought by a number of different types of plaintiffs under a variety of legal
+theories, generally allege that rebate agreements between the drug manufacturers and PBMs caused inflated prices for certain drug products. The Company is
+defending itself against these claims. The Company has also received subpoenas, civil investigative demands (CIDs), and other requests for documents and
+information from, and is being investigated by, the FTC and Attorneys General of several states and the District of Columbia regarding its PBM practices,
+including pricing and rebates. The Company has been providing documents and information in response to these subpoenas, CIDs, and requests for
+information.
+United States ex rel. Behnke v. CVS Caremark Corporation, et al. (U.S. District Court for the Eastern District of Pennsylvania). In April 2018, the Court
+unsealed a complaint filed in February 2014. The government has declined to intervene in this case. The relator alleges that the Company submitted, or caused
+to be submitted, to Part D of the Medicare program Prescription Drug Event data and/or Direct and Indirect Remuneration reports that misrepresented true
+prices paid by the Companys PBM to pharmacies for drugs dispensed to Part D beneficiaries with prescription benefits administered by the Companys PBM.
+The Company is defending itself against these claims.
+171
+
+Controlled Substances Litigation, Audits and Subpoenas
+In December 2017, the U.S. Judicial Panel on Multidistrict Litigation consolidated numerous cases filed against various defendants by plaintiffs such as
+counties, cities, hospitals, Indian tribes and third-party payors, alleging claims beginning as far back as the early 2000s generally concerning the impacts of
+widespread prescription opioid abuse. The consolidated multidistrict litigation captioned In re National Prescription Opiate Litigation (MDL No. 2804) is
+pending in the U.S. District Court for the Northern District of Ohio. This multidistrict litigation presumptively includes hundreds of relevant federal court cases
+that name the Company as a defendant. A significant number of similar cases that name the Company as a defendant in some capacity are pending in state
+courts.
+In addition, the Company has been named as a defendant in similar cases brought by certain state Attorneys General. The Company is defending itself against
+all such claims. Additionally, the Company has received subpoenas, CIDs, and/or other requests for information regarding opioids from state Attorneys General
+and insurance and other regulators of several U.S. jurisdictions. The Company has been cooperating with the government with respect to these subpoenas,
+CIDs, and other requests for information.
+In November 2021, the Company was among the chain pharmacies found liable by a jury in a trial in federal court in Ohio; in August 2022, the court issued a
+judgment jointly against the three defendants in the amount of $651 million to be paid over 15 years, and also ordered certain injunctive relief. The Company is
+appealing the judgment and has not accrued a liability for this matter. In March 2022, CVS Health Corporation and CVS Pharmacy, Inc. entered into a
+settlement agreement with the State of Florida to resolve claims related to opioid medications dating back more than a decade. Under the terms of the
+settlement agreement, CVS Health Corporation settled all opioid claims against it and its subsidiaries by the State of Florida for $484 million, which is to be
+paid over a period of 18 years. During the three months ended March 31, 2022, the Company recorded a $484 million liability associated with this legal
+settlement. In August 2022, CVS Pharmacy, Inc. entered into an agreement with the State of New Mexico to settle all opioid claims against it and its parents
+and subsidiaries by the State of New Mexico and participating subdivisions. In September 2022, CVS Pharmacy, Inc. entered into an agreement with the State
+of West Virginia to settle all opioid claims against it and its parents and subsidiaries by the State of West Virginia and participating subdivisions. Also in
+September 2022, CVS Pharmacy, Inc. entered into an agreement with the Cherokee Nation to settle all opioid claims against it and its parents and subsidiaries
+by the Cherokee Nation.
+In December 2022, the Company agreed to a formal settlement agreement, the financial amounts of which were agreed to in principle in October 2022, with a
+leadership group of a number of state Attorneys General and the Plaintiffs Executive Committee (PEC). The agreement would resolve substantially all
+opioid claims against Company entities by states and political subdivisions, but not private plaintiffs. The maximum amount payable by the Company under the
+settlement would be approximately $4.3 billion in opioid remediation and $625 million in attorneys fees and costs and additional remediation. The amounts
+would be payable over 10 years, beginning in 2023. The agreement also contains injunctive terms relating to the dispensing of opioid medications. The
+settlement agreement is available at nationalopioidsettlement.com.
+Under the settlement agreement, before the Company determines whether to enter into any final settlement, it will assess the number and identities of the
+governmental entities that will participate in any such settlement. The settlement agreement contemplates that if certain governmental entities do not agree to
+the settlement, but the Company nonetheless concludes that there is sufficient participation to warrant going forward with the settlement, there would be a
+corresponding reduction in the amount due from the Company to account for the governmental entities that did not agree. Those non-participating
+governmental entities would be entitled to pursue their claims against the Company and other defendants. Private plaintiff litigation will also continue.
+The Company has been informed that 45 states, the District of Columbia, and all eligible United States territories have elected to join the settlement. Three
+states were the subject of earlier settlements. The Company has elected to proceed with the settlement process based on that level of participation. The
+settlement process will progress to the period during which subdivisions may elect to join.
+In December 2022, the Company also agreed to a formal settlement agreement with a leadership group representing tribes throughout the United States. The
+agreement would resolve substantially all opioid claims against Company entities by such tribes. The maximum amount payable by the Company under the
+settlement would be $113 million in opioid remediation and $18 million in attorneys fees and costs. The amounts would be payable over 10 years, beginning
+in 2023. The agreement is contingent upon sufficient participation by tribes.
+172
+
+Table of Contents
+PART II
+Item 5. Market for Registrants Common Equity, Related Stockholder Matters and Issuer Purchases of Equity Securities.
+Market Information
+CVS Health Corporations common stock is listed on the New York Stock Exchange under the symbol CVS.
+Dividends
+During 2022, 2021 and 2020, the quarterly cash dividend was $0.55, $0.50 and $0.50 per share, respectively. In December 2022, the Board authorized a 10%
+increase in the quarterly cash dividend to $0.605 per share effective in 2023. CVS Health Corporation has paid cash dividends every quarter since becoming a
+public company. Future dividends will depend on the Companys earnings, capital requirements, financial condition and other factors considered relevant by
+the Board.
+See Note 12 Shareholders Equity included in Item 8 of this 10-K for information regarding CVS Health Corporations dividends.
+Holders of Common Stock
+As of February 1, 2023, there were 24,142 registered holders of the registrants common stock according to the records maintained by the registrants transfer
+agent.
+Issuer Purchases of Equity Securities
+The following share repurchase programs have been authorized by the Board:
+In billions
+Authorization Date
+Authorized
+Remaining as of
+December 31, 2022
+November 17, 2022 (2022 Repurchase Program)
+$
+10.0 
+$
+10.0 
+December 9, 2021 (2021 Repurchase Program)
+10.0 
+6.5 
+Each of the share Repurchase Programs was effective immediately and permit the Company to effect repurchases from time to time through a combination of
+open market repurchases, privately negotiated transactions, accelerated share repurchase (ASR) transactions, and/or other derivative transactions. Both the
+2022 and 2021 Repurchase Programs can be modified or terminated by the Board at any time.
+During the year ended December 31, 2022, the Company repurchased an aggregate of 34.1 million shares of common stock for approximately $3.5 billion
+pursuant to the 2021 Repurchase Program, including share repurchases under the $1.5 billion fixed dollar ASR transaction described below. During the years
+ended December 31, 2021 and 2020, the Company did not repurchase any shares of common stock.
+Pursuant to the authorization under the 2021 Repurchase Program, the Company entered into a $2.0 billion fixed dollar ASR with Citibank, N.A. (Citibank).
+Upon payment of the $2.0 billion purchase price on January 4, 2023, the Company received a number of shares of CVS Health Corporations common stock
+equal to 80% of the $2.0 billion notional amount of the ASR or approximately 17.4 million shares at a price of $92.19 per share, which were placed into
+treasury stock in January 2023. At the conclusion of the ASR, the Company may receive additional shares representing the remaining 20% of the $2.0 billion
+notional amount. The ultimate number of shares the Company may receive will depend on the daily volume-weighted average price of the Companys stock
+over an averaging period, less a discount. It is also possible, depending on such weighted average price, that the Company will have an obligation to Citibank
+which, at the Companys option, could be settled in additional cash or by issuing shares. Under the terms of the ASR, the maximum number of shares that
+could be delivered to the Company is 43.4 million.
+Pursuant to the authorization under the 2021 Repurchase Program, the Company entered into a $1.5 billion fixed dollar ASR with Barclays Bank PLC. Upon
+payment of the $1.5 billion purchase price on January 4, 2022, the Company received a number of shares of CVS Health Corporations common stock equal to
+80% of the $1.5 billion notional amount of the ASR or approximately 11.6 million shares at a price of $103.34 per share, which were placed into treasury stock
+in January 2022. The
+66

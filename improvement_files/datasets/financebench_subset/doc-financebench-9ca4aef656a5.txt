@@ -1,0 +1,225 @@
+ITEM 2. MANAGEMENTS DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF
+OPERATIONS
+GENERAL
+The following MD&A is intended to assist the reader in understanding our financial condition and results of operations, including an evaluation of the amounts
+and certainty of cash flows from operations and from outside sources, and is provided as a supplement to and should be read in conjunction with the condensed
+consolidated financial statements and related notes in Item 1. Financial Statements in this Form 10-Q.
+References to operational variances pertain to period-over-period changes that exclude the impact of foreign exchange rates. Although foreign exchange rate
+changes are part of our business, they are not within our control and because they can mask positive or negative trends in the business, we believe presenting
+operational variances excluding these foreign exchange changes provides useful information to evaluate our results.
+OVERVIEW OF OUR PERFORMANCE, OPERATING ENVIRONMENT, STRATEGY AND OUTLOOK
+Our Business and StrategyPfizer Inc. is a research-based, global biopharmaceutical company. We apply science and our global resources to bring therapies
+to people that extend and significantly improve their lives. In 2023, we are making additional investments in both R&D and SI&A to support Pfizers near- and
+longer-term growth plans, including to support anticipated new launches, commercial launch of COVID-19 products, potential pipeline programs and recently
+acquired assets. We manage our commercial operations through a global structure consisting of two operating segments: Biopharma and Business Innovation.
+Biopharma is the only reportable segment. See Note 13A.
+We expect to incur costs of approximately $700 million in connection with separating Upjohn, of which approximately 90% has been incurred since inception
+and through the second quarter of 2023. These charges include costs and expenses related to separation of legal entities and transaction costs.
+In the fourth quarter of 2022, we began taking steps through our Transforming to a More Focused Company restructuring program to optimize our end-to-end
+R&D operations to reduce costs and cycle times as well as to further prioritize our internal R&D portfolio in areas where our capabilities are differentiated
+while increasing external innovation efforts to leverage an expanding and productive biotech sector. See Note 3. For a description of savings related to this
+program, see the Costs and ExpensesRestructuring Charges and Other Costs Associated with Acquisitions and Cost-Reduction/Productivity Initiatives
+section within MD&A.
+In July 2023, we announced that in consideration of planned future investments in oncology, including the proposed acquisition of Seagen, we are reorganizing
+how our R&D operations are conducted. Beginning in July 2023, discovery to early- and late-phase clinical development for oncology will be performed by a
+new end-to-end Oncology Research and Development platform function and discovery to early- and late-phase clinical development for all remaining
+therapeutic areas will be consolidated in the Pfizer Research and Development platform function.
+For additional information about our business, strategy and operating environment, see the Item 1. Business section and Overview of Our Performance,
+Operating Environment, Strategy and Outlook section within MD&A of our 2022 Form 10-K.
+Our Business Development InitiativesWe are committed to strategically capitalizing on growth opportunities, primarily by advancing our own product
+pipeline and maximizing the value of our existing products, but also through various business development activities. Our significant recent business
+development activities include the transactions discussed in Notes 1A and 2, including the proposed acquisition of Seagen, as well as the following:
+Proposed Divestiture of Early-Stage Rare Disease Gene Therapy PortfolioIn July 2023, we entered into an agreement with Alexion, a subsidiary of
+AstraZeneca plc, under which Alexion will purchase and license the assets of our early-stage rare disease gene therapy portfolio. This agreement is consistent
+with our previously announced strategy to pivot from viral capsid-based gene therapy approaches to harnessing new platform technologies that we believe can
+have a transformative impact on patients, such as mRNA or in vivo gene editing. Under the terms of the agreement, Alexion will pay us total consideration of
+up to $1 billion, plus tiered royalties based on annual net sales of the assets. The transaction is expected to close in the third quarter of 2023, subject to
+customary closing conditions.
+Agreement with Flagship Pioneering, Inc. (Flagship)In July 2023, we and Flagship announced that we have partnered to create a new pipeline of innovative
+medicines. Under the terms of the novel agreement, we and Flagship will each invest $50 million upfront to explore opportunities to develop 10 single-asset
+programs by leveraging Flagships ecosystem of more than 40 human health companies and multiple biotechnology platforms. Pfizer will fund and have an
+option to acquire each selected development program. Flagship and its bioplatform companies will be eligible to receive up to $700 million in milestones and
+royalties for each successfully commercialized program.
+38
+
+PFIZER INC. AND SUBSIDIARY COMPANIES.
+NOTES TO CONDENSED CONSOLIDATED FINANCIAL STATEMENTS
+(UNAUDITED)
+Segment AssetsWe manage our assets on a total company basis, not by operating segment, as our operating assets are shared or commingled. Therefore, our
+chief operating decision maker does not regularly review any asset information by operating segment and, accordingly, we do not report asset information by
+operating segment. Total assets were $220 billion as of July 2, 2023 and $197 billion as of December 31, 2022.
+Selected Income Statement Information
+The following provides selected income statement information by reportable segment:
+Three Months Ended
+Six Months Ended
+ 
+Revenues
+Earnings
+Revenues
+Earnings
+(MILLIONS)
+July 2,
+2023
+July 3,
+2022
+July 2,
+2023
+July 3,
+2022
+July 2,
+2023
+July 3,
+2022
+July 2,
+2023
+July 3,
+2022
+Reportable Segment:
+Biopharma
+$
+12,418 
+$
+27,425 
+$
+7,003 
+$
+17,166 
+$
+30,389 
+$
+52,748 
+$
+17,939 
+$
+30,557 
+Other business activities
+316 
+317 
+(2,871)
+(3,384)
+626 
+655 
+(5,605)
+(5,812)
+Reconciling Items:
+Amortization of intangible assets
+(1,184)
+(822)
+(2,287)
+(1,657)
+Acquisition-related items
+(387)
+(82)
+(550)
+(269)
+Certain significant items
+(293)
+(1,431)
+(958)
+(2,322)
+$
+12,734 
+$
+27,742 
+$
+2,269 
+$
+11,447 
+$
+31,015 
+$
+53,402 
+$
+8,539 
+$
+20,497 
+Income from continuing operations before provision/(benefit) for taxes on income. Biopharmas earnings include dividend income from our investment in ViiV of $91 million in the second quarter
+of 2023 and $69 million in the second quarter of 2022, and $183 million in the first six months of 2023 and $125 million in the first six months of 2022. In connection with the organizational
+changes effective in the third quarter of 2022, certain functions transferred between Biopharma and corporate enabling functions and certain activities were realigned within the GPD organization.
+We have reclassified $58 million of costs in the second quarter of 2022 and $105 million in the first six months of 2022 from corporate enabling functions, which are included in Other business
+activities, to Biopharma to conform to the current period presentation.
+Other business activities include revenues and costs associated with Business Innovation and costs that we do not allocate to our operating segments, per above, including acquired IPR&D
+expenses in the periods presented. Earnings in the second quarter and first six months of 2023 include approximately $140 million and $260 million, respectively, of write-offs to Cost of sales of
+inventory related to COVID-19 products that exceeded or were expected to exceed their approved shelf-lives prior to being used. Earnings in the second quarter and first six months of 2022
+included a $450 million write-off to Cost of sales of inventory related to COVID-19 products that exceeded or were expected to exceed their approved shelf-lives prior to being used.
+Certain significant items are substantive and/or unusual, and in some cases recurring, items (as noted above). Earnings in the second quarter and first six months of 2022 included, among other
+items, net losses on equity securities of $539 million and $1.2 billion, respectively, recorded in Other (income)/deductionsnet. See Note 4.
+B. Geographic Information
+The following summarizes revenues by geographic area:
+ 
+Three Months Ended
+Six Months Ended
+(MILLIONS)
+July 2,
+2023
+July 3,
+2022
+%
+Change
+July 2,
+2023
+July 3,
+2022
+%
+Change
+United States
+$
+6,185 
+$
+11,222 
+(45)
+$
+14,692 
+$
+20,140 
+(27)
+Developed Europe
+2,415 
+5,480 
+(56)
+5,236 
+11,569 
+(55)
+Developed Rest of World
+1,305 
+5,034 
+(74)
+3,778 
+8,320 
+(55)
+Emerging Markets
+2,828 
+6,006 
+(53)
+7,308 
+13,373 
+(45)
+Revenues
+$
+12,734 
+$
+27,742 
+(54)
+$
+31,015 
+$
+53,402 
+(42)
+In May 2023, we and our collaboration partner, BioNTech, amended our contract with the EC to deliver COVID-19 vaccines to the EU. The amended
+agreement includes rephasing of delivery of doses annually through 2026 and an aggregate volume reduction, providing additional flexibility for EU member
+states. The EC will maintain access to future adapted COVID-19 vaccines and the ability to donate doses, in alignment with the original agreement. See Note
+13C.
+C. Other Revenue Information
+Significant CustomersFor information on our significant wholesale customers, see Note 17C in our 2022 Form 10-K. Additionally, revenues from the U.S.
+government represented 1% and 9% of total revenues for the three and six months ended July 2, 2023, respectively, and 26% and 22% of total revenues for the
+three and six months ended July 3, 2022, respectively. Accounts receivable from the U.S. government represented less than 1% and 4% of total trade accounts
+receivable as of July 2, 2023 and December 31, 2022, respectively. Revenues and accounts receivable from the U.S. government primarily represent sales of
+Paxlovid and Comirnaty.
+(a)
+(a)
+(b)
+(c)
+(a)
+(b)
+(c)
+35

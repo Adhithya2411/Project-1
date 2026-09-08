@@ -1,0 +1,765 @@
+Consolidated Statements of Earnings
+$ and shares in millions, except per share amounts
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fiscal Years Ended
+January 28, 2023
+ 
+January 29, 2022
+ 
+January 30, 2021
+Revenue
+$
+ 46,298 
+ 
+$
+ 51,761 
+ 
+$
+ 47,262 
+Cost of sales
+ 
+ 36,386 
+ 
+ 
+ 40,121 
+ 
+ 
+ 36,689 
+Gross profit
+ 
+ 9,912 
+ 
+ 
+ 11,640 
+ 
+ 
+ 10,573 
+Selling, general and administrative expenses
+ 
+ 7,970 
+ 
+ 
+ 8,635 
+ 
+ 
+ 7,928 
+Restructuring charges
+ 
+ 147 
+ 
+ 
+ (34) 
+ 
+ 
+ 254 
+Operating income
+ 
+ 1,795 
+ 
+ 
+ 3,039 
+ 
+ 
+ 2,391 
+Other income (expense):
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Investment income and other
+ 
+ 28 
+ 
+ 
+ 10 
+ 
+ 
+ 38 
+Interest expense
+ 
+ (35) 
+ 
+ 
+ (25) 
+ 
+ 
+ (52) 
+Earnings before income tax expense and equity in income of affiliates
+ 
+ 1,788 
+ 
+ 
+ 3,024 
+ 
+ 
+ 2,377 
+Income tax expense
+ 
+ 370 
+ 
+ 
+ 574 
+ 
+ 
+ 579 
+Equity in income of affiliates
+ 
+ 1 
+ 
+ 
+ 4 
+ 
+ 
+ - 
+Net earnings
+$
+ 1,419 
+ 
+$
+ 2,454 
+ 
+$
+ 1,798 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Basic earnings per share
+$
+ 6.31 
+ 
+$
+ 9.94 
+ 
+$
+ 6.93 
+Diluted earnings per share
+$
+ 6.29 
+ 
+$
+ 9.84 
+ 
+$
+ 6.84 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Weighted-average common shares outstanding:
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Basic
+ 
+ 224.8 
+ 
+ 
+ 246.8 
+ 
+ 
+ 259.6 
+Diluted
+ 
+ 225.7 
+ 
+ 
+ 249.3 
+ 
+ 
+ 263.0 
+ 
+See Notes to Consolidated Financial Statements.
+ 
+ 
+40
+
+Vendor Allowances
+ 
+We receive funds from our merchandise vendors through a variety of programs and arrangements, primarily in the form of purchases-based or sales-based 
+volumes and for product advertising and placement. We recognize allowances based on purchases and sales as a reduction of cost of sales when the associated 
+inventory is sold. Allowances for advertising and placement are recognized as a reduction of cost of sales ratably over the corresponding performance period. 
+Funds that are determined to be a reimbursement of specific, incremental and identifiable costs incurred to sell a vendors products are recorded as an offset to 
+the related expense within SG&A when incurred.
+ 
+Advertising Costs
+ 
+Advertising costs, which are included in SG&A, are expensed the first time the advertisement runs. Advertising costs consist primarily of digital advertisements. 
+Advertising expenses were $864 million, $915 million and $819 million in fiscal 2023, fiscal 2022 and fiscal 2021, respectively.
+ 
+Stock-Based Compensation
+ 
+We recognize stock-based compensation expense for the fair value of our stock-based compensation awards, which is determined based on the closing market 
+price of our stock at the date of grant for time-based and performance-based share awards, and Monte-Carlo simulation for market-based share awards. 
+Compensation expense is recognized on a straight-line basis over the period in which services are required, except for performance-based share awards that 
+vest on a graded basis, in which case the expense is front-loaded or recognized on a graded-attribution basis. Forfeitures are expensed as incurred or upon 
+termination.
+ 
+Comprehensive Income (Loss)
+ 
+Comprehensive income (loss) is computed as net earnings plus certain other items that are recorded directly to shareholders equity.
+ 
+2. Acquisitions
+ 
+Current Health Ltd.
+ 
+In fiscal 2022, we acquired all of the outstanding shares of Current Health Ltd. (Current Health), a care-at-home technology platform, on November 2, 2021, for 
+net cash consideration of $389 million. The acquired assets included $351 million of goodwill that was assigned to our Best Buy Health reporting unit and was 
+deductible for income tax purposes. The acquisition is aligned with our focus in virtual care to enable people in their homes to connect seamlessly with their 
+health care providers and is included in our Domestic reportable segment and Services revenue category. The acquisition was accounted for using the 
+acquisition method of accounting for business combinations and was not material to the results of operations.
+ 
+Two Peaks, LLC d/b/a Yardbird Furniture
+ 
+In fiscal 2022, we acquired all of the outstanding shares of Two Peaks, LLC d/b/a Yardbird Furniture (Yardbird), a direct-to-consumer outdoor furniture company, 
+on November 4, 2021, for net cash consideration of $79 million. The acquired assets included $47 million of goodwill that was assigned to our Best Buy Domestic 
+reporting unit and was deductible for income tax purposes. The acquisition expands our assortment in categories like outdoor living, as more and more 
+consumers look to make over or upgrade their outdoor living spaces. The acquisition was accounted for using the acquisition method of accounting for business 
+combinations and was not material to the results of our operations.
+ 
+3. Restructuring
+ 
+ 
+Restructuring charges were as follows ($ in millions):
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2023
+ 
+2022
+ 
+2021
+Fiscal 2023 Resource Optimization Initiative
+ 
+ 
+$
+ 145 
+ 
+$
+ - 
+ 
+$
+ - 
+Mexico Exit and Strategic Realignment(1)
+ 
+ 
+ 
+ 2 
+ 
+ 
+ (41) 
+ 
+ 
+ 277 
+Fiscal 2020 U.S. Retail Operating Model Changes
+ 
+ -
+ 
+ 
+ 1 
+ 
+ 
+ -
+ 
+Total
+ 
+ 
+ 
+ 
+ 
+$
+ 147 
+ 
+$
+ (40) 
+ 
+$
+ 277 
+ 
+(1)
+Includes ($6) million and $23 million related to inventory markdowns recorded in Cost of sales on our Consolidated Statements of Earnings in fiscal 2022 and fiscal 2021, respectively.
+ 
+Fiscal 2023 Resource Optimization Initiative
+ 
+In light of ongoing changes in business trends, during the second quarter of fiscal 2023, we commenced an enterprise-wide initiative to better align our spending 
+with critical strategies and operations, as well as to optimize our cost structure. Charges incurred relate to employee termination benefits within our Domestic and 
+International segments of $140 million and $5 million, respectively. We currently do not expect the remaining charges in fiscal 2024 related to this initiative to be 
+material to the results of our operations.
+ 
+All charges incurred related to this initiative were from continuing operations and were presented within Restructuring charges on our Consolidated Statements of 
+Earnings. 
+ 
+51
+
+Consolidated Statements of Cash Flows
+$ in millions
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fiscal Years Ended
+January 28, 2023
+ 
+January 29, 2022
+ 
+January 30, 2021
+Operating activities
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Net earnings
+$
+ 1,419 
+ 
+$
+ 2,454 
+ 
+$
+ 1,798 
+ 
+Adjustments to reconcile net earnings to total cash provided by operating activities:
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Depreciation and amortization
+ 
+ 918 
+ 
+ 
+ 869 
+ 
+ 
+ 839 
+Restructuring charges
+ 
+ 147 
+ 
+ 
+ (34) 
+ 
+ 
+ 254 
+Stock-based compensation
+ 
+ 138 
+ 
+ 
+ 141 
+ 
+ 
+ 135 
+Deferred income taxes
+ 
+ 51 
+ 
+ 
+ 14 
+ 
+ 
+ (36) 
+Other, net
+ 
+ 12 
+ 
+ 
+ 11 
+ 
+ 
+ 3 
+Changes in operating assets and liabilities, net of acquired assets and liabilities:
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Receivables
+ 
+ (103) 
+ 
+ 
+ 17 
+ 
+ 
+ 73 
+Merchandise inventories
+ 
+ 809 
+ 
+ 
+ (328) 
+ 
+ 
+ (435) 
+Other assets
+ 
+ (21) 
+ 
+ 
+ (14) 
+ 
+ 
+ (51) 
+Accounts payable
+ 
+ (1,099) 
+ 
+ 
+ (201) 
+ 
+ 
+ 1,676 
+Income taxes
+ 
+ 36 
+ 
+ 
+ (156) 
+ 
+ 
+ 173 
+Other liabilities
+ 
+ (483) 
+ 
+ 
+ 479 
+ 
+ 
+ 498 
+Total cash provided by operating activities
+ 
+ 1,824 
+ 
+ 
+ 3,252 
+ 
+ 
+ 4,927 
+Investing activities
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Additions to property and equipment, net of $35, $46 and $32, respectively, of non-cash 
+capital expenditures
+ 
+ (930) 
+ 
+ 
+ (737) 
+ 
+ 
+ (713) 
+Purchases of investments
+ 
+ (46) 
+ 
+ 
+ (233) 
+ 
+ 
+ (620) 
+Sales of investments
+ 
+ 7 
+ 
+ 
+ 66 
+ 
+ 
+ 546 
+Acquisitions, net of cash acquired
+ 
+ - 
+ 
+ 
+ (468) 
+ 
+ 
+ - 
+Other, net
+ 
+ 7 
+ 
+ 
+ - 
+ 
+ 
+ (1) 
+Total cash used in investing activities
+ 
+ (962) 
+ 
+ 
+ (1,372) 
+ 
+ 
+ (788) 
+Financing activities
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Repurchase of common stock
+ 
+ (1,014) 
+ 
+ 
+ (3,502) 
+ 
+ 
+ (312) 
+Issuance of common stock
+ 
+ 16 
+ 
+ 
+ 29 
+ 
+ 
+ 28 
+Dividends paid
+ 
+ (789) 
+ 
+ 
+ (688) 
+ 
+ 
+ (568) 
+Borrowings of debt
+ 
+ - 
+ 
+ 
+ - 
+ 
+ 
+ 1,892 
+Repayments of debt
+ 
+ (19) 
+ 
+ 
+ (133) 
+ 
+ 
+ (1,916) 
+Other, net
+ 
+ - 
+ 
+ 
+ (3) 
+ 
+ 
+ - 
+Total cash used in financing activities
+ 
+ (1,806) 
+ 
+ 
+ (4,297) 
+ 
+ 
+ (876) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Effect of exchange rate changes on cash
+ 
+ (8) 
+ 
+ 
+ (3) 
+ 
+ 
+ 7 
+Increase (decrease) in cash, cash equivalents and restricted cash
+ 
+ (952) 
+ 
+ 
+ (2,420) 
+ 
+ 
+ 3,270 
+Cash, cash equivalents and restricted cash at beginning of period
+ 
+ 3,205 
+ 
+ 
+ 5,625 
+ 
+ 
+ 2,355 
+Cash, cash equivalents and restricted cash at end of period
+$
+ 2,253 
+ 
+$
+ 3,205 
+ 
+$
+ 5,625 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Supplemental cash flow information
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Income taxes paid
+$
+ 283 
+ 
+$
+ 716 
+ 
+$
+ 442 
+Interest paid
+$
+ 31 
+ 
+$
+ 22 
+ 
+$
+ 50 
+ 
+See Notes to Consolidated Financial Statements.
+ 
+ 
+42

@@ -1,0 +1,112 @@
+documents:
+- doc_id: doc-pub-bacda842f062
+  path: corpus/doc-pub-bacda842f062.md
+  title: Node.js Code of Conduct
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 3
+- doc_id: doc-pub-9a4ef226f851
+  path: corpus/doc-pub-9a4ef226f851.md
+  title: Node.js Contributing Guide
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 3
+- doc_id: doc-pub-06b6c9697adf
+  path: corpus/doc-pub-06b6c9697adf.md
+  title: Node.js Security Policy
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 3
+- doc_id: doc-pub-e582b090cc9c
+  path: corpus/doc-pub-e582b090cc9c.md
+  title: Rust Code of Conduct
+  doc_type: policy
+  owner: Rust Foundation
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 3
+- doc_id: doc-pub-6f090465843a
+  path: corpus/doc-pub-6f090465843a.md
+  title: Rust Contributing Guide
+  doc_type: policy
+  owner: Rust Foundation
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 3
+- doc_id: doc-pub-052da426294a
+  path: corpus/doc-pub-052da426294a.md
+  title: CPython Project Overview
+  doc_type: wiki
+  owner: Python Software Foundation
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 3
+- doc_id: doc-pub-962b62248b20
+  path: corpus/doc-pub-962b62248b20.md
+  title: VS Code Contributing Guide
+  doc_type: policy
+  owner: Microsoft
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 3
+- doc_id: doc-pub-0ae513fc635f
+  path: corpus/doc-pub-0ae513fc635f.md
+  title: Go Contributing Guide
+  doc_type: policy
+  owner: Go Authors
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 3
+- doc_id: doc-pub-4cb3ed4320f2
+  path: corpus/doc-pub-4cb3ed4320f2.md
+  title: Go Security Policy
+  doc_type: policy
+  owner: Go Authors
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 3
+- doc_id: doc-pub-4f579d71fe39
+  path: corpus/doc-pub-4f579d71fe39.md
+  title: 'NIST SP 800-63B: Authentication and Lifecycle Management'
+  doc_type: policy
+  owner: NIST
+  acl_roles:
+  - employee
+  - engineering
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 5

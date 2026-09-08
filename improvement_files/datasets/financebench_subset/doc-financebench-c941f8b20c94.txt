@@ -1,0 +1,663 @@
+Table of Contents
+3M Company and Subsidiaries
+Consolidated Statement of Income
+Years ended December 31
+(Millions, except per share amounts)
+2022
+2021
+2020
+Net sales
+$
+34,229 $
+35,355 $
+32,184 
+Operating expenses
+Cost of sales
+19,232 
+18,795 
+16,605 
+Selling, general and administrative expenses
+9,049 
+7,197 
+6,929 
+Research, development and related expenses
+1,862 
+1,994 
+1,878 
+Gain on business divestitures
+(2,724)
+ 
+(389)
+Goodwill impairment expense
+271 
+ 
+ 
+Total operating expenses
+27,690 
+27,986 
+25,023 
+Operating income
+6,539 
+7,369 
+7,161 
+Other expense (income), net
+147 
+165 
+366 
+Income before income taxes
+6,392 
+7,204 
+6,795 
+Provision for income taxes
+612 
+1,285 
+1,337 
+Income of consolidated group
+5,780 
+5,919 
+5,458 
+Income (loss) from unconsolidated subsidiaries, net of taxes
+11 
+10 
+(5)
+Net income including noncontrolling interest
+5,791 
+5,929 
+5,453 
+Less: Net income (loss) attributable to noncontrolling interest
+14 
+8 
+4 
+Net income attributable to 3M
+$
+5,777 $
+5,921 $
+5,449 
+Weighted average 3M common shares outstanding basic
+566.0 
+579.0 
+577.6 
+Earnings per share attributable to 3M common shareholders basic
+$
+10.21 $
+10.23 $
+9.43 
+Weighted average 3M common shares outstanding diluted
+567.6 
+585.3 
+582.2 
+Earnings per share attributable to 3M common shareholders diluted
+$
+10.18 $
+10.12 $
+9.36 
+The accompanying Notes to Consolidated Financial Statements are an integral part of this statement.
+48
+
+Table of Contents
+3M Company and Subsidiaries
+Consolidated Balance Sheet
+At December 31
+(Dollars in millions, except per share amount)
+2022
+2021
+Assets
+Current assets
+Cash and cash equivalents
+$
+3,655 $
+4,564 
+Marketable securities current
+238 
+201 
+Accounts receivable net of allowances of $174 and $189
+4,532 
+4,660 
+Inventories
+Finished goods
+2,497 
+2,196 
+Work in process
+1,606 
+1,577 
+Raw materials and supplies
+1,269 
+1,212 
+Total inventories
+5,372 
+4,985 
+Prepaids
+435 
+654 
+Other current assets
+456 
+339 
+Total current assets
+14,688 
+15,403 
+Property, plant and equipment
+25,998 
+27,213 
+Less: Accumulated depreciation
+(16,820)
+(17,784)
+Property, plant and equipment net
+9,178 
+9,429 
+Operating lease right of use assets
+829 
+858 
+Goodwill
+12,790 
+13,486 
+Intangible assets net
+4,699 
+5,288 
+Other assets
+4,271 
+2,608 
+Total assets
+$
+46,455 $
+47,072 
+Liabilities
+Current liabilities
+Short-term borrowings and current portion of long-term debt
+$
+1,938 $
+1,307 
+Accounts payable
+3,183 
+2,994 
+Accrued payroll
+692 
+1,020 
+Accrued income taxes
+259 
+260 
+Operating lease liabilities current
+261 
+263 
+Other current liabilities
+3,190 
+3,191 
+Total current liabilities
+9,523 
+9,035 
+Long-term debt
+14,001 
+16,056 
+Pension and postretirement benefits
+1,966 
+2,870 
+Operating lease liabilities
+580 
+591 
+Other liabilities
+5,615 
+3,403 
+Total liabilities
+31,685 
+31,955 
+Commitments and contingencies (Note 16)
+Equity
+3M Company shareholders equity:
+Common stock par value, $.01 par value; 944,033,056 shares issued
+9 
+9 
+Shares outstanding - December 31, 2022: 549,245,105
+Shares outstanding - December 31, 2021: 571,845,478
+Additional paid-in capital
+6,691 
+6,429 
+Retained earnings
+47,950 
+45,821 
+Treasury stock, at cost:
+(33,255)
+(30,463)
+Accumulated other comprehensive income (loss)
+(6,673)
+(6,750)
+Total 3M Company shareholders equity
+14,722 
+15,046 
+Noncontrolling interest
+48 
+71 
+Total equity
+14,770 
+15,117 
+Total liabilities and equity
+$
+46,455 $
+47,072 
+The accompanying Notes to Consolidated Financial Statements are an integral part of this statement.
+50
+
+Table of Contents
+3M Company and Subsidiaries
+Consolidated Statement of Cash Flows
+Years ended December 31
+(Millions)
+2022
+2021
+2020
+Cash Flows from Operating Activities
+Net income including noncontrolling interest
+$
+5,791 $
+5,929 $
+5,453 
+Adjustments to reconcile net income including noncontrolling interest to net cash provided by operating
+activities
+Depreciation and amortization
+1,831 
+1,915 
+1,911 
+Long-lived and indefinite-lived asset impairment expense
+618 
+ 
+6 
+Goodwill impairment expense
+271 
+ 
+ 
+Company pension and postretirement contributions
+(158)
+(180)
+(156)
+Company pension and postretirement expense
+178 
+206 
+322 
+Stock-based compensation expense
+263 
+274 
+262 
+Gain on business divestitures
+(2,724)
+ 
+(389)
+Deferred income taxes
+(663)
+(166)
+(165)
+Changes in assets and liabilities
+Accounts receivable
+(105)
+(122)
+165 
+Inventories
+(629)
+(903)
+(91)
+Accounts payable
+111 
+518 
+252 
+Accrued income taxes (current and long-term)
+(47)
+(244)
+132 
+Other net
+854 
+227 
+411 
+Net cash provided by (used in) operating activities
+5,591 
+7,454 
+8,113 
+Cash Flows from Investing Activities
+Purchases of property, plant and equipment (PP&E)
+(1,749)
+(1,603)
+(1,501)
+Proceeds from sale of PP&E and other assets
+200 
+51 
+128 
+Acquisitions, net of cash acquired
+ 
+ 
+(25)
+Purchases of marketable securities and investments
+(1,250)
+(2,202)
+(1,579)
+Proceeds from maturities and sale of marketable securities and investments
+1,261 
+2,406 
+1,811 
+Proceeds from sale of businesses, net of cash sold
+13 
+ 
+576 
+Cash payment from Food Safety business split-off, net of divested cash
+478 
+ 
+ 
+Other net
+1 
+31 
+10 
+Net cash provided by (used in) investing activities
+(1,046)
+(1,317)
+(580)
+Cash Flows from Financing Activities
+Change in short-term debt net
+340 
+(2)
+(143)
+Repayment of debt (maturities greater than 90 days)
+(1,179)
+(1,144)
+(3,482)
+Proceeds from debt (maturities greater than 90 days)
+1 
+1 
+1,750 
+Purchases of treasury stock
+(1,464)
+(2,199)
+(368)
+Proceeds from issuance of treasury stock pursuant to stock option and benefit plans
+381 
+639 
+429 
+Dividends paid to shareholders
+(3,369)
+(3,420)
+(3,388)
+Other net
+(60)
+(20)
+(98)
+Net cash provided by (used in) financing activities
+(5,350)
+(6,145)
+(5,300)
+Effect of exchange rate changes on cash and cash equivalents
+(104)
+(62)
+48 
+Net increase (decrease) in cash and cash equivalents
+(909)
+(70)
+2,281 
+Cash and cash equivalents at beginning of year
+4,564 
+4,634 
+2,353 
+Cash and cash equivalents at end of period
+$
+3,655 $
+4,564 $
+4,634 
+The accompanying Notes to Consolidated Financial Statements are an integral part of this statement.
+52
+
+Table of Contents
+RESULTS OF OPERATIONS
+Net Sales:
+Refer to the preceding Overview section and the Performance by Business Segment section later in MD&A for additional discussion of sales change.
+Operating Expenses:
+(Percent of net sales)
+2022
+2021
+Change
+Cost of sales
+56.2 %
+53.2 %
+3.0 %
+Selling, general and administrative expenses (SG&A)
+26.5 
+20.4 
+6.1 
+Research, development and related expenses (R&D)
+5.4 
+5.6 
+(0.2)
+Gain on business divestitures
+(8.0)
+ 
+(8.0)
+Goodwill impairment expense
+0.8 
+ 
+0.8 
+Operating income margin
+19.1 %
+20.8 %
+(1.7)%
+The Company is continuing the ongoing deployment of an enterprise resource planning (ERP) system on a worldwide basis, with these investments impacting cost of sales,
+SG&A, and R&D.
+Cost of Sales:
+Cost of sales, measured as a percent of sales, increased in 2022 when compared to the same period last year. Increases were primarily due to 2022 special item costs for
+significant litigation from additional commitments to address PFAS-related matters at 3M's Zwijndrecht, Belgium site (discussed in Note 16), higher raw materials and logistics
+costs, manufacturing productivity headwinds which were further magnified by the shutdown of certain operations in Belgium and progress on restarting previously-idled
+operations, and investments in growth, productivity and sustainability. On a percent of sales basis, these increases were partially offset by increases in selling prices.
+Selling, General and Administrative Expenses:
+SG&A, measured as a percent of sales, increased in 2022 when compared to the same period last year. SG&A was impacted by increased special item costs for significant
+litigation primarily related to steps toward resolving Combat Arms Earplugs litigation (discussed in Note 16) resulting in a 2022 second quarter pre-tax charge of approximately
+$1.2 billion, certain impairment costs related to exiting PFAS manufacturing (see Note 15), costs related to exiting Russia (see Note 15), divestiture-related restructuring
+charges (see Note 5), and continued investment in key growth initiatives. These increases were partially offset by restructuring benefits and ongoing general 3M cost
+management.
+Research, Development and Related Expenses:
+R&D, measured as a percent of sales, decreased in 2022 when compared to the same period last year. 3M continues to invest in a range of R&D activities from application
+development, product and manufacturing support, product development and technology development aimed at disruptive innovations.
+Gain on Business Divestitures:
+In the third quarter of 2022, 3M recorded a pre-tax gain of $2.7 billion ($2.7 billion after tax) related to the split-off and combination of its Food Safety business with Neogen
+Corporation. Refer to Note 3 for further details.
+Goodwill Impairment Expense:
+As a result of 3M's commitment to exit per- and polyfluoroalkyl substance (PFAS) manufacturing, 3M recorded a goodwill impairment charge related to the Advanced
+Materials reporting unit (within the Transportation and Electronics business). Refer to Note 15 for further details.
+27
+
+Table of Contents
+Sales and operating income (loss) by business segment:
+The following tables contain sales and operating income (loss) results by business segment for the years ended December 31, 2022 and 2021. Refer to the section entitled
+Performance by Business Segment later in MD&A for additional discussion concerning 2022 versus 2021 results, including Corporate and Unallocated. Refer to Note 19 for
+additional information on business segments.
+2022
+2021
+% change
+(Dollars in millions)
+Net Sales
+% of Total
+Operating
+Income (Loss)
+Net Sales
+% of Total
+Operating
+Income (Loss)
+Net Sales
+Operating Income
+(Loss)
+Business Segments
+Safety and Industrial
+$
+11,604
+33.9 % $
+1,199 $
+11,981
+33.9 % $
+2,466
+(3.2)%
+(51.4)%
+Transportation and Electronics
+8,902
+26.0 
+1,012
+9,262
+26.2 
+1,880
+(3.9)
+(46.2)
+Health Care
+8,421
+24.6 
+1,815
+8,597
+24.3 
+2,037
+(2.0)
+(10.9)
+Consumer
+5,298
+15.5 
+994
+5,513
+15.6 
+1,162
+(3.9)
+(14.4)
+Corporate and Unallocated
+4
+ 
+1,519
+2
+ 
+(176)
+Total Company
+$
+34,229 
+100.0 % $
+6,539 $
+35,355 
+100.0 % $
+7,369 
+(3.2)%
+(11.3)%
+Year ended December 31, 2022
+Worldwide Sales Change 
+By Business Segment
+Organic sales
+Acquisitions
+Divestitures
+Translation
+Total sales change
+Safety and Industrial
+1.0 %
+ 
+ %
+ %
+(4.2) %
+(3.2) %
+Transportation and Electronics
+1.2 
+ 
+(0.5)
+(4.6)
+(3.9)
+Health Care
+3.2 
+ 
+(1.4)
+(3.8)
+(2.0)
+Consumer
+(0.9)
+ 
+(0.4)
+(2.6)
+(3.9)
+Total Company
+1.2 
+ 
+(0.5)
+(3.9)
+(3.2)
+Sales by geographic area:
+Percent change information compares the years ended December 31, 2022 and 2021 with the same prior year period, unless otherwise indicated. Additional discussion of
+business segment results is provided in the Performance by Business Segment section.
+Year ended December 31, 2022
+Americas
+Asia Pacific
+Europe, Middle East
+& Africa
+Other Unallocated
+Worldwide
+Net sales (millions)
+$
+18,400 
+$
+9,901 
+$
+5,928 
+$
+ 
+$
+34,229 
+% of worldwide sales
+53.8 %
+28.9 %
+17.3 %
+100.0 %
+Components of net sales change:
+Organic sales
+2.6 
+0.3 
+(0.6)
+1.2 
+Divestitures
+(0.6)
+(0.4)
+(0.6)
+(0.5)
+Translation
+(0.3)
+(6.5)
+(9.8)
+(3.9)
+Total sales change
+1.7 %
+(6.6) %
+(11.0) %
+(3.2) %
+Year ended December 31, 2021
+Americas
+Asia Pacific
+Europe, Middle East
+& Africa
+Other Unallocated
+Worldwide
+Net sales (millions)
+$
+18,097 
+$
+10,600 
+$
+6,660 
+$
+(2)
+$
+35,355 
+% of worldwide sales
+51.2 %
+30.0 %
+18.8 %
+100.0 %
+Components of net sales change:
+Organic sales
+9.8 
+8.5 
+6.3 
+8.8 
+Divestitures
+(0.6)
+ 
+(1.1)
+(0.5)
+Translation
+0.3 
+2.3 
+3.8 
+1.6 
+Total sales change
+9.5 %
+10.8 %
+9.0 %
+9.9 %
+25

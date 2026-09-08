@@ -1,0 +1,58 @@
+PART II
+ITEM 5. MARKET FOR REGISTRANTS COMMON EQUITY, RELATED STOCKHOLDER MATTERS AND ISSUER PURCHASES OF
+EQUITY SECURITIES
+Common Stock Information
+Our common stock is traded on the New York Stock Exchange (NYSE) under the symbol MGM.
+There were approximately 3,143 record holders of our common stock as of February 22, 2023.
+Dividend Policy
+We implemented a dividend program in February 2017 pursuant to which it has paid regular quarterly dividends. In the second quarter of 2020, we
+reduced our annual dividend to $0.01 per share in light of the impact of the COVID-19 pandemic on our operations at that time. We maintained an annual
+dividend of $0.01 per share throughout 2022. On February 8, 2023, we announced that the Board of Directors has determined to suspend the ongoing dividends
+in light of our current preferred method of returning value to shareholders through our share repurchase plan. To the extent we determine to reinstate the
+dividend in the future, the amount, declaration and payment of any future dividends will be subject to the discretion of our Board of Directors who will
+evaluate our dividend policy from time to time based on factors it deems relevant, and the contractual limitations described below.
+Purchases of Equity Securities by the Issuer
+The following table provides information about share repurchases of our common stock during the quarter ended December 31, 2022:
+Period
+Total Number of
+Shares Purchased
+Average Price Paid
+per Share
+Total Number of
+Shares Purchased as
+Part of a Publicly
+Announced Program
+Dollar Value of
+Shares that May Yet
+be Purchased Under
+the Program
+(In thousands)
+October 1, 2022 October 31, 2022
+5,727,219 
+$
+31.74 
+5,727,219 
+$
+645,485 
+November 1, 2022 November 30, 2022
+1,259,233 
+$
+33.65 
+1,259,233 
+$
+603,108 
+December 1, 2022 December 31, 2022
+3,700,000 
+$
+34.61 
+3,700,000 
+$
+475,049 
+In March 2022, we announced that the Board of Directors authorized a $2.0 billion stock repurchase plan and in February 2023, we announced that the
+Board of Directors had authorized a $2.0 billion stock repurchase plan. Under the stock repurchase plans, we may repurchase shares from time to time in the
+open market or in privately negotiated agreements. Repurchases of common stock may also be made under a Rule 10b5-1 plan, which would permit common
+stock to be purchased when we might otherwise be precluded from doing so under insider trading laws. The timing, volume and nature of stock repurchases
+will be at the sole discretion of management, dependent on market conditions, applicable securities laws, and other factors, and may be suspended or
+discontinued at any time. All shares we repurchased during the quarter ended December 31, 2022 were purchased pursuant to our publicly announced stock
+repurchase plans and have been retired.
+30

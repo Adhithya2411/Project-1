@@ -1,0 +1,113 @@
+The following tables present information regarding the Companys debt investments:
+Fair value level
+June 30, 2023
+December 31, 2022
+(In thousands)
+Cash and cash equivalents:
+Money market funds
+Level 1
+$
+2,195 
+$
+12,009 
+Commercial paper and certificates of deposit
+Level 2
+ 
+5,992 
+Cash and cash equivalents
+2,195 
+18,001 
+Short-term investments:
+U.S. government securities
+Level 1
+57,696 
+56,835 
+U.S. agency securities
+Level 2
+29,049 
+9,530 
+Commercial paper and certificates of deposit
+Level 2
+4,561 
+4,466 
+Corporate bonds
+Level 2
+416,420 
+213,875 
+Short-term investments
+507,726 
+284,706 
+Total debt investments
+$
+509,921 
+$
+302,707 
+Restricted cash. MGM Chinas pledged cash of $87 million and $124 million as of June 30, 2023 and December 31, 2022, respectively, securing the
+bank guarantees discussed in Note 9 is restricted in use and classified within Other long-term assets, net. Such amounts plus Cash and cash equivalents on
+the consolidated balance sheets equal Cash, cash equivalents, and restricted cash on the consolidated statements of cash flows as of June 30, 2023 and
+December 31, 2022.
+Accounts receivable. As of June 30, 2023 and December 31, 2022, the loss reserve on accounts receivable was $129 million and $113 million,
+respectively.
+Note receivable. In February 2023, the secured note receivable related to the sale of Circus Circus Las Vegas and the adjacent land was repaid, prior to
+maturity, for $170 million, which approximated its carrying value on the date of repayment. As of December 31, 2022, the carrying value of the note receivable
+was $167 million and was recorded within Other long-term assets, net on the consolidated balance sheets.
+Accounts payable. As of June 30, 2023 and December 31, 2022, the Company had accrued $60 million and $80 million, respectively, for purchases of
+property and equipment within Accounts and construction payable on the consolidated balance sheets.
+Revenue recognition. Contract and Contract-Related Liabilities. There may be a difference between the timing of cash receipts from the customer and
+the recognition of revenue, resulting in a contract or contract-related liability. The Company generally has three types of liabilities related to contracts with
+customers: (1) outstanding chip liability, which represents the amounts owed in exchange for gaming chips held by a customer, (2) loyalty program obligations,
+which represents the deferred allocation of revenue relating to loyalty program incentives earned, and (3) customer advances and other, which is primarily
+funds deposited by customers before gaming play occurs (casino front money) and advance payments on goods and services yet to be provided, such as
+advance ticket sales and deposits on rooms and convention space or for unpaid wagers. These liabilities are generally expected to be recognized as revenue
+within one year of being purchased, earned, or deposited and are recorded within Other accrued liabilities on the consolidated balance sheets.
+The following table summarizes the activity related to contract and contract-related liabilities:
+ 
+Outstanding Chip Liability
+Loyalty Program
+Customer Advances and Other
+ 
+2023
+ 
+2022
+2023
+ 
+2022
+2023
+ 
+2022
+ 
+(In thousands)
+Balance at January 1
+$
+185,669 
+$
+176,219 
+$
+183,602 
+$
+144,465 
+$
+816,376 
+$
+640,001 
+Balance at June 30
+196,446 
+165,564 
+194,570 
+160,752 
+806,072 
+704,404 
+Increase / (decrease)
+$
+10,777 
+$
+(10,655)
+$
+10,968 
+$
+16,287 
+$
+(10,304)
+$
+64,403 
+9

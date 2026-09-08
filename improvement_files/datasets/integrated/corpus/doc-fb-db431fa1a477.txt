@@ -1,0 +1,489 @@
+Table of Contents
+Advanced Micro Devices, Inc.
+Consolidated Balance Sheets
+ 
+December 31,
+2022
+December 25,
+2021
+ 
+(In millions, except par value amounts)
+ASSETS
+Current assets:
+Cash and cash equivalents
+$
+4,835 
+$
+2,535 
+Short-term investments
+1,020 
+1,073 
+Accounts receivable, net
+4,126 
+2,706 
+Inventories
+3,771 
+1,955 
+Receivables from related parties
+2 
+2 
+Prepaid expenses and other current assets
+1,265 
+312 
+Total current assets
+15,019 
+8,583 
+Property and equipment, net
+1,513 
+702 
+Operating lease right-of-use assets
+460 
+367 
+Goodwill
+24,177 
+289 
+Acquisition-related intangibles
+24,118 
+ 
+Investment: equity method
+83 
+69 
+Deferred tax assets
+58 
+931 
+Other non-current assets
+2,152 
+1,478 
+Total assets
+$
+67,580 
+$
+12,419 
+LIABILITIES AND STOCKHOLDERS EQUITY
+Current liabilities:
+Accounts payable
+$
+2,493 
+$
+1,321 
+Payables to related parties
+463 
+85 
+Accrued liabilities
+3,077 
+2,424 
+Current portion of long-term debt, net
+ 
+312 
+Other current liabilities
+336 
+98 
+Total current liabilities
+6,369 
+4,240 
+Long-term debt, net of current portion
+2,467 
+1 
+Long-term operating lease liabilities
+396 
+348 
+Deferred tax liabilities
+1,934 
+12 
+Other long-term liabilities
+1,664 
+321 
+Commitments and Contingencies (see Notes 16 and 17)
+Stockholders equity:
+Capital stock:
+Common stock, par value $0.01; shares authorized: 2,250; shares issued: 1,645 and 1,232; shares
+outstanding: 1,612 and 1,207
+16 
+12 
+Additional paid-in capital
+58,005 
+11,069 
+Treasury stock, at cost (shares held: 33 and 25)
+(3,099)
+(2,130)
+Accumulated deficit
+(131)
+(1,451)
+Accumulated other comprehensive loss
+(41)
+(3)
+Total stockholders equity
+54,750 
+7,497 
+Total liabilities and stockholders equity
+$
+67,580 
+$
+12,419 
+See accompanying notes to consolidated financial statements.
+53
+
+---
+
+Table of Contents
+PART I
+ITEM 1. BUSINESS
+Cautionary Statement Regarding Forward-Looking Statements
+The statements in this report include forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995. These forward-
+looking statements are based on current expectations and beliefs and involve numerous risks and uncertainties that could cause actual results to differ
+materially from expectations. These forward-looking statements speak only as of the date hereof or as of the dates indicated in the statements and should not
+be relied upon as predictions of future events, as we cannot assure you that the events or circumstances reflected in these statements will be achieved or will
+occur. You can identify forward-looking statements by the use of forward-looking terminology including believes, expects, may, will, should, seeks,
+intends, plans, pro forma, estimates, anticipates, or the negative of these words and phrases, other variations of these words and phrases or
+comparable terminology. The forward-looking statements relate to, among other things: possible impact of future accounting rules on AMDs consolidated
+financial statements; demand for AMDs products; the growth, change and competitive landscape of the markets in which AMD participates; international sales
+will continue to be a significant portion of total sales in the foreseeable future; that AMDs cash, cash equivalents and short-term investment balances together
+with the availability under that certain revolving credit facility (the Revolving Credit Agreement) made available to AMD and certain of its subsidiaries, our
+commercial paper program, and our cash flows from operations will be sufficient to fund AMDs operations including capital expenditures and purchase
+commitments over the next 12 months and beyond; AMDs ability to obtain sufficient external financing on favorable terms, or at all; AMDs expectation that
+based on managements current knowledge, the potential liability related to AMDs current litigation will not have a material adverse effect on its financial
+position, results of operation or cash flows; anticipated ongoing and increased costs related to enhancing and implementing information security controls; all
+unbilled accounts receivables are expected to be billed and collected within 12 months; revenue allocated to remaining performance obligations that are
+unsatisfied which will be recognized in the next 12 months; and a small number of customers will continue to account for a substantial part of AMDs revenue in
+the future. For a discussion of the factors that could cause actual results to differ materially from the forward-looking statements, see Part I, Item 1A-Risk
+Factors and the Financial Condition section set forth in Part II, Item 7-Managements Discussion and Analysis of Financial Condition and Results of
+Operations, or MD&A, and such other risks and uncertainties as set forth below in this report or detailed in our other Securities and Exchange Commission
+(SEC) reports and filings. We assume no obligation to update forward-looking statements.
+References in this Annual Report on Form 10-K to AMD, we, us, management, our or the Company mean Advanced Micro Devices, Inc. and our
+consolidated subsidiaries.
+Overview
+We are a global semiconductor company primarily offering:
+
+server microprocessors (CPUs) and graphics processing units (GPUs), data processing units (DPUs), Field Programmable Gate Arrays (FPGAs), and
+Adaptive System-on-Chip (SoC) products for data centers;
+
+CPUs, accelerated processing units (APUs) that integrate CPUs and GPUs, and chipsets for desktop and notebook personal computers;
+
+discrete GPUs, and semi-custom SoC products and development services; and
+
+embedded CPUs, GPUs, APUs, FPGAs, and Adaptive SoC products.
+From time to time, we may also sell or license portions of our intellectual property (IP) portfolio.
+1
+
+---
+
+Table of Contents
+ITEM 7. MANAGEMENTS DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS
+The following discussion should be read in conjunction with the consolidated financial statements as of December 31, 2022 and December 25, 2021 and for
+each of the three years in the period ended December 31, 2022 and related notes, which are included in this Annual Report on Form 10-K as well as with the
+other sections of this Annual Report on Form 10-K, Part II, Item 8: Financial Statements and Supplementary Data.
+Introduction
+In this section, we will describe the general financial condition and the results of operations of Advanced Micro Devices, Inc. and its wholly-owned subsidiaries
+(collectively, us, our or AMD), including a discussion of our results of operations for 2022 compared to 2021, an analysis of changes in our financial
+condition and a discussion of our off-balance sheet arrangements. Discussions of 2020 items and year-to-year comparisons between 2021 and 2020 that are
+not included in this Form 10-K can be found in Managements Discussion and Analysis of Financial Condition and Results of Operations in Part II, Item 7 of
+our Annual Report on Form 10-K for the fiscal year ended December 25, 2021.
+Overview
+2022 was a transformative year for AMD as we took several major steps that scaled and reshaped our business. In February 2022, we completed our strategic
+acquisition of Xilinx, Inc. (Xilinx) which expanded our technology and product portfolio to include adaptable hardware platforms that enable hardware
+acceleration and rapid innovation across a variety of technologies and established AMD in multiple embedded markets where we have traditionally not had a
+significant presence. We now offer Field Programmable Gate Arrays (FPGAs), Adaptive SoCs, and Adaptive Compute Acceleration Platform (ACAP) products.
+With the acquisition of Xilinx, we have access to a new set of markets and customers, further strengthening and diversifying our business model. In May 2022,
+we expanded our data center solutions capabilities with the acquisition of Pensando Systems, Inc. (Pensando). We now offer high-performance data
+processing units (DPUs) and a software stack that complements our existing products. With the Xilinx and Pensando acquisitions, we are well positioned to
+provide the industrys broadest set of leadership compute engines and accelerators to help enable best performance, security, flexibility and total cost of
+ownership for leading-edge data centers.
+Our 2022 financial results reflect the strength of our diversified business model despite the challenging PC market conditions in the second half of 2022. Net
+revenue for 2022 was $23.6 billion, an increase of 44% compared to 2021 net revenue of $16.4 billion. The increase in net revenue was driven by a 64%
+increase in Data Center segment revenue primarily due to higher sales of our EPYC server processors, a 21% increase in Gaming segment revenue
+primarily due to higher semi-custom product sales, and a significant increase in Embedded segment revenue from the prior year period driven by the inclusion
+of Xilinx embedded product sales. This growth was partially offset by a 10% decrease in Client segment revenue primarily due to lower processor shipments
+driven by a weak PC market and significant inventory correction actions across the PC supply chain. Gross margin, as a percentage of net revenue for 2022,
+was 45%, compared to 48% in 2021. The decrease in gross margin was primarily due to amortization of intangible assets associated with the Xilinx acquisition.
+Operating income for 2022 was $1.3 billion compared to operating income of $3.6 billion for 2021. The decrease in operating income was primarily driven by
+amortization of intangible assets associated with the Xilinx acquisition. Net income for 2022 was $1.3 billion compared to $3.2 billion in the prior year. The
+decrease in net income was primarily driven by lower operating income.
+Cash, cash equivalents and short-term investments as of December 31, 2022 were $5.9 billion, compared to $3.6 billion at the end of 2021. Our aggregate
+principal amount of total debt as of December 31, 2022 was $2.5 billion, compared to $313 million as of December 25, 2021.
+We took several actions in 2022 to strengthen our financial position. In June 2022, we issued $1.0 billion in aggregate principal amount of senior notes,
+consisting of $500 million in aggregate principal amount of 3.924% Senior Notes due 2032 (3.924% Notes) and $500 million in aggregate principal amount of
+4.393% Senior Notes due 2052 (4.393% Notes). The 3.924% Notes will mature on June 1, 2032 and bear interest at a rate of 3.924% per annum, and the
+4.393% Notes will mature on June 1, 2052 and bear interest at a rate of 4.393% per annum. The 3.924% Notes and the 4.393% Notes are senior unsecured
+obligations.
+40
+
+---
+
+Table of Contents
+Advanced Micro Devices, Inc.
+Consolidated Statements of Cash Flows
+Year Ended
+December 31,
+2022
+December 25,
+2021
+December 26,
+2020
+(In millions)
+Cash flows from operating activities:
+Net income
+$
+1,320 
+$
+3,162 
+$
+2,490 
+Adjustments to reconcile net income to net cash provided by operating activities:
+Depreciation and amortization
+4,174 
+407 
+312 
+Stock-based compensation
+1,081 
+379 
+274 
+Amortization of debt discount and issuance costs
+ 
+5 
+14 
+Amortization of operating lease right-of-use assets
+88 
+56 
+42 
+Amortization of inventory fair value adjustment
+189 
+ 
+ 
+Loss on debt redemption, repurchase and conversion
+ 
+7 
+54 
+Loss on sale or disposal of property and equipment
+16 
+34 
+33 
+Deferred income taxes
+(1,505)
+308 
+(1,223)
+(Gains) losses on equity investments, net
+62 
+(56)
+(2)
+Other
+(14)
+(7)
+8 
+Changes in operating assets and liabilities:
+Accounts receivable, net
+(1,091)
+(640)
+(219)
+Inventories
+(1,401)
+(556)
+(417)
+Receivables from related parties
+(13)
+8 
+10 
+Prepaid expenses and other assets
+(1,197)
+(920)
+(231)
+Payables to related parties
+379 
+7 
+(135)
+Accounts payable
+931 
+801 
+(513)
+Accrued liabilities and other
+546 
+526 
+574 
+Net cash provided by operating activities
+3,565 
+3,521 
+1,071 
+Cash flows from investing activities:
+Purchases of property and equipment
+(450)
+(301)
+(294)
+Purchases of short-term investments
+(2,667)
+(2,056)
+(850)
+Proceeds from maturity of short-term investments
+4,310 
+1,678 
+192 
+Cash received from acquisition of Xilinx
+2,366 
+ 
+ 
+Acquisition of Pensando, net of cash acquired
+(1,544)
+ 
+ 
+Other
+(16)
+(7)
+ 
+Net cash provided by (used in) investing activities
+1,999 
+(686)
+(952)
+Cash flows from financing activities:
+Proceeds from debt, net of issuance costs
+991 
+ 
+200 
+Repayment of debt
+(312)
+ 
+(200)
+Proceeds from sales of common stock through employee equity plans
+167 
+104 
+85 
+Repurchases of common stock
+(3,702)
+(1,762)
+ 
+Common stock repurchases for tax withholding on employee equity plans
+(406)
+(237)
+(78)
+Other
+(2)
+ 
+(1)
+Net cash (used in) provided by financing activities
+(3,264)
+(1,895)
+6 
+Net increase in cash and cash equivalents
+2,300 
+940 
+125 
+Cash and cash equivalents at beginning of year
+2,535 
+1,595 
+1,470 
+Cash and cash equivalents at end of year
+$
+4,835 
+$
+2,535 
+$
+1,595 
+55
+
+---
+
+Table of Contents
+Results of Operations
+During the second quarter of fiscal year 2022, we changed our reporting segments to align our financial reporting with how we manage our business in strategic
+end markets. This is consistent with how our Chief Operating Decision Maker (CODM) assesses our financial performance and allocates resources. As a result,
+we report our financial performance based on the following four reportable segments: Data Center, Client, Gaming, and Embedded.
+Additional information on our reportable segments is contained in Note 4 Segment Reporting of the Notes to Financial Statements (Part II, Item 8 of this Form
+10-K).
+Our operating results tend to vary seasonally. Historically, our net revenue has been generally higher in the second half of the year than in the first half of the
+year, although market conditions and product transitions could impact these trends.
+The following table provides a summary of net revenue and operating income (loss) by segment for 2022 and 2021:
+Year Ended
+December 31,
+2022
+December 25,
+2021
+(In millions)
+Net revenue:
+Data Center
+$
+6,043 
+$
+3,694 
+Client
+6,201 
+6,887 
+Gaming
+6,805 
+5,607 
+Embedded
+4,552 
+246 
+Total net revenue
+$
+23,601 
+$
+16,434 
+Operating income (loss):
+Data Center
+$
+1,848 
+$
+991 
+Client
+1,190 
+2,088 
+Gaming
+953 
+934 
+Embedded
+2,252 
+44 
+All Other
+(4,979)
+(409)
+Total operating income (loss)
+$
+1,264 
+$
+3,648 
+Data Center
+Data Center net revenue of $6 billion in 2022 increased by 64%, compared to net revenue of $3.7 billion in 2021. The increase was primarily driven by higher
+sales of our EPYC server processors.
+Data Center operating income was $1.8 billion in 2022, compared to operating income of $991 million in 2021. The increase in operating income was primarily
+driven by higher revenue, partially offset by higher operating expenses. Operating expenses increased for the reasons outlined under Expenses below.
+Client
+Client net revenue of $6.2 billion in 2022 decreased by 10%, compared to net revenue of $6.9 billion in 2021, primarily driven by a 24% decrease in unit
+shipment, partially offset by a 19% increase in average selling price. The decrease in unit shipments was due to challenging PC market conditions and
+significant inventory correction across the PC supply chain experienced during the second half of 2022. The increase in average selling price was primarily
+driven by a richer mix of Ryzen mobile processor sales.
+Client operating income was $1.2 billion in 2022, compared to operating income of $2.1 billion in 2021. The decrease in operating income was primarily driven
+by lower revenue and higher operating expenses. Operating expenses increased for the reasons outlined under Expenses below.
+45
+
+---
+
+Table of Contents
+We also work with our customers to create differentiated products that leverage our CPU, GPU and APU technology. Certain customers pay us non-recurring
+engineering fees for design and development services and a purchase price for the resulting products.
+One customer accounted for 16% of our consolidated net revenue for the year ended December 31, 2022. Sales to this customer consisted of sales of products
+from our Gaming segment. A loss of this customer would have a material adverse effect on our business.
+Original Equipment Manufacturers
+We focus on three types of OEM partners: multi-nationals, selected regional accounts and selected global and local system integrators, who target commercial
+and consumer end customers of all sizes. Large multi-nationals and regional accounts are the core of our OEM partners business; however, we are
+increasingly focused on the VAR channel which resells OEM systems to the mid-market and the small and medium business (SMB) segments. Additionally, we
+have increased our focus on global system integrators, which resell OEM systems, coupled with their software and services solutions into Enterprise, high
+performance computing (HPC) and Cloud Service Provider Customers. Our OEM customers include numerous foreign and domestic manufacturers of servers
+and workstations, desktops, notebooks, PC motherboards and game consoles.
+Third-Party Distributors
+Our authorized channel distributors resell to sub-distributors and OEMs, ODMs, and other customers. Typically, distributors handle a wide variety of products,
+and may include products from other manufacturers that compete with our products. Distributors typically maintain an inventory of our products. In most
+instances, our agreements with distributors protect their inventory of our products against price reductions and provide certain return rights with respect to any
+product that we have removed from our price book or otherwise subject to discontinuation. In addition, some agreements with our distributors may contain
+standard stock rotation provisions permitting limited product returns.
+Add-in-Board (AIB) Manufacturers and System Integrators
+We offer component-level graphics and chipset products to AIB manufacturers who in turn build and sell board-level products using our technology to system
+integrators (SIs), retail buyers and sub distributors. Our agreements with AIBs protect their inventory of our products against price reductions. We also sell
+directly to our SI customers. SIs typically sell from positions of regional or product-based strength in the market. They usually operate on short design cycles
+and can respond quickly with new technologies. SIs often use discrete graphics solutions as a means to differentiate their products and add value to their
+customers.
+Competition in Data Center Segment
+In Data Center, we compete against Intel Corporation (Intel) with our FPGA, Adaptive SoC, CPU and DPU server products and NVIDIA Corporation (NVIDIA)
+with our CPU, GPU and DPU server products. A variety of companies provide or have developed ARM-based microprocessors and platforms. ARM-based
+designs are being used in the server market, which could lead to further growth and development of the ARM ecosystem.
+Competition in Client Segment
+The markets in which we participate are highly competitive. Our primary competitor in the supply of CPUs is Intel. A variety of companies provide or have
+developed ARM-based microprocessors and platforms. ARM-based designs are being used in the PC market, which could lead to further growth and
+development of the ARM ecosystem.
+9

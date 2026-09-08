@@ -1,0 +1,472 @@
+Consolidated Balance Sheets 
+Verizon Communications Inc. and Subsidiaries 
+(dollars in millions, except per share amounts) 
+At December 31,
+2022
+2021 
+Assets 
+Current assets 
+Cash and cash equivalents
+$ 
+2,605 
+$ 
+2,921 
+Accounts receivable
+ 
+25,332 
+ 
+24,742 
+Less Allowance for credit losses
+ 
+826 
+ 
+896 
+Accounts receivable, net 
+ 
+24,506 
+ 
+23,846 
+Inventories
+ 
+2,388 
+ 
+3,055 
+Prepaid expenses and other
+ 
+8,358 
+ 
+6,906 
+Total current assets
+ 
+37,857 
+ 
+36,728 
+Property, plant and equipment
+ 
+307,689 
+ 
+289,897 
+Less Accumulated depreciation
+ 
+200,255 
+ 
+190,201 
+Property, plant and equipment, net
+ 
+107,434 
+ 
+99,696 
+Investments in unconsolidated businesses
+ 
+1,071 
+ 
+1,061 
+Wireless licenses
+ 
+149,796 
+ 
+147,619 
+Goodwill
+ 
+28,671 
+ 
+28,603 
+Other intangible assets, net
+ 
+11,461 
+ 
+11,677 
+Operating lease right-of-use assets
+ 
+26,130 
+ 
+27,883 
+Other assets
+ 
+17,260 
+ 
+13,329 
+Total assets
+$ 
+379,680 
+$ 
+366,596 
+Liabilities and Equity 
+Current liabilities 
+Debt maturing within one year
+$ 
+9,963 
+$ 
+7,443 
+Accounts payable and accrued liabilities
+ 
+23,977 
+ 
+24,833 
+Current operating lease liabilities
+ 
+4,134 
+ 
+3,859 
+Other current liabilities
+ 
+12,097 
+ 
+11,025 
+Total current liabilities
+ 
+ 
+ 
+ 
+ 
+ 
+50,171 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+47,160 
+Long-term debt
+140,676 
+143,425 
+Employee benefit obligations
+12,974 
+15,410 
+Deferred income taxes
+43,441 
+40,685 
+Non-current operating lease liabilities
+21,558 
+23,203 
+Other liabilities
+18,397 
+13,513 
+Total long-term liabilities
+ 
+237,046 
+236,236 
+Commitments and Contingencies (Note 16) 
+Equity 
+Series preferred stock ($0.10 par value; 250,000,000 shares authorized; none issued)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Common stock ($0.10 par value; 6,250,000,000 shares authorized in each period; 
+4,291,433,646 shares issued in each period)
+429 
+429 
+Additional paid in capital
+13,420 
+13,861 
+Retained earnings
+82,380 
+71,993 
+Accumulated other comprehensive loss
+(1,865) 
+(927) 
+Common stock in treasury, at cost (91,572,258 and 93,634,725 shares outstanding)
+(4,013) 
+(4,104) 
+Deferred compensation employee stock ownership plans (ESOPs) and other
+793 
+538 
+Noncontrolling interests
+1,319 
+1,410 
+Total equity
+92,463 
+83,200 
+Total liabilities and equity
+$ 
+379,680 
+$ 
+366,596 
+See Notes to Consolidated Financial Statements
+Verizon 2022 Annual Report on Form 10-K 56
+
+---
+
+benefit related costs and interest and financing expenses. Corporate and other also includes the historical results of divested 
+businesses, including Verizon Media Group (Verizon Media) divested in September 2021, and other adjustments and gains and 
+losses that are not allocated in assessing segment performance due to their nature. Although such transactions are excluded 
+from the business segment results, they are included in reported consolidated earnings. Gains and losses from these 
+transactions that are not individually significant are included in segment results as these items are included in the chief operating 
+decision makers assessment of segment performance. See "Consolidated Results of Operations" for additional information 
+regarding Corporate and other results. 
+Capital Expenditures and Investments 
+We continue to invest in our wireless networks, high-speed fiber and other advanced technologies to position ourselves at the 
+center of growth trends for the future. During the year ended December 31, 2022, these investments included $23.1 billion for 
+capital expenditures, inclusive of approximately $6.2 billion in C-Band related capital expenditures. See "Cash Flows Used in 
+Investing Activities" and "Liquidity and Capital Resources" for additional information. We believe that our investments aimed at 
+expanding our portfolio of products and services will provide our customers with an efficient, reliable infrastructure for competing 
+in the information economy. 
+Global Network and Technology 
+We are focusing our capital spending on adding capacity and density to our 4G Long-Term Evolution (LTE) network, while also 
+building our next generation 5G network. We are densifying our networks by utilizing small cell technology, in-building solutions 
+and distributed antenna systems. Network densification enables us to add capacity to address increasing mobile video 
+consumption and the growing demand for IoT products and services on our 4G LTE and 5G networks. Over the past several 
+years, we have been leading the development of 5G wireless technology industry standards and the ecosystems for fixed and 
+mobile 5G wireless services. 5G technology enables higher throughput and lower latency than the 4G LTE technology and allows 
+our networks to handle more traffic as the number of internet-connected devices grows. In January 2022, we began deploying C-
+Band spectrum, which has been built out to cover approximately 189 million POPs in the U.S. as of December 31, 2022. We 
+expect to continue deploying C-Band spectrum across the continental U.S. as more and more of the spectrum becomes 
+available for our use. We use low and mid-band spectrum and dynamic spectrum sharing (DSS) technology, to allow 5G service 
+to run simultaneously with 4G LTE on multiple spectrum bands. With DSS, whenever customers move outside Verizons 
+millimeter wave and C-Band coverage areas, their 5G-enabled devices will remain on 5G technology using the lower spectrum 
+bands where this network is available. This allows us to more fully and effectively utilize our current spectrum resources to serve 
+both 4G and 5G customers. 
+To compensate for the shrinking market for traditional copper-based products, we continue to build fiber-based networks 
+supporting data, video and advanced business services - areas where demand for reliable high-speed connections is growing. 
+We are transforming the architecture of our networks into our Intelligent Edge Network, providing improved efficiency and 
+virtualization, increased automation and opportunities for edge computing services that will support our fiber-based and radio 
+access network technologies. We expect that this new architecture will simplify operations by eliminating legacy network 
+elements, speed the deployment of 5G wireless technology and create new opportunities in the business market in a cost-
+efficient manner. 
+Consolidated Results of Operations 
+In this section, we discuss our overall results of operations and highlight special items that are not included in our segment 
+results. In "Segment Results of Operations," we review the performance of our two reportable segments in more detail. A detailed 
+discussion of 2020 items and year-over-year comparisons between 2021 and 2020 that are not included in this Form 10-K can 
+be found in the "Management's Discussion and Analysis of Financial Condition and Results of Operations" in our Annual Report 
+on Form 10-K for the year ended December 31, 2021. 
+Consolidated Operating Revenues 
+(dollars in millions) 
+Increase/(Decrease) 
+Years Ended December 31,
+2022
+2021 
+2022 vs. 2021 
+Consumer
+$ 103,506 
+$ 95,300 $ 
+8,206 
+ 8.6 % 
+Business
+31,072 
+31,042 
+30 
+ 0.1 
+Corporate and other
+2,510 
+7,722 
+(5,212) 
+ (67.5) 
+Eliminations
+(253)
+(451)
+198 
+ 43.9 
+Consolidated Operating Revenues
+$ 136,835 
+$ 133,613 $ 
+3,222 
+ 2.4 
+Consolidated operating revenues increased during 2022 compared to 2021, due to increases in our Consumer and Business 
+segments, partially offset by a decrease in Corporate and other. 
+ 23 
+ Verizon 2022 Annual Report on Form 10-K
+
+---
+
+Note 7. Debt 
+Outstanding long-term debt obligations as of December 31, 2022 and 2021 are as follows: 
+(dollars in millions) 
+At December 31,
+Maturities 
+Interest 
+Rates %
+2022
+2021 
+Verizon Communications
+< 5 Years
+0.75 - 5.82
+$ 
+23,929 
+$ 
+18,406 
+5-10 Years
+1.50 - 7.88
+42,637 
+43,225 
+> 10 Years
+1.13 - 8.95
+60,134 
+73,520 
+< 5 Years
+Floating
+(1) 
+2,992 
+4,086 
+5-10 Years
+Floating
+(1) 
+3,029 
+824 
+Alltel Corporation
+5-10 Years
+6.80 - 7.88
+94 
+38 
+> 10 Years
+N/A
+N/A 
+58 
+Operating telephone company subsidiariesdebentures
+< 5 Years
+N/A
+N/A 
+141 
+5-10 Years
+6.00 - 8.75
+475 
+375 
+> 10 Years
+5.13 - 7.38
+139 
+250 
+Other subsidiariesasset-backed debt
+< 5 Years
+0.41 - 5.72
+9,767 
+9,620 
+< 5 Years
+Floating
+(2) 
+10,271 
+4,610 
+Finance lease obligations (average rate of 2.5% and 2.2% in 
+2022 and 2021, respectively)
+1,732 
+1,325 
+Unamortized discount, net of premium
+(4,039) 
+(4,922) 
+Unamortized debt issuance costs
+(671) 
+(688) 
+Total long-term debt, including current maturities
+150,489 
+150,868 
+Less long-term debt maturing within one year
+9,813 
+7,443 
+Total long-term debt
+$ 
+140,676 
+$ 
+143,425 
+Long-term debt maturing within one year
+$ 
+9,813 
+$ 
+7,443 
+Add commercial paper
+150 
+ 
+Debt maturing within one year
+9,963 
+7,443 
+Add long-term debt
+140,676 
+143,425 
+Total debt
+$ 
+150,639 
+$ 
+150,868 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(1) The debt obligations bore interest at a floating rate based on the Compounded Secured Overnight Financing Rate (SOFR) for 
+the interest period or the London Interbank Offered Rate (LIBOR) plus an applicable interest margin per annum, as applicable. 
+Compounded SOFR is calculated using the SOFR Index published by the Federal Reserve Bank of New York in accordance 
+with the formula set forth in the terms of the notes. The Compounded SOFR for the interest period ending in December 2022 
+was 3.450%. The one-month and three-month LIBOR at December 31, 2022 was 4.392% and 4.767%, respectively. 
+(2) The debt obligations bore interest at floating rates, including floating rates associated with SOFR for the interest period, or 
+LIBOR plus an applicable interest margin per annum, as applicable. Floating rates associated with SOFR for the interest 
+period ending in December 2022 ranged from 3.807% to 4.372%. 
+ 
+Maturities of long-term debt (secured and unsecured) outstanding, including current maturities, excluding unamortized debt 
+issuance costs, at December 31, 2022 are as follows: 
+Years
+(dollars in millions) 
+2023
+$ 
+9,279 
+2024
+16,252 
+2025
+8,706 
+2026
+8,304 
+2027
+6,962 
+Thereafter
+99,925 
+ 
+ 
+ 
+ 
+ 
+During 2022, we received $17.8 billion of proceeds from long-term borrowings, which included $10.7 billion of proceeds from 
+asset-backed debt transactions. The net proceeds were primarily used for general corporate purposes including the repayment 
+of debt and the funding of certain renewable energy projects. We used $13.6 billion of cash to repay, redeem and repurchase 
+long-term borrowings and finance lease obligations, including $4.9 billion to prepay and repay asset-backed, long-term 
+borrowings. The net proceeds of approximately $1.0 billion from the green bond issued in 2022 are expected to be used to fund 
+certain renewable energy projects. 
+During 2021, we received $41.4 billion of proceeds from long-term borrowings, which included $8.4 billion of proceeds from 
+asset-backed debt transactions. The net proceeds were primarily used to finance the purchase of wireless licenses won in 
+connection with the FCC's auction for C-Band wireless spectrum, Auction 107, and fund certain renewable energy projects. We 
+ 77 
+ 
+ Verizon 2022 Annual Report on Form 10-K

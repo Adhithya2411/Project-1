@@ -1,0 +1,151 @@
+# ==============================================================================
+# Seeded demo corpus manifest.
+#
+# Everything AHRAG's governance layer needs that cannot be inferred from a file:
+# ownership, ACL roles, effective dates, versions, authority, and the
+# supersedes/superseded-by chain. Ingesting a file *without* a manifest entry is
+# allowed (see the UI upload panel) but the document then defaults to the most
+# restrictive sensible ACL, never to "everyone".
+#
+# authority_score: 1 = informal note, 3 = working document, 5 = ratified policy.
+# ==============================================================================
+
+roles:
+  employee:   "Baseline role held by every member of staff."
+  manager:    "Line manager; may read management-scoped material."
+  engineering: "Engineering staff; may read runbooks and platform plans."
+  hr:         "HR function; may read all HR policy material including drafts."
+  finance:    "Finance function; may read restricted financial material."
+
+users:
+  - user_id: alice.employee
+    display_name: "Alice Nowak — Support Engineer"
+    roles: [employee, engineering]
+    description: "General staff with engineering access. No finance, no HR-internal."
+  - user_id: bob.manager
+    display_name: "Bob Adeyemi — Delivery Manager"
+    roles: [employee, manager]
+    description: "Line manager. Reads reports and policies; no finance, no runbooks."
+  - user_id: carol.hr
+    display_name: "Carol Bianchi — HR Business Partner"
+    roles: [employee, hr, manager]
+    description: "HR function. Full HR policy access including superseded versions."
+  - user_id: dan.finance
+    display_name: "Dan Oyelaran — Finance Analyst"
+    roles: [employee, finance]
+    description: "Finance function. The only role that may read restricted finance."
+  - user_id: erin.contractor
+    display_name: "Erin Vasquez — External Contractor"
+    roles: [employee]
+    description: "Baseline access only. Used to demonstrate scope restriction."
+
+documents:
+  - doc_id: doc-hr-leave-v2
+    path: corpus/hr_leave_policy_v2.md
+    title: "Annual Leave and Time-Off Policy"
+    doc_type: policy
+    owner: "HR Director"
+    acl_roles: [employee, manager, hr]
+    created_date: 2024-11-18
+    effective_date: 2025-01-01
+    version: "2.1"
+    authority_score: 5
+    policy_family: leave-policy
+    supersedes: doc-hr-leave-v1
+
+  - doc_id: doc-hr-leave-v1
+    path: corpus/hr_leave_policy_v1.md
+    title: "Annual Leave and Time-Off Policy (2023 edition)"
+    doc_type: policy
+    owner: "HR Director"
+    acl_roles: [employee, manager, hr]
+    created_date: 2022-12-02
+    effective_date: 2023-01-01
+    version: "1.4"
+    authority_score: 4
+    policy_family: leave-policy
+    # superseded_by is derived from the `supersedes` link above at ingest time.
+
+  - doc_id: doc-hr-remote
+    path: corpus/remote_work_policy.md
+    title: "Hybrid and Remote Working Policy"
+    doc_type: policy
+    owner: "HR Director"
+    acl_roles: [employee, manager, hr]
+    created_date: 2025-11-30
+    effective_date: 2026-01-01
+    version: "3.0"
+    authority_score: 5
+    policy_family: remote-work-policy
+
+  - doc_id: doc-fin-expenses
+    path: corpus/expenses_policy.txt
+    title: "Expenses and Travel Policy"
+    doc_type: policy
+    owner: "Finance Director"
+    acl_roles: [employee, manager, hr, finance, engineering]
+    created_date: 2025-02-10
+    effective_date: 2025-03-01
+    version: "1.2"
+    authority_score: 4
+    policy_family: expenses-policy
+
+  - doc_id: doc-eng-payments-runbook
+    path: corpus/payments_runbook.md
+    title: "Payments Service Runbook (payments-api)"
+    doc_type: runbook
+    owner: "Platform Engineering"
+    acl_roles: [engineering]
+    created_date: 2026-01-20
+    effective_date: 2026-02-01
+    version: "4.3"
+    authority_score: 4
+    policy_family: payments-runbook
+
+  - doc_id: doc-sec-incident-runbook
+    path: corpus/security_incident_runbook.md
+    title: "Security Incident Response Runbook"
+    doc_type: runbook
+    owner: "Security Engineering"
+    acl_roles: [engineering, manager]
+    created_date: 2025-09-05
+    effective_date: 2025-10-01
+    version: "2.0"
+    authority_score: 4
+    policy_family: security-runbook
+
+  - doc_id: doc-pmo-atlas-q2
+    path: corpus/project_atlas_status.md
+    title: "Project Atlas — Status Report Q2 2026"
+    doc_type: report
+    owner: "Programme Management Office"
+    acl_roles: [employee, manager, engineering]
+    created_date: 2026-07-04
+    effective_date: 2026-07-04
+    version: "1.0"
+    authority_score: 3
+    policy_family: atlas-status
+
+  - doc_id: doc-eng-capacity-h2
+    path: corpus/platform_capacity_plan.md
+    title: "Platform Engineering Capacity Plan H2 2026"
+    doc_type: report
+    owner: "Head of Platform Engineering"
+    acl_roles: [engineering, manager]
+    created_date: 2026-06-12
+    effective_date: 2026-07-01
+    version: "1.1"
+    authority_score: 3
+    policy_family: platform-capacity
+
+  - doc_id: doc-fin-q3-forecast
+    path: corpus/finance_q2_forecast.md
+    title: "Q3 2026 Revenue Forecast and Margin Review (RESTRICTED)"
+    doc_type: finance
+    owner: "Finance Director"
+    acl_roles: [finance]
+    created_date: 2026-07-10
+    effective_date: 2026-07-10
+    version: "1.0"
+    authority_score: 4
+    policy_family: finance-forecast

@@ -1,0 +1,40 @@
+PepsiCo Reports First-Quarter 2023 Results; Raises Full-Year 
+Guidance
+Reported (GAAP) First-Quarter 2023 Results
+First-Quarter
+Net revenue growth
+10.2%
+Foreign exchange impact on net revenue
+(2.5)%
+Earnings per share (EPS)
+$1.40
+EPS change
+(54)%
+Foreign exchange impact on EPS
+(2)%
+Organic/Core (non-GAAP)1 First-Quarter 2023 Results
+First-Quarter
+Organic revenue growth
+14.3%
+Core EPS
+$1.50
+Core constant currency EPS change
+18%
+PURCHASE, N.Y. - April 25, 2023 - PepsiCo, Inc. (NASDAQ: PEP) today reported results for 
+the first quarter 2023. 
+We are very pleased with our performance and business momentum as our categories and 
+geographies remained resilient during the first quarter. Given our strong start to the year, we 
+now expect our full-year 2023 organic revenue to increase 8 percent (previously 6 percent) and 
+core constant currency EPS to increase 9 percent (previously 8 percent), said Chairman and 
+CEO Ramon Laguarta.
+Laguarta continued, Our results demonstrate that the investments we have made to become an 
+even Faster, even Stronger, and even Better organization by Winning with pep+ are laying the 
+foundation for durable and sustainable growth. We remain committed to our strategic agenda 
+and will continue to invest in our people, brands, supply chain, go-to-market systems, and 
+digitization initiatives to build competitive advantages and win in the marketplace.
+1 Please refer to the Glossary for the definitions of non-GAAP financial measures, including Organic revenue growth, Core and Constant currency, 
+and to Guidance and Outlook for additional information regarding PepsiCos full-year 2023 financial guidance. PepsiCo provides guidance on a non-
+GAAP basis as we cannot predict certain elements which are included in reported GAAP results, including the impact of foreign exchange and 
+commodity mark-to-market net impacts. Please refer to PepsiCos Quarterly Report on Form 10-Q for the 12 weeks ended March 25, 2023 (Q1 2023 
+Form 10-Q) filed with the Securities and Exchange Commission (SEC) for additional information regarding PepsiCos financial results.
+1

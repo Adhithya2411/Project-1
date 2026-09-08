@@ -1,0 +1,390 @@
+Consolidated Balance Sheets
+Pfizer Inc. and Subsidiary Companies
+As of December 31,
+(MILLIONS, EXCEPT PER COMMON SHARE DATA)
+2021
+2020
+Assets
+Cash and cash equivalents
+$
+1,944 
+$
+1,786 
+Short-term investments
+29,125 
+10,437 
+Trade accounts receivable, less allowance for doubtful accounts: 2021$492; 2020$508
+11,479 
+7,913 
+Inventories
+9,059 
+8,020 
+Current tax assets
+4,266 
+3,264 
+Other current assets
+3,820 
+3,646 
+Total current assets
+59,693 
+35,067 
+Equity-method investments
+16,472 
+16,856 
+Long-term investments
+5,054 
+3,406 
+Property, plant and equipment
+14,882 
+13,745 
+Identifiable intangible assets
+25,146 
+28,337 
+Goodwill
+49,208 
+49,556 
+Noncurrent deferred tax assets and other noncurrent tax assets
+3,341 
+2,383 
+Other noncurrent assets
+7,679 
+4,879 
+Total assets
+$
+181,476 
+$
+154,229 
+Liabilities and Equity
+ 
+ 
+Short-term borrowings, including current portion of long-term debt: 2021$1,636; 2020$2,002
+$
+2,241 
+$
+2,703 
+Trade accounts payable
+5,578 
+4,283 
+Dividends payable
+2,249 
+2,162 
+Income taxes payable
+1,266 
+1,049 
+Accrued compensation and related items
+3,332 
+3,049 
+Deferred revenues
+3,067 
+1,113 
+Other current liabilities
+24,939 
+11,561 
+Total current liabilities
+42,671 
+25,920 
+Long-term debt
+36,195 
+37,133 
+Pension benefit obligations
+3,489 
+4,766 
+Postretirement benefit obligations
+235 
+645 
+Noncurrent deferred tax liabilities
+349 
+4,063 
+Other taxes payable
+11,331 
+11,560 
+Other noncurrent liabilities
+9,743 
+6,669 
+Total liabilities
+104,013 
+90,756 
+Commitments and Contingencies
+Preferred stock, no par value, at stated value; 27 shares authorized; no shares issued or outstanding at December 31, 2021 and
+December 31, 2020
+ 
+ 
+Common stock, $0.05 par value; 12,000 shares authorized; issued: 20219,471; 20209,407
+473 
+470 
+Additional paid-in capital
+90,591 
+88,674 
+Treasury stock, shares at cost: 20213,851; 20203,840
+(111,361)
+(110,988)
+Retained earnings
+103,394 
+90,392 
+Accumulated other comprehensive loss
+(5,897)
+(5,310)
+Total Pfizer Inc. shareholders equity
+77,201 
+63,238 
+Equity attributable to noncontrolling interests
+262 
+235 
+Total equity
+77,462 
+63,473 
+Total liabilities and equity
+$
+181,476 
+$
+154,229 
+See Accompanying Notes.
+Pfizer Inc.
+2021 Form 10-K
+53
+
+Consolidated Statements of Income
+Pfizer Inc. and Subsidiary Companies
+ 
+Year Ended December 31,
+(MILLIONS, EXCEPT PER COMMON SHARE DATA)
+2021
+2020
+2019
+Revenues
+$
+81,288 
+$
+41,651 
+$
+40,905 
+Costs and expenses:
+ 
+ 
+Cost of sales
+30,821 
+8,484 
+8,054 
+Selling, informational and administrative expenses
+12,703 
+11,597 
+12,726 
+Research and development expenses
+13,829 
+9,393 
+8,385 
+Amortization of intangible assets
+3,700 
+3,348 
+4,429 
+Restructuring charges and certain acquisition-related costs
+802 
+579 
+601 
+(Gain) on completion of Consumer Healthcare JV transaction
+ 
+(6)
+(8,107)
+Other (income)/deductionsnet
+(4,878)
+1,219 
+3,497 
+Income from continuing operations before provision/(benefit) for taxes on income
+24,311 
+7,036 
+11,321 
+Provision/(benefit) for taxes on income
+1,852 
+370 
+583 
+Income from continuing operations
+22,459 
+6,666 
+10,738 
+Discontinued operationsnet of tax
+(434)
+2,529 
+5,318 
+Net income before allocation to noncontrolling interests
+22,025 
+9,195 
+16,056 
+Less: Net income attributable to noncontrolling interests
+45 
+36 
+29 
+Net income attributable to Pfizer Inc. common shareholders
+$
+21,979 
+$
+9,159 
+$
+16,026 
+Earnings per common sharebasic:
+ 
+ 
+ 
+Income from continuing operations attributable to Pfizer Inc. common shareholders
+$
+4.00 
+$
+1.19 
+$
+1.92 
+Discontinued operationsnet of tax
+(0.08)
+0.46 
+0.95 
+Net income attributable to Pfizer Inc. common shareholders
+$
+3.92 
+$
+1.65 
+$
+2.88 
+Earnings per common sharediluted:
+ 
+ 
+Income from continuing operations attributable to Pfizer Inc. common shareholders
+$
+3.93 
+$
+1.18 
+$
+1.89 
+Discontinued operationsnet of tax
+(0.08)
+0.45 
+0.94 
+Net income attributable to Pfizer Inc. common shareholders
+$
+3.85 
+$
+1.63 
+$
+2.82 
+Weighted-average sharesbasic
+5,601 
+5,555 
+5,569 
+Weighted-average sharesdiluted
+5,708 
+5,632 
+5,675 
+Exclusive of amortization of intangible assets, except as disclosed in Note 1M.
+See Accompanying Notes.
+(a)
+(a)
+(a)
+(a)
+Pfizer Inc.
+2021 Form 10-K
+51
+
+Notes to Consolidated Financial Statements
+Pfizer Inc. and Subsidiary Companies
+We regularly monitor our position and subsequently recognize the unrecognized tax benefit: (i) if there are changes in tax law, analogous case law or there is new information that
+sufficiently raise the likelihood of prevailing on the technical merits of the position to more likely than not; (ii) if the statute of limitations expires; or (iii) if there is a completion of an
+audit resulting in a favorable settlement of that tax year with the appropriate agency. Liabilities for uncertain tax positions are classified as current only when we expect to pay cash
+within the next 12 months. Interest and penalties, if any, are recorded in Provision/(benefit) for taxes on income and are classified on our consolidated balance sheet with the related
+tax liability.
+Our assessments are based on estimates and assumptions that have been deemed reasonable by management, but our estimates of unrecognized tax benefits and potential tax
+benefits may not be representative of actual outcomes, and variation from such estimates could materially affect our financial statements in the period of settlement or when the
+statutes of limitations expire, as we treat these events as discrete items in the period of resolution.
+R. Pension and Postretirement Benefit Plans
+The majority of our employees worldwide are covered by defined benefit pension plans, defined contribution plans or both. In the U.S., we have both IRC-qualified and supplemental
+(non-qualified) defined benefit plans and defined contribution plans, as well as other postretirement benefit plans consisting primarily of medical insurance for retirees and their eligible
+dependents. We recognize the overfunded or underfunded status of each of our defined benefit plans as an asset or liability. The obligations are generally measured at the actuarial
+present value of all benefits attributable to employee service rendered, as provided by the applicable benefit formula. Our pension and other postretirement obligations may be
+determined using assumptions such as discount rate, expected annual rate of return on plan assets, expected employee turnover and participant mortality. For our pension plans, the
+obligation may also include assumptions as to future compensation levels. For our other postretirement benefit plans, the obligation may include assumptions as to the expected cost
+of providing medical insurance benefits, as well as the extent to which those costs are shared with the employee or others (such as governmental programs). Plan assets are
+measured at fair value. Net periodic pension and postretirement benefit costs other than the service costs are recognized in Other (income)/deductionsnet.
+S. Legal and Environmental Contingencies
+We and certain of our subsidiaries are subject to numerous contingencies arising in the ordinary course of business, such as patent litigation, product liability and other product-related
+litigation, commercial litigation, environmental claims and proceedings, government investigations and guarantees and indemnifications. In assessing contingencies related to legal
+and environmental proceedings that are pending against the Company, or unasserted claims that are probable of being asserted, we record accruals for these contingencies to the
+extent that we conclude that a loss is both probable and reasonably estimable. If some amount within a range of loss appears to be a better estimate than any other amount within the
+range, we accrue that amount. Alternatively, when no amount within a range of loss appears to be a better estimate than any other amount, we accrue the lowest amount in the range.
+We record anticipated recoveries under existing insurance contracts when recovery is assured.
+T. Share-Based Payments
+Our compensation programs can include share-based payments. Generally, grants under share-based payment programs are accounted for at fair value and these fair values are
+generally amortized on a straight-line basis over the vesting terms with the related costs recorded in Cost of sales, Selling, informational and administrative expenses and/or Research
+and development expenses, as appropriate.
+Note 2. Acquisitions, Divestitures, Equity-Method Investments, Licensing Arrangements and Collaborative Arrangements
+A. Acquisitions
+Trillium
+On November 17, 2021, we acquired all of the issued and outstanding common stock not already owned by Pfizer of Trillium, a clinical stage immuno-oncology company developing
+therapies targeting cancer immune evasion pathways and specific cell targeting approaches, for a price of $18.50 per share in cash, for total consideration of $2.0 billion, net of cash
+acquired. As a result, Trillium became our wholly owned subsidiary. We previously held a 2% ownership investment in Trillium. Trilliums lead program, TTI-622, is an investigational
+fusion protein that is designed to block the inhibitory activity of CD47, a molecule that is overexpressed by a wide variety of tumors.
+We accounted for the transaction as an asset acquisition since the lead asset, TTI-622, represented substantially all of the fair value of the gross assets acquired, which exclude cash
+acquired. At the acquisition date, we recorded a $2.1 billion charge representing an acquired IPR&D asset with no alternative future use in Research and development expenses, of
+which the $2.0 billion net cash consideration is presented as a cash outflow from operating activities. In connection with this acquisition, we recorded $256 million of assets acquired
+primarily consisting of cash and investments. Liabilities assumed were approximately $81 million.
+Array
+On July 30, 2019, we acquired Array, a commercial stage biopharmaceutical company focused on the discovery, development and commercialization of targeted small molecule
+medicines to treat cancer and other diseases of high unmet need, for $48 per share in cash. The total fair value of the consideration transferred was $11.2 billion ($10.9 billion, net of
+cash acquired). In addition, $157 million in payments to Array employees for the fair value of previously unvested stock options was recognized as post-closing compensation expense
+and recorded in Restructuring charges and certain acquisition-related costs (see Note 3). We financed the majority of the transaction with debt and the balance with existing cash.
+Pfizer Inc.
+2021 Form 10-K
+64
+
+Notes to Consolidated Financial Statements
+Pfizer Inc. and Subsidiary Companies
+Arrays portfolio includes Braftovi (encorafenib) and Mektovi (binimetinib), a broad pipeline of targeted cancer medicines in different stages of R&D, as well as a portfolio of out-
+licensed medicines, which may generate milestones and royalties over time.
+The final allocation of the consideration transferred to the assets acquired and the liabilities assumed was completed in 2020. In connection with this acquisition, we recorded: (i) $6.3
+billion in Identifiable intangible assets, consisting of $2.0 billion of Developed technology rights with a useful life of 16 years, $2.8 billion of IPR&D and $1.5 billion of Licensing
+agreements and other ($1.2 billion for technology in developmentindefinite-lived licensing agreements and $360 million for developed technologyfinite-lived licensing agreements
+with a useful life of 10 years), (ii) $6.1 billion of Goodwill, (iii) $1.1 billion of net deferred tax liabilities and (iv) $451 million of assumed long-term debt, which was paid in full in 2019.
+In 2020, we recorded measurement period adjustments to the estimated fair values initially recorded in 2019, which resulted in a reduction in Identifiable intangible assets of
+approximately $900 million with a corresponding change to Goodwill and net deferred tax liabilities. The measurement period adjustments were recorded to better reflect market
+participant assumptions about facts and circumstances existing as of the acquisition date and did not have a material impact on our consolidated statement of income for the year
+ended December 31, 2020.
+Therachon
+On July 1, 2019, we acquired all the remaining shares of Therachon, a privately-held clinical-stage biotechnology company focused on rare diseases, with assets in development for
+the treatment of achondroplasia, a genetic condition and the most common form of short-limb dwarfism, for $340 million upfront, plus potential milestone payments of up to $470
+million contingent on the achievement of key milestones in the development and commercialization of the lead asset. We accounted for the transaction as an asset acquisition since
+the lead asset represented substantially all the fair value of the gross assets acquired. The total fair value of the consideration transferred for Therachon was $322 million, which
+consisted of $317 million of cash and our previous $5 million investment in Therachon. In connection with this asset acquisition, we recorded a charge of $337 million in Research and
+development expenses.
+B. Divestitures
+Meridian
+On December 31, 2021, we completed the sale of our Meridian subsidiary for approximately $51 million in cash and recognized a loss of approximately $167 million, net of tax, in
+Discontinued operationsnet of tax. In connection with the sale, Pfizer and the purchaser of Meridian entered into various agreements to provide a framework for our relationship
+after the sale, including interim TSAs and a manufacturing supply agreement (MSA). The TSAs primarily involve Pfizer providing services related to information technology, among
+other activities, and are generally expected to be for terms of no more than 12 to 18 months post sale. The MSA is for a term of three years post sale with a two year extension period.
+No amounts were recorded under the above arrangements in 2021.
+Upjohn Separation and Combination with Mylan
+On November 16, 2020, we completed the spin-off and the combination of the Upjohn Business with Mylan (the Transactions) to form Viatris.
+The Transactions were structured as an all-stock, Reverse Morris Trust transaction. Specifically, (i) we contributed the Upjohn Business to a wholly owned subsidiary, which was
+renamed Viatris, so that the Upjohn Business was separated from the remainder of our business (the Separation), (ii) following the Separation, we distributed, on a pro rata basis, all
+of the shares of Viatris common stock held by Pfizer to Pfizer stockholders as of the November 13, 2020 record date, such that each Pfizer stockholder as of the record date received
+approximately 0.124079 shares of Viatris common stock per share of Pfizer common stock (the Distribution); and (iii) immediately after the Distribution, the Upjohn Business combined
+with Mylan in a series of transactions in which Mylan shareholders received one share of Viatris common stock for each Mylan ordinary share held by such shareholder, subject to any
+applicable withholding taxes (the Combination). Prior to the Distribution, Viatris made a cash payment to Pfizer equal to $12.0 billion as partial consideration for the contribution of the
+Upjohn Business to Viatris. As of the closing of the Combination, Pfizer stockholders owned approximately 57% of the outstanding shares of Viatris common stock, and Mylan
+shareholders owned approximately 43% of the outstanding shares of Viatris common stock, in each case on a fully diluted, as-converted and as-exercised basis. The Transactions are
+generally expected to be tax free to Pfizer and Pfizer stockholders for U.S. tax purposes. Beginning November 16, 2020, Viatris operates both the Upjohn Business and Mylan as an
+independent publicly traded company, which is traded under the symbol VTRS on the NASDAQ.
+In connection with the Transactions, in June 2020, Upjohn Inc. and Upjohn Finance B.V. completed privately placed debt offerings of $7.45 billion and 3.60 billion aggregate principal
+amounts, respectively, (approximately $11.4 billion) of senior unsecured notes and entered into other financing arrangements, including a $600 million delayed draw term loan
+agreement and a revolving credit facility agreement for up to $4.0 billion. Proceeds from the debt offerings and other financing arrangements were used to fund the $12.0 billion cash
+distribution Viatris made to Pfizer prior to the Distribution. We used the cash distribution proceeds to pay down commercial paper borrowings and redeem the $1.15 billion aggregate
+principal amount outstanding of our 1.95% senior unsecured notes that were due in June 2021 and $342 million aggregate principal amount outstanding of our 5.80% senior
+unsecured notes that were due in August 2023, before the maturity date. Interest expense for the $11.4 billion in debt securities incurred during 2020 is included in Discontinued
+operationsnet of tax. Following the Separation and Combination of the Upjohn Business with Mylan, we are no longer the obligor or guarantor of any Upjohn debt or Upjohn
+financing arrangements.
+As a result of the spin-off of the Upjohn Business, we distributed net assets of $1.6 billion as of November 16, 2020, which was reflected as a reduction to Retained earnings and
+reflects the change in accounting principle in the first quarter of 2021 to MTM Accounting. See Note 1C. Of this amount, $412 million represents cash transferred to the Upjohn
+Business, with the remainder considered a non-cash activity in the consolidated statement of cash flows for the year ended December 31, 2020. The spin-off also resulted in a net
+increase to Accumulated other comprehensive loss of $423 million for the derecognition of net gains on foreign currency translation adjustments of $397 million and prior service net
+credits associated with benefit plans of $26 million, which were reclassified to Retained earnings.
+As a result of the separation of Upjohn, we incurred separation-related costs of $434 million in 2020 and $83 million in 2019, which are included in Discontinued operationsnet of
+tax. These costs primarily relate to professional fees for regulatory filings and separation activities within finance, tax, legal and information system functions as well as investment
+banking fees.
+Pfizer Inc.
+2021 Form 10-K
+65

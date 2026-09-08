@@ -1,0 +1,297 @@
+# ==============================================================================
+# AHRAG router configuration.
+#
+# Everything the governance-aware router uses to score routes lives here. No
+# weight, threshold, or cost prior is hard-coded in Python; `RouterConfig.load`
+# reads this file and validates it. Change a number here and re-run
+# `python -m ahrag.evaluate` to see the effect.
+#
+# Utility:  U(z|x) = Q(z|x) - lambda_latency*L(z|x)
+#                          - lambda_cost*C(z|x)
+#                          - lambda_risk*R(z|x)
+#
+# ACL is NOT a term in this function. Authorisation is a hard pre-filter applied
+# to the candidate pool before any utility is computed (see governance/acl.py).
+# ==============================================================================
+
+router_version: "ahrag-router-0.3.0-interpretable"
+
+# --- Utility trade-off coefficients ------------------------------------------
+# Units are chosen so all three penalties land on a comparable 0..1-ish scale:
+#   latency is in seconds, cost is in US cents, risk is a 0..1 probability proxy.
+lambdas:
+  latency: 0.09      # per second of estimated end-to-end latency
+  cost: 0.12         # per US cent of estimated generation cost
+  risk: 0.55         # per unit of estimated evidence/governance risk
+
+# --- Per-route operational priors --------------------------------------------
+# base_latency_s: fixed overhead of the route
+# per_candidate_latency_s: marginal cost of each candidate carried into rerank
+# input_tokens / output_tokens: estimated generation budget for the route
+route_costs:
+  R0:
+    base_latency_s: 0.05
+    per_candidate_latency_s: 0.0
+    input_tokens: 250
+    output_tokens: 120
+  R1:
+    base_latency_s: 0.12
+    per_candidate_latency_s: 0.002
+    input_tokens: 1400
+    output_tokens: 260
+  R2:
+    base_latency_s: 0.22
+    per_candidate_latency_s: 0.003
+    input_tokens: 1500
+    output_tokens: 260
+  R3:
+    base_latency_s: 0.34
+    per_candidate_latency_s: 0.004
+    input_tokens: 2000
+    output_tokens: 300
+  R4:
+    base_latency_s: 0.45
+    per_candidate_latency_s: 0.005
+    input_tokens: 2400
+    output_tokens: 320
+
+# --- Expected evidence quality model -----------------------------------------
+# Q(z|x) = clip(prior + sum_f(weight[f] * feature_value[f]) + probe_term, 0, 1)
+#
+# Feature values are all normalised to 0..1 by routing/features.py. The weights
+# below are interpretable by design: they were set from the failure modes named
+# in the literature review (dense retrieval loses rare identifiers; sparse loses
+# paraphrase; fusion helps mixed queries; decomposition helps multi-hop), NOT
+# fitted on the evaluation set. They are hypotheses to be tested, not results.
+quality_model:
+  R0:
+    prior: 0.30
+    weights:
+      unsupported_signal: 0.55        # nothing authorised looks relevant
+      followup_signal: 0.10
+      semantic_ambiguity: 0.12
+    probe:
+      sparse_confidence: -0.35        # good probe hits make abstention worse
+      dense_confidence: -0.35
+  R1:
+    prior: 0.30
+    weights:
+      identifier_signal: 0.34
+      lexical_specificity: 0.20
+      intent_lookup: 0.10
+      numeric_signal: 0.06
+      semantic_ambiguity: -0.22
+      hop_signal: -0.20
+      comparison_signal: -0.18
+    probe:
+      sparse_confidence: 0.42
+      dense_confidence: 0.0
+  R2:
+    prior: 0.32
+    weights:
+      semantic_ambiguity: 0.20
+      intent_explanation: 0.14
+      intent_summarisation: 0.10
+      identifier_signal: -0.30
+      lexical_specificity: -0.12
+      hop_signal: -0.18
+      comparison_signal: -0.16
+    probe:
+      sparse_confidence: 0.0
+      dense_confidence: 0.44
+  R3:
+    prior: 0.42
+    weights:
+      identifier_signal: 0.10
+      semantic_ambiguity: 0.12
+      intent_explanation: 0.08
+      intent_procedural: 0.10
+      mixed_signal: 0.16            # both lexical and semantic cues present
+      hop_signal: -0.08
+    probe:
+      sparse_confidence: 0.20
+      dense_confidence: 0.20
+  R4:
+    prior: 0.40
+    weights:
+      hop_signal: 0.26
+      comparison_signal: 0.24
+      temporal_signal: 0.12
+      intent_comparison: 0.10
+      query_length: 0.06
+      identifier_signal: -0.04
+    probe:
+      sparse_confidence: 0.12
+      dense_confidence: 0.12
+
+# --- Risk model --------------------------------------------------------------
+# R(z|x) in 0..1. Higher = more chance of an unsupported, stale, or
+# governance-inappropriate answer if this route is taken.
+risk_model:
+  # Baseline risk that a route's evidence turns out insufficient.
+  base:
+    R0: 0.02
+    R1: 0.20
+    R2: 0.20
+    R3: 0.12
+    R4: 0.10
+  # Added risk when the query needs current sources but the route does not
+  # perform metadata-aware reranking across versions (R1/R2 are single-family).
+  freshness_penalty:
+    R0: 0.00
+    R1: 0.16
+    R2: 0.16
+    R3: 0.05
+    R4: 0.02
+  # Added risk when a large share of the corpus was withheld by ACL: the
+  # authorised view may be a partial picture of the topic.
+  restricted_scope_weight: 0.30
+  # Added risk when the ACL-scoped probe found little that is clearly relevant.
+  # Risk grows linearly as the best probe confidence falls below the reference
+  # point, reaching `low_probe_weight` when the probe found nothing at all.
+  low_probe_weight: 0.45
+  low_probe_reference: 0.65
+  # Added risk for answering routes when a version conflict is likely present
+  # and the route cannot surface both sides (only R3/R4 pack multiple versions).
+  conflict_penalty:
+    R0: 0.00
+    R1: 0.14
+    R2: 0.14
+    R3: 0.02
+    R4: 0.00
+
+# --- Hard constraints --------------------------------------------------------
+constraints:
+  # If the ACL-authorised candidate pool is empty, only R0 is admissible.
+  force_r0_on_empty_scope: true
+  # If the best probe score across both families is below this, only R0 is
+  # admissible: there is no authorised evidence worth generating from.
+  min_probe_for_answering: 0.12
+  # R0 may never emit a factual claim; it may only clarify or abstain.
+  r0_is_non_generative: true
+
+# --- Retrieval parameters ----------------------------------------------------
+# NOTE ON DEPTH: the seeded corpus is ~66 chunks, of which a given user can
+# read 40-55. Production-scale top-k values (30-100) would retrieve almost the
+# entire authorised pool in one pass, after which the reranker sees the same
+# candidates whatever route ran and every route produces identical results --
+# which makes the whole routing comparison vacuous. These values keep the
+# first-stage retriever genuinely selective (~20% of the authorised pool),
+# preserving the same selectivity ratio a production system has. See
+# RESEARCH_LIMITATIONS.md.
+retrieval:
+  probe_top_k: 5              # cheap first-pass used for router confidence
+  candidate_top_k: 10         # per-family candidate pool before fusion
+  rrf_k: 60                   # RRF smoothing constant
+  rerank_top_k: 8             # candidates carried into reranking
+  evidence_top_k: 5           # chunks packed into the evidence pack
+  r4_max_iterations: 3        # hard cap on decomposition rounds
+  r4_subquery_top_k: 5
+
+# --- Evidence sufficiency thresholds -----------------------------------------
+# THRESHOLD CALIBRATION: min_top_score and min_mean_score are on the reranker's
+# ABSOLUTE 0..1 scale (never max-normalised -- see retrieval/pipeline.py). They
+# were set by measuring the observed score distribution over the labelled suite
+# on the seeded corpus and placing the cut between the true-positive and
+# off-topic clusters. That cut is imperfect and the residual errors are reported
+# in the evaluation output rather than tuned away; see RESEARCH_LIMITATIONS.md.
+# Re-calibrate these if you change the corpus, the chunker, or the reranker.
+evidence:
+  min_top_score: 0.10             # absolute rerank score of the best chunk
+  min_supporting_chunks: 1
+  min_mean_score: 0.09
+  # Intents that require evidence from more than one parent document.
+  diversity_required_intents: ["comparison", "summarisation"]
+  min_distinct_documents: 2
+  min_authority_for_policy: 3     # authority score 1..5 for doc_type=policy
+  # A chunk whose parent document is superseded is demoted, and is dropped
+  # entirely when a superseding version is present in the same evidence pack.
+  demote_superseded: true
+  superseded_score_multiplier: 0.55
+  # Freshness: for freshness-sensitive queries, the top-cited document must be
+  # the current effective version of its policy family.
+  enforce_current_version_on_freshness: true
+
+# --- Query feature detection -------------------------------------------------
+features:
+  # Regexes that mark an "exact identifier" query. Deliberately explicit so a
+  # reviewer can see exactly what triggers R1 rather than trusting a black box.
+  identifier_patterns:
+    - '\b[A-Z]{2,6}-\d{2,6}\b'          # ERR-5041, SOX-404, POL-2024
+    - '\b[A-Z]{2,}\d{3,}\b'             # E5041, HTTP503
+    - '\berror\s+code\s+\S+'
+    - '\bclause\s+\d+(\.\d+)*\b'
+    - '\bsection\s+\d+(\.\d+)*\b'
+    - '\bv\d+\.\d+(\.\d+)?\b'
+    - '\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b'
+  temporal_terms:
+    - current
+    - latest
+    - now
+    - today
+    - effective
+    - "2024"
+    - "2025"
+    - "2026"
+    - updated
+    - "new"
+    - recent
+    - "as of"
+    - still
+    - changed
+    - change
+  comparison_terms:
+    - compare
+    - comparison
+    - versus
+    - "vs"
+    - difference
+    - differ
+    - differences
+    - "both"
+    - "between"
+    - contrast
+    - changed from
+    - instead of
+  multihop_terms:
+    - "and also"
+    - "then"
+    - "which"
+    - "who"
+    - "across"
+    - "each"
+    - "all projects"
+    - "every"
+    - "impact"
+    - "affect"
+    - "affects"
+  followup_terms:
+    - "it"
+    - "that"
+    - "this"
+    - "they"
+    - "those"
+    - "the same"
+    - "he"
+    - "she"
+  intent_markers:
+    lookup: ["what is", "what's", "define", "who is", "when is", "which", "list", "code", "how many", "how much"]
+    explanation: ["why", "explain", "how does", "rationale", "reason", "purpose", "means"]
+    comparison: ["compare", "versus", "vs", "difference", "differ", "contrast"]
+    summarisation: ["summarise", "summarize", "summary", "overview", "status of", "brief"]
+    procedural: ["how do i", "how to", "steps", "procedure", "process", "runbook", "resolve", "fix", "remediate"]
+    temporal: ["current", "latest", "effective", "as of", "since", "changed", "updated", "new policy"]
+  # Words that suggest a particular document type, used as a soft prior only.
+  doc_type_hints:
+    policy: ["policy", "leave", "vacation", "pto", "hr", "entitlement", "compliance", "handbook"]
+    runbook: ["error", "runbook", "incident", "alert", "service", "restart", "latency", "oncall", "on-call"]
+    report: ["status", "milestone", "project", "quarter", "delivery", "roadmap", "budget burn"]
+    finance: ["revenue", "margin", "forecast", "ebitda", "salary", "compensation", "budget", "financial"]
+
+# --- Complexity-only baseline router (B5) ------------------------------------
+# Deliberately mirrors Adaptive-RAG's premise: complexity of the query text
+# alone selects the route. Used as an ablation, not as a strawman: it gets the
+# same retrieval stack, same reranker, same evidence gates, same generator.
+complexity_baseline:
+  simple_max_tokens: 6
+  complex_min_tokens: 16

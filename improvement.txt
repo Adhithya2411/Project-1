@@ -1,0 +1,373 @@
+================================================================================
+AHRAG PROJECT — IMPROVEMENT RECOMMENDATIONS FOR RESEARCH NOVELTY
+================================================================================
+Prepared after full analysis of the codebase, corpus, evaluation suite,
+router, embeddings, metrics, and RESEARCH_LIMITATIONS.md.
+
+Focus: Dataset volume, training, evaluation rigor, and what needs to change
+so you can make legitimate novelty claims in a research paper or thesis.
+These are NOT feature requests — they are about making the existing system
+provably better than baselines at scale.
+
+================================================================================
+1. CORPUS IS FAR TOO SMALL — THE SINGLE BIGGEST PROBLEM
+================================================================================
+
+CURRENT STATE:
+  - 9 documents, 60 chunks, ~17 KB total text (~15,000 words)
+  - All documents are hand-written specifically for this demo
+  - Only 4 document types: policy, runbook, report, finance
+  - Only 1 supersession chain (leave policy v1 → v2)
+  - Only 1 restricted document (Q3 finance forecast)
+  - Only 5 demo users with 5 roles
+
+WHY THIS IS A PROBLEM:
+  - At 60 chunks, ANY retrieval route finds almost everything. The README
+    itself admits: "on a 9-document corpus almost everything is findable by
+    any route." If every route ties, you cannot claim your router helps.
+  - The router's governance-aware advantage (abstention on thin corpus)
+    shows on exactly 2 out of 32 queries. That is not publishable evidence.
+  - LSA fitted on 60 chunks has almost no co-occurrence data to learn from,
+    so the embedding quality is artificially low.
+  - BM25 on 60 chunks is basically a brute-force scan, not real retrieval.
+
+WHAT YOU MUST DO:
+  a) Scale to 500–1000+ documents, 5,000–10,000+ chunks minimum.
+     This means the retrieval first-stage is genuinely selective and
+     different routes will actually produce different results.
+
+  b) Use REAL or REALISTIC data sources. Options:
+     - EnterpriseRAG-Bench: ~500K synthetic company documents across 9 types
+     - FinanceBench: 10,231 financial QA items with evidence strings
+     - Company-10K: Publicly available SEC 10-K annual reports (real finance)
+     - ConflictQA / HAGRID: Existing RAG benchmarks with citations
+     - PolicyQA: Policy document question-answering dataset
+     - Scrape real open-source policy documents from government websites
+       (many are public domain), corporate handbooks published online, and
+       technical runbooks from open-source projects
+
+  c) Mix multiple REAL document types at scale:
+     - 100+ HR/compliance policies with versioning chains
+     - 100+ technical runbooks/SOPs from open-source projects
+     - 100+ financial/business reports (SEC filings, annual reports)
+     - 50+ project status reports and meeting notes
+     - 50+ internal memos and communications
+     This diversity is needed to make the doc_type_hints feature meaningful.
+
+  d) Create MULTIPLE supersession chains (at least 10–15) so the freshness
+     metric is not trivially 1.000 for all systems. Currently it tells you
+     NOTHING because every system happens to lead with the current version.
+
+  e) Create MULTIPLE restricted document classes with overlapping topics
+     so the ACL boundary is genuinely tested. One restricted document
+     is not a security evaluation.
+
+
+================================================================================
+2. EVALUATION DATASET IS TOO SMALL AND SINGLE-ANNOTATOR
+================================================================================
+
+CURRENT STATE:
+  - 32 labelled queries total (only 25 answerable ones)
+  - 8 query types, averaging only 3–4 queries per type
+  - Single annotator who wrote both the corpus AND the labels
+  - No inter-annotator agreement (IAA) metric
+  - No statistical significance tests (the project itself says "no
+    significance test is reported because none would be meaningful at n=25")
+  - 0.03 difference in Recall@5 is well within noise
+
+WHAT YOU MUST DO:
+  a) Scale to 300–500+ labelled evaluation queries minimum.
+     At n=300, a paired bootstrap test can detect meaningful differences.
+     At n=32, you literally cannot claim anything statistically.
+
+  b) Get a SECOND annotator (even a classmate) to independently label at
+     least 100 queries. Report Cohen's kappa or Krippendorff's alpha as
+     inter-annotator agreement. Without this, any reviewer will question
+     your labels.
+
+  c) Include adversarial/edge-case queries:
+     - Ambiguous queries that could match multiple document types
+     - Queries with misspellings of error codes (does R1 still work?)
+     - Long, rambling queries that bury the key question
+     - Queries that require information across 3+ documents
+     - Queries where the superseded document is MORE lexically relevant
+       than the current one (this is the real test of freshness handling)
+
+  d) Use stratified evaluation with enough samples per stratum:
+     - At least 30 queries per query type for statistical power
+     - At least 20 permission-constrained queries across different users
+     - At least 15 freshness-sensitive queries with competing versions
+
+  e) Report confidence intervals (bootstrap 95% CI) on every metric
+     comparison. Without these, your numbers are anecdotes, not evidence.
+
+
+================================================================================
+3. ROUTER IS RULE-BASED WITH HAND-TUNED WEIGHTS — NOT TRAINED
+================================================================================
+
+CURRENT STATE:
+  - Router weights in config/router.yaml are hand-set by the author
+  - The quality model is a linear combination of 23 features with manually
+    chosen weights based on "reading of the literature's failure modes"
+  - Weights were NOT fitted on ANY data — they are "unvalidated priors"
+  - The research draft proposes a trained router but it was never built
+  - ComplexityOnlyRouter (baseline B5) is the only ablation
+
+WHY THIS IS A PROBLEM:
+  - A rule-based router with hand-tuned weights cannot claim to be "adaptive"
+    in the machine learning sense. Reviewers will say this is just a
+    heuristic decision tree, not learned routing.
+  - Without training, you cannot claim the weights are optimal or even good.
+  - The utility function U(z|x) = Q - λ_L·L - λ_C·C - λ_R·R is elegant
+    but the Q function is a linear model with guessed coefficients.
+
+WHAT YOU MUST DO:
+  a) TRAIN the router on real offline route labels:
+     - Run all 5 routes (R0-R4) on each query in a training partition
+     - Score evidence sufficiency against annotated gold references
+     - For each query, assign the LOWEST-COST route that clears quality
+       thresholds as the gold label
+     - This gives you real training labels, not fabricated ones
+
+  b) Train a proper ML classifier on the 23 features:
+     - Gradient-boosted trees (XGBoost/LightGBM) — interpretable, fast
+     - Small neural network classifier
+     - Compare both against the current rule-based router AND against
+       an LLM-based router (e.g., using GPT/Claude to classify query type)
+
+  c) Use proper train/validation/test splits:
+     - 60% train, 20% validation (for threshold tuning), 20% held-out test
+     - The test set must NEVER be used to set any threshold or weight
+     - Report results ONLY on the held-out test set
+
+  d) Perform hyperparameter search on the lambdas (λ_latency, λ_cost,
+     λ_risk) using the validation set. Currently they are hand-picked
+     constants (0.09, 0.12, 0.55).
+
+  e) Show learning curves: how does router accuracy change as training
+     data increases from 50 to 100 to 500 to 1000 queries? This directly
+     supports the claim that more data helps.
+
+
+================================================================================
+4. EMBEDDING BACKEND IS A WEAKNESS, NOT A FEATURE
+================================================================================
+
+CURRENT STATE:
+  - Default is LSA (TF-IDF + truncated SVD) fitted on the 60-chunk corpus
+  - LSA on 60 chunks has almost no co-occurrence data
+  - Multiple failures are attributed to vocabulary mismatch that a neural
+    encoder would fix (sem-003, sem-005 in the eval results)
+  - sentence-transformers is optional but never actually evaluated
+  - The README calls LSA a "deliberate" choice but the real reason is that
+    the corpus is too small for it to matter
+
+WHAT YOU MUST DO:
+  a) ACTUALLY RUN the evaluation with sentence-transformers installed and
+     compare the results side-by-side. The project is set up for this but
+     nobody has done it. This is low-hanging fruit.
+
+  b) Compare at least 3 embedding backends on YOUR larger corpus:
+     - LSA (current default)
+     - all-MiniLM-L6-v2 (the configured sentence-transformer model)
+     - A larger model like all-mpnet-base-v2 or BGE-base-en
+     Show that the router's R1-vs-R2 routing decision MATTERS more with
+     better embeddings, because dense retrieval actually works differently
+     from sparse when embeddings are good.
+
+  c) On a large corpus, LSA will actually learn meaningful term associations.
+     Show this empirically: LSA@60 chunks vs LSA@5000 chunks vs neural.
+
+  d) Fine-tune embeddings on your domain (enterprise policies, runbooks).
+     Even basic fine-tuning on in-domain data is a publishable contribution
+     that shows you understand the embedding space.
+
+
+================================================================================
+5. STATISTICAL RIGOR IS MISSING
+================================================================================
+
+CURRENT STATE:
+  - No significance tests anywhere
+  - No confidence intervals on any metric
+  - A 0.03 Recall@5 difference (0.840 vs 0.820) on 25 items is reported
+    without any caveat that this is 1 item difference
+  - No ablation studies beyond the fixed-route baselines
+
+WHAT YOU MUST DO:
+  a) Paired bootstrap significance tests on every pairwise system comparison.
+     Report p-values. If p > 0.05, say "not statistically significant."
+
+  b) 95% bootstrap confidence intervals on all key metrics:
+     Recall@5, MRR, nDCG@10, Abstention Appropriateness, Citation Coverage
+
+  c) Proper ablation studies that isolate each component:
+     - Router WITH governance signal vs WITHOUT (already done: P1 vs B5)
+     - Router WITH probe confidence vs WITHOUT
+     - Router WITH freshness penalty vs WITHOUT
+     - Router WITH risk model vs WITHOUT
+     - Evidence gates WITH authority checking vs WITHOUT
+     - Evidence gates WITH freshness enforcement vs WITHOUT
+     Each ablation should show a MEASURABLE, SIGNIFICANT difference.
+
+  d) Effect size reporting (Cohen's d) alongside p-values.
+     Statistical significance alone is not enough — you need to show the
+     effect is meaningfully LARGE, not just non-zero.
+
+
+================================================================================
+6. BENCHMARKING AGAINST PUBLISHED SYSTEMS IS NEEDED
+================================================================================
+
+CURRENT STATE:
+  - Only compares against its own fixed-route baselines (B1-B4) and
+    complexity-only router (B5)
+  - No comparison against ANY published RAG system
+  - No comparison against Adaptive-RAG (the paper cited as the premise)
+  - No comparison against Self-RAG, CRAG, or other recent work
+
+WHAT YOU MUST DO:
+  a) Implement or reproduce Adaptive-RAG (Jeong et al., NAACL 2024) as a
+     proper baseline. B5 is described as "the Adaptive-RAG premise" but it
+     is a simplified reimplementation, not the actual system.
+
+  b) Compare against at least 2–3 published baselines:
+     - Adaptive-RAG (query complexity routing)
+     - Self-RAG (self-reflective retrieval augmentation)
+     - CRAG (corrective retrieval augmented generation)
+     - A simple RAG pipeline (retrieve-then-generate, no routing)
+
+  c) Run on at least ONE established benchmark dataset:
+     - Natural Questions (NQ)
+     - HotpotQA (multi-hop)
+     - FEVER (fact verification)
+     - Or a domain-specific benchmark like FinanceBench
+
+  d) Show results on both YOUR custom dataset AND a public benchmark.
+     Custom dataset alone is not enough for a paper — reviewers want to
+     see you can compete on datasets others have used.
+
+
+================================================================================
+7. SPECIFIC DATASET EXPANSION PLAN (STEP-BY-STEP)
+================================================================================
+
+This is the actionable plan your professor is asking for:
+
+PHASE 1 — Grow the corpus to 100+ documents (Week 1-2):
+  - Collect 30+ real HR policy documents from public sources
+    (government agency policies, university HR handbooks — many are online)
+  - Collect 30+ technical runbooks from open-source projects
+    (Kubernetes troubleshooting, AWS incident response, etc.)
+  - Collect 20+ financial reports (SEC 10-K summaries, annual reports)
+  - Collect 20+ project/status reports (open-source project reports)
+  - Create 10+ supersession chains (old policy → new policy pairs)
+  - Create 5+ restricted document classes with different ACL roles
+
+PHASE 2 — Scale evaluation to 200+ queries (Week 2-3):
+  - Write 25+ queries per query type (8 types × 25 = 200 minimum)
+  - Get a second person to independently label 100+ queries
+  - Include adversarial edge cases (misspellings, ambiguous queries)
+  - Include cross-document queries that require 3+ sources
+
+PHASE 3 — Train the router (Week 3-4):
+  - Run all 5 routes offline on the 200+ training queries
+  - Collect gold route labels based on evidence sufficiency scores
+  - Train XGBoost/LightGBM classifier on the 23 features
+  - Compare trained router vs rule-based router vs LLM router
+  - Report on held-out test set with confidence intervals
+
+PHASE 4 — Run comparative evaluation (Week 4-5):
+  - Install sentence-transformers and run full evaluation
+  - Implement Adaptive-RAG baseline properly
+  - Run on FinanceBench or HotpotQA subset
+  - Report all metrics with bootstrap confidence intervals
+  - Generate publication-quality comparison tables and charts
+
+
+================================================================================
+8. NOVELTY CLAIMS YOU CAN MAKE AFTER THESE IMPROVEMENTS
+================================================================================
+
+After scaling up, you can legitimately claim:
+
+  a) "Governance-aware routing outperforms complexity-only routing on
+     abstention appropriateness by X% (p < 0.01, n=300+)"
+     — Currently this is a 0.031 difference on n=32, unpublishable.
+
+  b) "The proposed router matches always-maximal retrieval quality while
+     reducing estimated cost by Y% on a Z,000-chunk enterprise corpus"
+     — Currently this is a 1.7% cost difference on 60 chunks, meaningless.
+
+  c) "The trained governance-aware router achieves W% route selection
+     accuracy vs V% for the rule-based version, demonstrating that
+     offline route labels improve routing decisions"
+     — Currently there IS no trained router; this is the open hypothesis.
+
+  d) "ACL pre-filtering as a hard architectural constraint (not a utility
+     term) provably prevents information leakage across N adversarial
+     query types on a corpus of M restricted documents"
+     — Currently tested on 1 restricted document and 4 ACL queries.
+
+  e) "Freshness-aware evidence packing correctly prefers current versions
+     over superseded ones in P% of freshness-sensitive queries across
+     Q supersession chains"
+     — Currently: 1 supersession chain, metric is trivially 1.000 everywhere.
+
+
+================================================================================
+9. ADDITIONAL THINGS REVIEWERS / PROFESSORS WILL ASK ABOUT
+================================================================================
+
+  a) REPRODUCIBILITY: Set a random seed for everything. Document the exact
+     hardware (CPU/GPU, RAM), Python version, and package versions used.
+     Provide a single script that reproduces all results end-to-end.
+
+  b) LATENCY AT SCALE: Currently everything runs in ~1ms because the corpus
+     is tiny. At 10,000 chunks, R4 (decomposed iterative) should genuinely
+     take longer than R1 (sparse BM25). This is when the cost-efficiency
+     claim becomes real and measurable.
+
+  c) HUMAN EVALUATION: For at least 50 queries, have 2 human judges rate
+     answer quality on a 1-5 Likert scale. Report agreement and average
+     scores per system. Automated metrics alone are not convincing for
+     answer quality.
+
+  d) ERROR ANALYSIS: For every system, categorize its failures:
+     - What fraction of errors are retrieval failures?
+     - What fraction are routing failures (wrong route chosen)?
+     - What fraction are generation failures?
+     - What fraction are ACL/governance failures?
+     This shows you understand WHERE and WHY your system fails.
+
+  e) REAL LLM EVALUATION: Run with Anthropic/OpenAI in the loop and
+     measure RAGAS faithfulness, answer relevancy, and context precision.
+     The extractive generator makes faithfulness trivially perfect but
+     that is testing the generator architecture, not the retrieval.
+
+
+================================================================================
+10. SUMMARY: TOP 5 PRIORITIES IN ORDER
+================================================================================
+
+  1. EXPAND CORPUS to 500+ real documents, 5000+ chunks
+     (Without this, no other improvement matters — all metrics are noise)
+
+  2. EXPAND EVALUATION SET to 300+ queries with second annotator
+     (Without this, you cannot report statistical significance)
+
+  3. TRAIN THE ROUTER on offline route labels using ML
+     (Without this, the "adaptive" in AHRAG is just a heuristic)
+
+  4. RUN WITH sentence-transformers and compare embedding backends
+     (Low effort, immediately shows whether neural embeddings help)
+
+  5. ADD BENCHMARK COMPARISON against Adaptive-RAG and at least
+     one public dataset (NQ, HotpotQA, or FinanceBench)
+     (Without this, reviewers will say you only tested on your own data)
+
+================================================================================
+END OF IMPROVEMENT RECOMMENDATIONS
+================================================================================

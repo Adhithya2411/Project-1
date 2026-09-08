@@ -1,0 +1,270 @@
+The table below shows the results of the Firms Risk Management VaR measure using a 95% confidence level. VaR can vary 
+significantly as positions change, market volatility fluctuates, and diversification benefits change.
+Total VaR
+Three months ended
+June 30, 2023
+March 31, 2023
+June 30, 2022
+(in millions)
+ Avg.
+Min
+Max
+ Avg.
+Min
+Max
+ Avg.
+Min
+Max
+CIB trading VaR by risk type
+Fixed income
+$ 57 
+$ 50 
+$ 66 
+$ 56 
+$ 45 
+$ 71 
+$ 60 
+$ 48 
+$ 79 
+Foreign exchange
+ 
+12 
+ 
+7 
+ 24 
+ 
+10 
+ 
+6 
+ 
+17 
+ 
+8 
+ 
+4 
+ 13 
+Equities
+ 
+8 
+ 
+5 
+ 11 
+ 
+7 
+ 
+5 
+ 
+10 
+ 11 
+ 
+7 
+ 15 
+Commodities and other
+ 
+12 
+ 
+8 
+ 17 
+ 
+15 
+ 
+11 
+ 
+19 
+ 14 
+ 
+12 
+ 17 
+Diversification benefit to CIB trading VaR(a)
+ (48) 
+ NM
+ NM
+ (44) 
+NM
+NM
+ (43) 
+NM
+NM
+CIB trading VaR
+ 
+41 
+ 
+31 
+ 50 
+ 
+44 
+ 
+34 
+ 
+55 
+ 50 
+ 
+38 
+ 66 
+Credit Portfolio VaR(b)
+ 
+14 
+ 
+11 
+ 18 
+ 
+11 
+ 
+8 
+ 
+17 
+ 17 
+ 
+6 
+ 31 
+(e)
+Diversification benefit to CIB VaR(a)
+ (11) 
+ NM
+ NM
+ (10) 
+NM
+NM
+ (15) 
+NM
+NM
+CIB VaR
+ 
+44 
+ 
+34 
+ 55 
+ 
+45 
+ 
+35 
+ 
+58 
+ 52 
+ 
+38 
+ 70 
+CCB VaR
+ 
+9 
+(d) 
+6 
+ 14 
+ 
+11 
+ 
+6 
+ 
+15 
+ 
+5 
+(d) 
+4 
+ 
+6 
+Corporate and other LOB VaR(c)
+ 
+13 
+ 
+11 
+ 15 
+ 
+15 
+ 
+13 
+ 
+17 
+ 10 
+ 
+9 
+ 11 
+Diversification benefit to other VaR(a)
+ 
+(7) 
+ NM
+ NM
+ 
+(8) 
+NM
+NM
+ 
+(3) 
+NM
+NM
+Other VaR
+ 
+15 
+ 
+13 
+ 19 
+ 
+18 
+ 
+14 
+ 
+22 
+ 12 
+ 
+10 
+ 14 
+Diversification benefit to CIB and other VaR(a)
+ (12) 
+ NM
+ NM
+ (16) 
+NM
+NM
+ (10) 
+NM
+NM
+Total VaR
+$ 47 
+$ 36 
+$ 56 
+$ 47 
+$ 37 
+$ 57 
+$ 54 
+$ 41 
+$ 71 
+(a) Diversification benefit represents the difference between the portfolio VaR and the sum of its individual components. This reflects the non-additive nature 
+of VaR due to imperfect correlation across LOBs, Corporate, and risk types. For maximum and minimum VaR, diversification benefit is not meaningful as 
+the maximum and minimum VaR for each portfolio may have occurred on different trading days than the components.
+(b) Credit portfolio VaR includes the derivative CVA, hedges of the CVA and hedges of the retained loan portfolio, which are reported in principal transactions 
+revenue. This VaR does not include the retained loan portfolio, which is not reported at fair value. In the first quarter of 2022, in line with the Firm's 
+internal model governance, the credit risk component of CVA related to certain counterparties was removed from Credit Portfolio VaR due to the widening 
+of the credit spreads for those counterparties to elevated levels. The related hedges were also removed to maintain consistency. This exposure is now 
+reflected in other sensitivity-based measures.
+(c) Corporate and other LOB VaR includes a legacy private equity position in Corporate which is publicly traded.
+(d) The increase in CCB VaR is driven by interest rate volatility impacting Home Lending warehouse loans, MSR, and related hedges.
+(e) For the period ended June 30, 2022, maximum Credit Portfolio VaR remained elevated due to the effects of nickel price increases and the associated 
+volatility in the nickel market which occurred during the first quarter of 2022.
+Quarter over quarter results
+Average total VaR was flat for the three months ended 
+June 30, 2023, when compared with March 31, 2023, 
+reflecting increases in fixed income offset by market volatility 
+relating to commodities rolling out of the one-year historical 
+look-back period. 
+Year over year results
+Average total VaR decreased by $7 million for the three 
+months ended June 30, 2023, compared with the same 
+period in the prior year predominantly driven by risk 
+reductions impacting Credit Portfolio VaR as well as fixed 
+income.
+The following graph presents daily Risk Management VaR for the five trailing quarters.
+Daily Risk Management VaR
+$ millions
+0
+50
+100
+Second Quarter
+2022
+Third Quarter
+2022
+Fourth Quarter
+2022
+First Quarter
+2023
+Second Quarter
+2023
+85

@@ -1,0 +1,1043 @@
+items:
+- id: hrqa-dc091200981c
+  query: How often is the company policy reviewed and updated?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: The company policy is reviewed
+    annually and updated as necessary to ensure ongoi'
+- id: hrqa-dfd01f69c1ba
+  query: Will I be informed if there are major changes to the company policy?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Yes, employees will be notified
+    of any significant changes to the company policy'
+- id: hrqa-a8d5f079593c
+  query: Why does the company review its policy every year?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: The company reviews its policy
+    annually to ensure it remains compliant with curr'
+- id: hrqa-7a41b9d4e7cc
+  query: What happens if the laws change before the annual policy review?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: If applicable laws change before
+    the scheduled annual review, the policy may be '
+- id: hrqa-0c0ed91a7c93
+  query: How will employees be notified about significant policy changes?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Employees will be notified of
+    significant policy changes through official compan'
+- id: hrqa-df40c758b8dc
+  query: Are minor policy updates also communicated to employees?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: While significant changes are
+    always communicated, minor updates may not be indi'
+- id: hrqa-0de3e7d9e755
+  query: Can employees provide feedback on policy updates?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Yes, employees are often encouraged
+    to provide feedback on policy updates, which'
+- id: hrqa-af88852652c6
+  query: Who should I contact if I have questions about the Anti-Bribery and Anti-Corruption
+    Policy?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: If you have any questions or
+    need further clarification regarding the Anti-Bribe'
+- id: hrqa-8120497d0584
+  query: What is the purpose of the Compliance Team in relation to the Anti-Bribery
+    and Anti-Corruption Policy?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: The Compliance Team is responsible
+    for overseeing the implementation and enforce'
+- id: hrqa-466e3bd85a80
+  query: How can I reach the Compliance Team for policy-related questions?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: You can reach the Compliance
+    Team by sending an email to the HR or compliance em'
+- id: hrqa-fb29a515bb03
+  query: Is it mandatory to contact the Compliance Team if I suspect a violation of
+    the Anti-Bribery and Anti-Corruption Policy?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Yes, it is generally mandatory
+    to report any suspected violations of the Anti-Br'
+- id: hrqa-6d3063c3dd4a
+  query: What kind of questions can I ask the Compliance Team regarding the Anti-Bribery
+    and Anti-Corruption Policy?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: You can ask the Compliance Team
+    any questions related to the interpretation, app'
+- id: hrqa-8e545a7bb71d
+  query: Will my inquiry to the Compliance Team about the Anti-Bribery and Anti-Corruption
+    Policy be kept confidential?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Yes, inquiries and reports made
+    to the Compliance Team regarding the Anti-Briber'
+- id: hrqa-2c5009deb19c
+  query: What should I do if I am unsure whether a situation violates the Anti-Bribery
+    and Anti-Corruption Policy?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: If you are unsure whether a
+    situation may violate the Anti-Bribery and Anti-Corr'
+- id: hrqa-7a2056f4a194
+  query: What does 'End of Policy Document' mean in a document?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: ''End of Policy Document'' is
+    a phrase typically used to indicate that the content'
+- id: hrqa-4b5309a28435
+  query: Why do some documents include 'End of Policy Document' at the end?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Including ''End of Policy Document''
+    at the end of a document helps clarify that t'
+- id: hrqa-b34a42975bb8
+  query: Is 'End of Policy Document' a legal requirement?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: ''End of Policy Document'' is
+    not generally a legal requirement, but it is a commo'
+- id: hrqa-520abea824fc
+  query: Can 'End of Policy Document' be used in digital documents as well as printed
+    ones?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Yes, ''End of Policy Document''
+    can be used in both digital and printed documents '
+- id: hrqa-1636a4b32f12
+  query: What are some alternatives to writing 'End of Policy Document' at the end
+    of a policy?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Alternatives include phrases
+    like ''End of Document,'' ''End of Policy,'' or simply '
+- id: hrqa-179f4aa26cf2
+  query: Does the presence of 'End of Policy Document' affect the validity of the
+    policy?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: The presence or absence of ''End
+    of Policy Document'' does not affect the legal va'
+- id: hrqa-e41646e2be3b
+  query: If a policy document is updated, should 'End of Policy Document' be moved
+    to the new end?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Yes, if a policy document is
+    updated with new sections or amendments, the ''End o'
+- id: hrqa-6b86467ee894
+  query: What is the policy for availing compensatory off in our company?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Compensatory off should be availed
+    within 60 days from the date it is accrued. T'
+- id: hrqa-2bab749e2fd6
+  query: Can I carry forward my unused compensatory off to the next period?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: No, unused compensatory off
+    cannot be carried forward beyond the stipulated 60-d'
+- id: hrqa-e8dea1ed24e4
+  query: Is it possible to encash my compensatory off if I don't use it?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: No, employees cannot encash
+    compensatory off. It must be availed within the spec'
+- id: hrqa-3c56edeb7779
+  query: Who needs to approve my compensatory off request?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Your compensatory off request
+    must be approved by your reporting manager. Additi'
+- id: hrqa-7628530d7a40
+  query: What happens if I don't use my compensatory off within 60 days?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: If you do not use your compensatory
+    off within 60 days from the date of accrual,'
+- id: hrqa-593769ff16b6
+  query: Is there any restriction on when I can take compensatory off?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Yes, compensatory off must be
+    availed within 60 days of accrual, and it should n'
+- id: hrqa-4ae0b431117f
+  query: If my project deliverables are at risk, can I still take compensatory off?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: No, compensatory off should
+    not be taken if it will impact project deliverables.'
+- id: hrqa-15b93afc2fdb
+  query: Are managers and employees in leadership roles eligible for compensatory
+    off?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Managers and employees in leadership
+    roles are generally not eligible for compen'
+- id: hrqa-47fa32048d14
+  query: Can exceptions be made for compensatory off in special situations?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Yes, in exceptional circumstances
+    where business needs require extended working '
+- id: hrqa-87765cc66719
+  query: Who has the authority to approve compensatory off for leadership roles?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: The CEO has the authority to
+    approve compensatory off for employees in leadershi'
+- id: hrqa-bab4dadc87f9
+  query: What happens if business needs require employees to work longer hours than
+    usual?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: If business needs require employees
+    to work extended hours beyond the usual limi'
+- id: hrqa-8146002a71ff
+  query: Is compensatory off automatically granted to all employees who work extra
+    hours?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: No, compensatory off is not
+    automatically granted to all employees who work extr'
+- id: hrqa-3293d9cc8eb3
+  query: If I am in a leadership position and work extra hours, can I expect compensatory
+    off?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: If you are in a leadership position,
+    you are generally not eligible for compensa'
+- id: hrqa-ed2f9213a60c
+  query: How does management decide on providing additional flexibility for extended
+    working hours?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: True. Answer: Management decides on providing
+    additional flexibility for extended working hour'
+- id: hrqa-bc71a9f9459e
+  query: What happens if someone misuses or falsifies overtime claims according to
+    company policy?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: According to company policy,
+    misuse or falsification of overtime claims will res'
+- id: hrqa-19afdcff9327
+  query: Who is responsible for making sure that work is planned efficiently to reduce
+    unnecessary overtime?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Managers are responsible for
+    ensuring that work is planned efficiently to minimi'
+- id: hrqa-aaf38d4dd798
+  query: How does the company monitor compliance with overtime policies?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: HR and management periodically
+    review overtime trends to ensure compliance with '
+- id: hrqa-e5b34e1b19ca
+  query: If a manager consistently allows unnecessary overtime, what could happen?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: If a manager consistently allows
+    unnecessary overtime, it may be identified duri'
+- id: hrqa-fdecd57b384a
+  query: What is the role of HR in overtime policy compliance?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: HR is responsible for periodically
+    reviewing overtime trends and ensuring that c'
+- id: hrqa-831094df42a9
+  query: Can employees claim overtime without prior approval?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Employees should not claim overtime
+    without prior approval, as all overtime must'
+- id: hrqa-559afdbd1bff
+  query: How often are overtime trends reviewed by management and HR?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Overtime trends are reviewed
+    periodically by management and HR, though the exact'
+- id: hrqa-dbdf844b7a64
+  query: Can you explain the approval process for compensatory off in our company?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Certainly! To apply for compensatory
+    off, employees should first send an email t'
+- id: hrqa-6a6be1b53b1e
+  query: Who should be included in the email when requesting compensatory off approval?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: When requesting compensatory
+    off approval, the email should be sent to your repo'
+- id: hrqa-e3495cb38783
+  query: What details should I include in my email to the manager when applying for
+    compensatory off?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Your email to the manager should
+    include a detailed description of the task for '
+- id: hrqa-55ba12c4683d
+  query: Is it enough to just get my manager's approval via email for compensatory
+    off?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: No, it is not enough to only
+    get your manager''s approval via email. After receiv'
+- id: hrqa-0da02bffe7c8
+  query: Why should HR be kept in CC when requesting compensatory off?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: HR should be kept in CC when
+    requesting compensatory off to ensure proper record'
+- id: hrqa-099702c492c5
+  query: What happens if I forget to apply for compensatory off in the leave management
+    system after getting email approval?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: True. Answer: If you forget to apply for compensatory
+    off in the leave management system after'
+- id: hrqa-a082b8df0215
+  query: Can I avail compensatory off before it is approved in the leave management
+    system?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: false
+  freshness_sensitive: false
+  notes: "HR Policies QA. Topic match: True. Answer: No, you must wait for your compensatory\
+    \ off to be approved in the company\u2019s leav"
+- id: hrqa-717ac8cb1777
+  query: What is Kreeda Labs' stance on work-life balance for its employees?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Kreeda Labs places a strong
+    emphasis on work-life balance and encourages employe'
+- id: hrqa-1c25b8a5e019
+  query: How does Kreeda Labs handle situations where employees need to work extra
+    hours?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Kreeda Labs has a policy to
+    ensure that any additional work performed outside of'
+- id: hrqa-3a8f50fb3f85
+  query: Why does Kreeda Labs encourage employees to complete tasks within regular
+    working hours?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: false
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: True. Answer: Kreeda Labs encourages employees
+    to complete their tasks within regular working '
+- id: hrqa-0a2bd8808978
+  query: Does Kreeda Labs recognize extra work done by employees?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Yes, Kreeda Labs ensures that
+    any additional work performed by employees beyond '
+- id: hrqa-a9165a07fff6
+  query: What are the benefits of Kreeda Labs' work-life balance policy for employees?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Kreeda Labs'' work-life balance
+    policy benefits employees by reducing stress, pre'
+- id: hrqa-abf3f14c9c1e
+  query: How does Kreeda Labs' policy on work-life balance impact operational productivity?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Kreeda Labs'' policy on work-life
+    balance helps maintain operational productivity'
+- id: hrqa-5646b1e2e27a
+  query: Can you summarize Kreeda Labs' approach to managing employee workload?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Kreeda Labs manages employee
+    workload by promoting efficient task completion wit'
+- id: hrqa-b12e4db0b7d8
+  query: What are ethical business practices according to Kreeda Labs?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: According to Kreeda Labs, ethical
+    business practices involve conducting business'
+- id: hrqa-4accd0bc3c40
+  query: Why is it important for employees and third parties to follow ethical business
+    practices at Kreeda Labs?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: It is important for employees
+    and third parties to follow ethical business pract'
+- id: hrqa-81413621e755
+  query: Can you give examples of actions that would be considered ethical business
+    practices at Kreeda Labs?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Examples of ethical business
+    practices at Kreeda Labs include being honest in al'
+- id: hrqa-1d0629859624
+  query: What should an employee do if they witness unethical behavior at Kreeda Labs?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: If an employee witnesses unethical
+    behavior at Kreeda Labs, they should report t'
+- id: hrqa-5c96c8ce56d0
+  query: Are third-party vendors also required to follow Kreeda Labs' ethical business
+    standards?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Yes, third-party vendors and
+    associated partners are required to adhere to Kreed'
+- id: hrqa-52e3efa04f8f
+  query: How does Kreeda Labs ensure compliance with its ethical business practices?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Kreeda Labs ensures compliance
+    with its ethical business practices by providing '
+- id: hrqa-781c04f77dfc
+  query: What are the consequences of not following ethical business practices at
+    Kreeda Labs?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Failure to follow ethical business
+    practices at Kreeda Labs can result in discip'
+- id: hrqa-7bc80dac23cf
+  query: What are some key responsibilities for maintaining ethical standards in financial
+    transactions?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Key responsibilities for maintaining
+    ethical standards in financial transactions'
+- id: hrqa-eb7d5011ab77
+  query: Why is it important to avoid arrangements that could be perceived as corrupt
+    or unethical in business?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Avoiding arrangements that could
+    be perceived as corrupt or unethical is importa'
+- id: hrqa-7b87b6280f01
+  query: What should I do if I suspect a violation of our company's ethics policy?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: If you suspect a violation of
+    your company''s ethics policy, you should report it'
+- id: hrqa-096e771727f7
+  query: How can I ensure that my transaction records are accurate and complete?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: To ensure your transaction records
+    are accurate and complete, record all details'
+- id: hrqa-85c550d08651
+  query: What are the consequences of failing to report suspected unethical behavior
+    in the workplace?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Failing to report suspected
+    unethical behavior can lead to legal consequences, d'
+- id: hrqa-106eeb10d346
+  query: Can you give examples of arrangements that might be perceived as corrupt
+    or unethical?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Examples of arrangements that
+    might be perceived as corrupt or unethical include'
+- id: hrqa-cffbb30e1ea8
+  query: If I am unsure whether a situation is unethical, what steps should I take?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: If you are unsure whether a
+    situation is unethical, consult your company''s code '
+- id: hrqa-c0b64e740dfb
+  query: How does Kreeda Labs handle reports of bribery or corruption?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Kreeda Labs encourages both
+    employees and third parties to report any concerns o'
+- id: hrqa-fb6e8cabd51f
+  query: Can I report a suspicion of corruption at Kreeda Labs anonymously?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Yes, Kreeda Labs allows reports
+    of suspected corruption to be made confidentiall'
+- id: hrqa-7372ba93dd63
+  query: What protections are in place for whistleblowers at Kreeda Labs?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Kreeda Labs strictly prohibits
+    any form of retaliation against individuals who r'
+- id: hrqa-32af177b2fe8
+  query: Who can I contact at Kreeda Labs if I want to report bribery?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: If you wish to report bribery
+    at Kreeda Labs, you can contact the designated com'
+- id: hrqa-8c3f0b7c89ec
+  query: Is retaliation allowed if someone reports corruption at Kreeda Labs?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: No, retaliation is strictly
+    prohibited at Kreeda Labs against anyone who reports'
+- id: hrqa-cc391ff12983
+  query: What should I do if I suspect bribery at Kreeda Labs?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: If you suspect bribery at Kreeda
+    Labs, you are encouraged to report your concern'
+- id: hrqa-606359464605
+  query: Are third parties allowed to report corruption at Kreeda Labs?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Yes, Kreeda Labs encourages
+    not only employees but also third parties to report '
+- id: hrqa-3b34b468faf8
+  query: What does the anti-bribery and anti-corruption policy say about training
+    and awareness for employees?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: The policy states that all employees
+    will receive regular training on anti-bribe'
+- id: hrqa-f49aabbe0c0f
+  query: Are business partners and third parties included in the anti-bribery and
+    anti-corruption training requirements?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Business partners and third
+    parties are not required to undergo the same trainin'
+- id: hrqa-f516fdf56c77
+  query: How often do employees receive anti-bribery and anti-corruption training?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Employees receive regular training
+    on anti-bribery and anti-corruption practices'
+- id: hrqa-569932e00f25
+  query: Why is it important for business partners to be informed about the anti-bribery
+    and anti-corruption policy?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: It is important for business
+    partners to be informed about the anti-bribery and '
+- id: hrqa-2dfdfc85bbe5
+  query: What happens if a third party does not comply with the anti-bribery and anti-corruption
+    policy?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: If a third party does not comply
+    with the anti-bribery and anti-corruption polic'
+- id: hrqa-86ad7ce1a8f9
+  query: Is the anti-bribery and anti-corruption training mandatory for all employees?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Yes, the training is mandatory
+    for all employees to ensure they are aware of and'
+- id: hrqa-754f3a2740ab
+  query: How are employees kept up to date with changes in anti-bribery and anti-corruption
+    policies?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Employees are kept up to date
+    with changes in anti-bribery and anti-corruption p'
+- id: hrqa-a8cb7db66da7
+  query: What are the consequences of violating a company policy?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Violating a company policy can
+    result in disciplinary actions such as warnings, '
+- id: hrqa-b42639fd64b4
+  query: Can breaking company policy result in legal trouble?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Yes, breaking company policy
+    can sometimes result in legal trouble. If the viola'
+- id: hrqa-b3ab16718cb4
+  query: What disciplinary actions can a company take if someone doesn't follow its
+    policies?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: A company can take several disciplinary
+    actions if someone fails to follow its p'
+- id: hrqa-27e8ce04c4f8
+  query: If an employee is terminated for policy violations, can they also face criminal
+    charges?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Yes, if the policy violation
+    involves illegal activities, such as fraud or theft'
+- id: hrqa-dfc00aaa5062
+  query: Are business partners subject to the same consequences for policy violations
+    as employees?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Business partners can also face
+    serious consequences for policy violations, such'
+- id: hrqa-35f60320b3ba
+  query: What should someone do if they are accused of violating a company policy?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: If someone is accused of violating
+    a company policy, they should review the poli'
+- id: hrqa-60552b0de631
+  query: Can a company take legal action against someone for not following its policies?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Yes, a company can take legal
+    action against someone who does not follow its pol'
+- id: hrqa-fd98c04e6498
+  query: What does it mean when a policy states it will be reviewed periodically and
+    updated as necessary?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: When a policy states it will
+    be reviewed periodically and updated as necessary, '
+- id: hrqa-472f2280d68f
+  query: Why is it important for a policy to be updated to ensure compliance with
+    applicable laws?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: It is important for a policy
+    to be updated to ensure compliance with applicable '
+- id: hrqa-63a00fbbf9ef
+  query: What are best practices in the context of policy updates?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Best practices in the context
+    of policy updates refer to the most effective and '
+- id: hrqa-78ebfd5f3b1f
+  query: How often should a policy be reviewed to stay compliant?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: The frequency of policy reviews
+    can vary depending on the organization and the t'
+- id: hrqa-722628aeb5bb
+  query: Who is typically responsible for reviewing and updating organizational policies?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Typically, the responsibility
+    for reviewing and updating organizational policies'
+- id: hrqa-dbc0755a2fbb
+  query: What steps are involved in updating a policy to ensure it meets current laws
+    and best practices?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: Updating a policy usually involves
+    several steps: reviewing the current policy, '
+- id: hrqa-51f4396cec91
+  query: If a policy is not updated regularly, what risks might an organization face?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: If a policy is not updated regularly,
+    an organization may face risks such as non'
+- id: hrqa-498f6a11fe04
+  query: What is the purpose of the Anti-Bribery & Corruption Policy at Kreeda Labs?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: The purpose of the Anti-Bribery
+    & Corruption Policy at Kreeda Labs is to promote'
+- id: hrqa-1aa8d433a8f1
+  query: How does following the Anti-Bribery & Corruption Policy benefit Kreeda Labs?
+  user_id: carol.hr
+  query_type: hr_policy
+  expected_route: R2
+  gold_chunks: []
+  should_abstain: true
+  freshness_sensitive: false
+  notes: 'HR Policies QA. Topic match: False. Answer: By following the Anti-Bribery
+    & Corruption Policy, Kreeda Labs ensures complianc'

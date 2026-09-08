@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.idea/
+.DS_Store
+.env
+data/
+!data/.gitkeep
+*.egg-info/
+build/
+dist/
+27-08-2026.txt
