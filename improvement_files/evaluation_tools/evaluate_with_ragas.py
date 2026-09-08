@@ -23,7 +23,16 @@ PREREQUISITES:
 
 USAGE:
   python improvement_files/evaluation_tools/evaluate_with_ragas.py --run
+  python improvement_files/evaluation_tools/evaluate_with_ragas.py --run --integrated
   python improvement_files/evaluation_tools/evaluate_with_ragas.py --results data/ragas_input.json
+
+NOTE ON A DEFECT THIS SCRIPT USED TO HAVE:
+  It called ``AHRAGEngine()`` / ``ensure_seeded()`` / ``load_eval_set()`` with no
+  arguments, so it always evaluated the packaged 9-document corpus and its
+  32-item suite regardless of which corpus the caller had built. It now takes
+  the same ``--integrated`` / ``--manifest`` / ``--eval-set`` options as every
+  other experiment script, and validates that the labels resolve against the
+  corpus actually loaded.
 """
 
 from __future__ import annotations
@@ -39,8 +48,18 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+os.environ.setdefault("HF_HUB_DISABLE_PROGRESS_BARS", "1")
 
-def run_ahrag_pipeline(output_file: str) -> list[dict]:
+from ahrag.eval.harness import add_corpus_arguments, resolve_corpus  # noqa: E402
+
+
+def run_ahrag_pipeline(
+    output_file: str,
+    manifest=None,
+    eval_set=None,
+    rebuild_cache: bool = False,
+) -> list[dict]:
     """
     Run the full AHRAG pipeline on the seeded evaluation set and collect
     results in the format RAGAS expects.
@@ -53,12 +72,10 @@ def run_ahrag_pipeline(output_file: str) -> list[dict]:
 
     Returns a list of dicts with keys: question, answer, contexts, ground_truth
     """
-    from ahrag.pipeline import AHRAGEngine
-    from ahrag.eval.dataset import load_eval_set
+    from ahrag.eval.harness import build_seeded_engine, load_and_validate
 
-    print("Initialising AHRAGEngine with seeded corpus...")
-    engine = AHRAGEngine()
-    engine.ensure_seeded()
+    print("Initialising AHRAGEngine with the requested corpus...")
+    engine = build_seeded_engine(manifest, rebuild_cache=rebuild_cache)
 
     info = engine.backend_info()
     print(f"  Engine ready: {info.get('documents', '?')} documents")
@@ -66,7 +83,7 @@ def run_ahrag_pipeline(output_file: str) -> list[dict]:
     print(f"  Router: {info.get('router', '?')}")
     print()
 
-    items = load_eval_set()
+    items, _ = load_and_validate(engine, eval_set)
     print(f"Running pipeline on {len(items)} evaluation queries...")
 
     # Build a chunk-id → text lookup from all chunks in the database.
@@ -272,6 +289,7 @@ Examples:
   python evaluate_with_ragas.py --results my_results.json
         """,
     )
+    add_corpus_arguments(parser)
     parser.add_argument(
         "--run", action="store_true",
         help="Run AHRAG pipeline on seeded eval set, save results, then evaluate",
@@ -300,7 +318,10 @@ Examples:
 
     if args.run:
         # Run the full AHRAG pipeline
-        results = run_ahrag_pipeline(args.output)
+        manifest, eval_set = resolve_corpus(args)
+        results = run_ahrag_pipeline(
+            args.output, manifest, eval_set, args.rebuild_cache
+        )
         print()
 
         # Try RAGAS evaluation (will skip gracefully if no API key)

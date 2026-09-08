@@ -28,7 +28,7 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env                       # optional; all values have defaults
 
-# 1. Run the evaluation (seeds the corpus, runs 6 systems x 32 items)
+# 1. Run the evaluation (seeds the demo corpus, runs 8 systems x 32 items)
 python -m ahrag.evaluate --per-type
 
 # 2. Run the tests
@@ -199,7 +199,7 @@ python -m ahrag.evaluate --json data/eval.json    # + machine-readable results
 python -m ahrag.evaluate --systems P1,B3          # subset
 ```
 
-Six systems over 32 labelled items. **All six share the same corpus, chunking,
+Eight systems over 32 labelled items. **All eight share the same corpus, chunking,
 indexes, embedding backend, reranker, evidence gates, generator, and ACL
 enforcement — only the routing policy differs.** That makes this an ablation of
 routing, not a comparison of unrelated pipelines, and it is why the baselines
@@ -288,6 +288,28 @@ These are the offline lexical stack's limits, discussed in
 [`RESEARCH_LIMITATIONS.md`](RESEARCH_LIMITATIONS.md).
 
 ---
+
+### Beyond the demo corpus
+
+The figures in this section are from the packaged 9-document demo corpus, which
+exists so the system runs offline with no downloads. A 6,139-document /
+7,082-chunk benchmark corpus with 965 labelled queries, a 7-class ACL lattice
+and 15 supersession chains is built by
+`improvement_files/datasets/integrate_datasets.py`; every experiment script
+takes `--integrated` to use it. Results on that corpus, including the ones that
+came out negative, are in **`FINDINGS.md`**.
+
+Two systems were added to the comparison set:
+
+| Key | System |
+|---|---|
+| `B6` | Adaptive-RAG reimplementation — a *trained* complexity classifier over query-text features only, which is the shape of Jeong et al. (2024) rather than B5's hand-set token thresholds |
+| `P2` | AHRAG learned router — the same hard governance constraints, with the admissible routes ranked by a trained classifier instead of hand-tuned utility weights |
+
+`P2` is the answer to "is the routing actually learned?". The classifier ranks
+only the routes the governance constraints already admitted, so it can change
+which admissible route wins but cannot expand what is permitted;
+`tests/test_routing.py::TestLearnedRouter` asserts that rather than assuming it.
 
 ## Governance model
 
@@ -398,9 +420,10 @@ ahrag/
 ├── api/                   FastAPI app + schemas
 ├── ui/                    Streamlit frontend
 └── seed/                  manifest.yaml · eval_set.yaml · corpus/ (9 documents)
+                           (the benchmark corpus is 6,139 documents; see FINDINGS.md)
 
 config/router.yaml         Every λ, threshold, weight, prior, and lexicon
-tests/                     247 tests
+tests/                     290 tests
 ```
 
 ---
@@ -466,7 +489,7 @@ This separation is deliberate and is maintained throughout the documentation.
 
 | | Where |
 |---|---|
-| **1. Implemented and tested functionality** | This README + 247 passing tests |
+| **1. Implemented and tested functionality** | This README + 290 passing tests |
 | **2. Research hypotheses still to be evaluated** | [`RESEARCH_LIMITATIONS.md`](RESEARCH_LIMITATIONS.md) |
 | **3. Potentially differentiating mechanisms + prior-art risk** | [`INVENTION_DISCLOSURE.md`](INVENTION_DISCLOSURE.md) |
 

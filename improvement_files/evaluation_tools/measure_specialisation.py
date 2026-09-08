@@ -45,6 +45,12 @@ import numpy as np
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from ahrag.eval.harness import (  # noqa: E402
+    add_corpus_arguments,
+    build_seeded_engine,
+    load_and_validate,
+    resolve_corpus,
+)
 from ahrag.stats import bootstrap_ci, cohens_d, paired_bootstrap  # noqa: E402
 
 # Fixed reference date so freshness-dependent behaviour does not drift with the
@@ -94,29 +100,50 @@ def build_engine(
     specialised: bool,
     lam: float = 0.0,
     calibrate: bool = False,
+    isolated: bool = False,
 ):
-    """Seed an engine on an isolated database with the given SPIS settings."""
-    from ahrag.config import RouterConfig, Settings
-    from ahrag.db import Database
-    from ahrag.pipeline import AHRAGEngine
+    """Build an engine with the given SPIS settings.
 
-    tmp_dir.mkdir(parents=True, exist_ok=True)
-    settings = Settings(
-        data_dir=tmp_dir,
-        db_path=tmp_dir / "spis.sqlite3",
-        router_config=PROJECT_ROOT / "config" / "router.yaml",
-        index_specialisation=specialised,
-        specialisation_lambda=lam,
-        specialisation_calibrate_confidence=calibrate,
+    Args:
+        tmp_dir: Retained for the isolated path, where each engine needs its
+            own database because the corpus itself is mutated.
+        manifest: Corpus manifest, or None for the packaged seed corpus.
+        specialised: Enable scope-pure index specialisation.
+        lam: Information-flow budget for the sparse channel.
+        calibrate: Enable per-class confidence calibration.
+        isolated: Seed a throwaway database instead of using the shared cache.
+            Required by E2, which deletes documents from the corpus; the
+            cached corpus must never be mutated.
+    """
+    overrides = {
+        "index_specialisation": specialised,
+        "specialisation_lambda": lam,
+        "specialisation_calibrate_confidence": calibrate,
+    }
+    if isolated:
+        tmp_dir.mkdir(parents=True, exist_ok=True)
+        from ahrag.config import RouterConfig, Settings
+        from ahrag.db import Database
+        from ahrag.pipeline import AHRAGEngine
+
+        settings = Settings(
+            data_dir=tmp_dir,
+            db_path=tmp_dir / "spis.sqlite3",
+            router_config=PROJECT_ROOT / "config" / "router.yaml",
+            **overrides,
+        )
+        engine = AHRAGEngine(
+            settings=settings,
+            config=RouterConfig.load(settings.router_config),
+            db=Database(settings.db_path),
+            today=EVAL_TODAY,
+        )
+        engine.seed(reset=True, manifest_path=manifest)
+        return engine
+
+    return build_seeded_engine(
+        manifest, settings_overrides=overrides, today=EVAL_TODAY, quiet=True
     )
-    engine = AHRAGEngine(
-        settings=settings,
-        config=RouterConfig.load(settings.router_config),
-        db=Database(settings.db_path),
-        today=EVAL_TODAY,
-    )
-    engine.seed(reset=True, manifest_path=manifest)
-    return engine
 
 
 def prune_to_scope(engine, user_id: str) -> None:
@@ -189,10 +216,12 @@ def experiment_interference(
 
         for observer in observers:
             full = build_engine(
-                tmp_root / f"{int(specialised)}-full-{observer}", manifest, specialised
+                tmp_root / f"{int(specialised)}-full-{observer}", manifest,
+                specialised, isolated=True,
             )
             pruned = build_engine(
-                tmp_root / f"{int(specialised)}-pruned-{observer}", manifest, specialised
+                tmp_root / f"{int(specialised)}-pruned-{observer}", manifest,
+                specialised, isolated=True,
             )
             prune_to_scope(pruned, observer)
             if pruned.db.count_chunks() >= full.db.count_chunks():
@@ -277,9 +306,8 @@ def experiment_quality(
     tmp_root: Path, manifest: Path | None, eval_set: Path | None, lambdas: list[float]
 ) -> dict:
     """Compare retrieval quality across the purity/utility frontier."""
-    from ahrag.eval.dataset import load_eval_set
-
-    items = load_eval_set(eval_set)
+    reference = build_engine(tmp_root / "q-load", manifest, specialised=False)
+    items, _ = load_and_validate(reference, eval_set, quiet=True)
     answerable = sum(1 for i in items if i.gold_chunks)
 
     print("=" * 78)
@@ -288,8 +316,7 @@ def experiment_quality(
     print(f"  {len(items)} eval items ({answerable} answerable)")
     print()
 
-    baseline_engine = build_engine(tmp_root / "q-base", manifest, specialised=False)
-    baseline = score_engine(baseline_engine, items)
+    baseline = score_engine(reference, items)
 
     metrics = ("recall_at_5", "mrr", "ndcg_at_10", "abstention_appropriateness")
     print(f"  {'system':18s} " + " ".join(f"{m[:12]:>14s}" for m in metrics))
@@ -361,10 +388,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="Measure Scope-Pure Index Specialisation",
     )
-    parser.add_argument("--manifest", type=str, default=None,
-                        help="Corpus manifest (default: the packaged seed manifest)")
-    parser.add_argument("--eval-set", type=str, default=None,
-                        help="Eval set YAML (default: the packaged seed eval set)")
+    add_corpus_arguments(parser)
     parser.add_argument("--lambdas", type=str, default="0,0.25,0.5,0.75,1",
                         help="Comma-separated information-flow budgets to sweep")
     parser.add_argument("--observers", type=str,
@@ -376,8 +400,7 @@ def main() -> None:
                         help="Skip E2, which reseeds one engine pair per observer")
     args = parser.parse_args()
 
-    manifest = Path(args.manifest).resolve() if args.manifest else None
-    eval_set = Path(args.eval_set).resolve() if args.eval_set else None
+    manifest, eval_set = resolve_corpus(args)
     lambdas = [float(x) for x in args.lambdas.split(",") if x.strip()]
     observers = [o.strip() for o in args.observers.split(",") if o.strip()]
 

@@ -179,39 +179,124 @@ coefficients were reasonable.
 
 ### 4.2 Component ablations (§5c) — `ablation_study.py --integrated`
 
-Full system R@5 = **0.5072** on 965 items. Each row disables exactly one
+All 9 ablations completed on 965 items. Each row disables exactly one
 mechanism; corpus, index, generator and ACL layer are identical throughout.
+Full system: R@5 **0.5072**, MRR **0.5124**, nDCG@10 **0.4703**,
+abstention-ok **0.8021**, citation coverage **0.4371**, freshness **1.0000**,
+ACL violations **0.0000**.
 
-| Ablation | R@5 | Reading |
-|---|---|---|
-| Full system | 0.5072 | — |
-| **− probe confidence (M3)** | **0.0128** | **Catastrophic. Probe confidence is load-bearing.** |
-| − restricted-scope signal (M2) | 0.5072 | no effect on recall |
-| − freshness penalty | 0.5072 | no effect on recall |
-| − conflict signal | 0.5072 | no effect on recall |
+| Ablation | R@5 | Abstention-ok | Citation coverage | MRR |
+|---|---|---|---|---|
+| *full (reference)* | 0.5072 | 0.8021 | 0.4371 | 0.5124 |
+| **− probe confidence (M3)** | **0.0128** (−0.494)\*\*\* | **0.1036** (−0.698)\*\*\* | **0.0057** (−0.431)\*\*\* | **0.0130** (−0.499)\*\*\* |
+| **− evidence sufficiency gate** | 0.5072 (+0.000) | **0.9067** (+0.105)\*\*\* | **0.4773** (+0.040)\*\*\* | 0.5124 (+0.000) |
+| − risk term entirely | 0.5017 (−0.006)\* | 0.8021 (+0.000) | 0.4377 (+0.001) | 0.5060 (−0.006)\* |
+| − cost and latency terms | 0.5078 (+0.001) | 0.8010 (−0.001) | 0.4354 (−0.002) | 0.5127 (+0.000) |
+| − freshness enforcement | 0.5072 (+0.000) | 0.8031 (+0.001) | 0.4383 (+0.001) | 0.5113 (−0.001) |
+| − restricted-scope signal (M2) | 0.5072 (+0.000) | 0.8021 (+0.000) | 0.4371 (+0.000) | 0.5124 (+0.000) |
+| − freshness penalty in routing | 0.5072 (+0.000) | 0.8021 (+0.000) | 0.4371 (+0.000) | 0.5124 (+0.000) |
+| − conflict signal in routing | 0.5072 (+0.000) | 0.8021 (+0.000) | 0.4371 (+0.000) | 0.5124 (+0.000) |
+| − authority gate | 0.5072 (+0.000) | 0.8021 (+0.000) | 0.4371 (+0.000) | 0.5124 (+0.000) |
 
-The three no-effect rows are an honest negative result: those governance
-signals shape *abstention and freshness* behaviour, not recall, so recall is
-the wrong metric to look for them in. Remaining ablations were still running at
-the time of writing (see §5).
+`***` p < 0.001, `*` p < 0.05, two-sided paired bootstrap.
 
-### 4.3 Embedding backends (§4) — `compare_embeddings.py`
+**Three findings, one of which is a problem with the system.**
 
-Seed corpus, everything but the encoder held fixed, reranker pinned to lexical:
+**(a) The governance-scoped probe is the single load-bearing mechanism.**
+Removing it collapses every metric: R@5 −0.494, MRR −0.499, citation coverage
+−0.431, and abstention appropriateness −0.698 with Cohen's *d* = **−1.521**
+(large). The route distribution explains it — the router falls from
+`R1:109 R2:1 R3:782 R4:73` to `R0:924 R1:23 R4:18`, i.e. it abstains on 96% of
+queries. Without probe evidence the quality model cannot tell that answering is
+worthwhile, so abstention wins by default. This is strong support for M3.
 
-| Backend | R@5 | MRR | nDCG@10 | Abstention-ok | sparse/dense Jaccard |
+**(b) The evidence sufficiency gate is mis-calibrated at scale, and switching
+it off *improves* the system.** Disabling it raises abstention appropriateness
+by **+0.105 (p < 0.0001)** and citation coverage by **+0.040 (p < 0.0001)**,
+with recall unchanged. The gate is causing *inappropriate* abstentions: its
+thresholds (`min_top_score` 0.10, `min_mean_score` 0.09) were tuned on a
+60-chunk corpus and do not transfer to 7,082 chunks, where absolute rerank
+scores sit lower. This is an actionable defect found by the ablation, not a
+tuning preference — the gate should be re-tuned per corpus scale, or expressed
+in relative rather than absolute score terms.
+
+**(c) Four mechanisms are inert on this corpus.** The restricted-scope signal,
+the routing freshness penalty, the routing conflict signal, and the authority
+gate each produce **exactly zero** change on every metric. Two of them do reach
+the engine — `no_freshness_penalty` shifts routing from `R1:109/R4:73` to
+`R1:122/R4:60`, and `no_conflict_signal` shifts `R2:1` to `R2:5` — so the
+mutations are applied; they simply do not change outcomes. The other two do not
+alter routing at all. Freshness compliance stays at 1.0000 even with
+enforcement disabled, so despite 15 supersession chains and 38
+freshness-sensitive queries that metric still does not discriminate, exactly as
+`RESEARCH_LIMITATIONS.md` warned about the demo corpus.
+
+The risk term is significant but negligible in size (R@5 −0.006, p = 0.032,
+*d* = −0.072). Removing cost and latency pressure shifts routing toward R4
+(`R4:73 → R4:93`) as predicted, for no measurable quality gain — which is the
+§8(b) claim that adaptivity buys efficiency for free.
+
+### 4.3 Embedding backends (§4) — `compare_embeddings.py --integrated`
+
+Run at scale: 7,082 chunks, 965 queries, everything but the encoder held fixed,
+reranker pinned to lexical.
+
+| Backend | dim | R@5 | MRR | nDCG@10 | Abstention-ok |
 |---|---|---|---|---|---|
-| LSA (offline default) | 0.840 | 0.753 | 0.758 | 0.875 | 0.658 |
-| all-MiniLM-L6-v2 | 0.880 | 0.761 | 0.773 | 0.906 | **0.278** |
+| LSA (offline default) | 256 | 0.395 [0.37, 0.42] | 0.426 [0.40, 0.46] | 0.362 [0.34, 0.39] | 0.896 |
+| all-MiniLM-L6-v2 | 384 | **0.417** [0.39, 0.45] | **0.434** [0.40, 0.46] | **0.374** [0.35, 0.40] | 0.896 |
 
-The quality deltas are **not significant** at n=25 (R@5 +0.040, p=0.52) — as
-expected on the demo corpus. The interesting column is the last one.
+| Comparison | Δ | p | Cohen's *d* | |
+|---|---|---|---|---|
+| MiniLM − LSA, R@5 | **+0.0215** | **0.0020** | +0.104 | ** |
+| MiniLM − LSA, nDCG@10 | **+0.0123** | **0.0023** | +0.106 | ** |
+| MiniLM − LSA, MRR | **+0.0079** | **0.0147** | +0.083 | * |
+| MiniLM − LSA, abstention-ok | +0.0000 | 1.0000 | 0.000 | ns |
 
-**The neural encoder halves sparse/dense rank agreement (0.658 → 0.278) and
-doubles the dense-only share (0.171 → 0.361).** This is direct evidence for
-§4(b)'s hypothesis: with a good encoder, dense retrieval genuinely does
-something sparse does not, which is what makes the router's R1-vs-R2 decision a
-real decision rather than a choice between two near-identical rankings.
+**The neural encoder is significantly better, and the effect is small.** Both
+halves of that sentence matter. On the seed corpus the same comparison gave
++0.040 at p = 0.52 — indistinguishable from noise at n = 25. At n ≈ 870 the
+gain is a third the size but *reliably measurable* (p = 0.002). This is exactly
+what §2(a) predicted would happen once the evaluation set was large enough, and
+it is the clearest demonstration in this project of why the sample size
+mattered. Cohen's *d* ≈ 0.10 is negligible by convention, so the honest summary
+is "a real but small improvement", not "neural embeddings fix retrieval".
+
+Abstention appropriateness is **identical** to four decimal places, which is
+consistent with §4.2's finding that abstention is governed by the probe floor
+and the sufficiency gate rather than by encoder quality.
+
+#### Correction: the seed-corpus Q3 result did not survive scaling
+
+Earlier in this session, on the 9-document corpus, I recorded that the neural
+encoder *halved* sparse/dense rank agreement (Jaccard 0.658 → 0.278) and
+presented it as evidence for §4(b) — that a better encoder makes the R1-vs-R2
+route choice more consequential. **At scale that reverses:**
+
+| | seed corpus (60 chunks) | integrated corpus (7,082 chunks) |
+|---|---|---|
+| LSA sparse/dense Jaccard | 0.658 | **0.188** |
+| MiniLM sparse/dense Jaccard | 0.278 | **0.202** |
+
+LSA now has *lower* agreement than the neural encoder, and both are far below
+either seed-corpus figure. The seed-corpus effect was therefore driven by
+**corpus size, not by encoder quality**: with only 60 candidates, sparse and
+dense necessarily return overlapping top-5 lists, and LSA fitted on 60 chunks
+overlaps with BM25 most of all because both are dominated by raw term matching.
+With 7,082 candidates the two retrievers diverge regardless of which encoder is
+used.
+
+So §4(b)'s hypothesis — that the route choice matters more with better
+embeddings — is **not supported**. What the data supports is the weaker and
+different claim that the route choice matters more *at scale*, which is
+§1's point rather than §4's. The dense-only share confirms it: 0.406 for LSA
+versus 0.399 for MiniLM at scale, essentially equal.
+
+`all-mpnet-base-v2` could not be measured in the same process: loading a second
+sentence-transformer model after the first aborts the interpreter on this
+platform (the OpenMP interaction of §2.2, in a form the preload fix does not
+cover). It needs a separate process per transformer backend; noted as a
+limitation of the script rather than worked around silently.
 
 ### 4.4 Novel contribution — Scope-Pure Index Specialisation
 

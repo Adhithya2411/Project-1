@@ -1,118 +1,232 @@
-# AHRAG (Adaptive Hybrid Retrieval-Augmented Generation)
-## Project Context and Status Document
+# AHRAG — Project Context and Status
 
-This document provides a comprehensive overview of the AHRAG project, detailing its architecture, the core idea, the purpose of the improvement files, and the current state of the codebase. It is designed to serve as a high-fidelity context injection for future AI sessions or developers joining the project.
+Context-injection document for a future session or a developer joining the
+project. It is written to be pasted or read first, and to be *accurate* rather
+than encouraging: the previous version of this file described work as complete
+that was not, and a session that trusts it will draw wrong conclusions.
 
----
+Companion documents, in the order worth reading them:
 
-## 1. Project Overview & Core Idea
-
-**AHRAG** is an advanced, **governance-aware** Retrieval-Augmented Generation (RAG) system. While traditional RAG systems simply embed text and perform nearest-neighbor searches, AHRAG is built for enterprise environments where data privacy, access control lists (ACLs), data freshness, and conflict disclosure are critical.
-
-### Key Innovations:
-1. **Governance-Awareness:** The system actively respects user roles (ACLs). If a user queries for financial data but lacks the `finance` role, the system will explicitly withhold that chunk and log the withholding in an audit trace.
-2. **Adaptive Routing:** Not all queries require expensive multi-hop vector searches. AHRAG categorizes queries and routes them to the cheapest/most effective retrieval mechanism (e.g., Sparse BM25, Dense Vector, Hybrid RRF, or Multi-Hop Iterative).
-3. **Evidence Sufficiency & Abstention:** If retrieved evidence is contradictory or insufficient, the system abstains from answering rather than hallucinating, and can ask clarifying questions.
-
----
-
-## 2. Core Pipeline Architecture
-
-The core operational code of the system lives in the `ahrag/` directory.
-
-### Key Files:
-* `ahrag/pipeline.py`: Contains the `AHRAGEngine`, which represents the 13-stage lifecycle of a query. The primary entry point for queries is `engine.answer()`. It orchestrates ACL scoping, probe generation, feature extraction, routing, retrieval, evidence packing, and generation.
-* `ahrag/routing/router.py`: Implements the routing logic. It evaluates the query's complexity and constraints to pick between routes (R0: Abstain, R1: Sparse, R2: Dense, R3: Hybrid, R4: Iterative).
-* `ahrag/models.py`: Contains all Pydantic schemas defining the domain (e.g., `Chunk`, `Document`, `AnswerResult`, `AuditRecord`, `EvidenceItem`).
-* `ahrag/db.py`: The SQLite-backed database layer that stores documents, chunks, and ACL metadata.
-* `ahrag/eval/systems.py` & `ahrag/evaluate.py`: The evaluation harness. It defines 6 different system configurations (Baselines B1-B5, and the proposed AHRAG P1) to run head-to-head comparisons.
+| File | What it is for |
+|---|---|
+| `FINDINGS.md` | Every measured result, including the negative ones. Start here for numbers. |
+| `RESEARCH_LIMITATIONS.md` | What the project does **not** establish, and what would be needed. |
+| `INVENTION_DISCLOSURE.md` | Mechanisms that might be differentiating, with prior-art risk, plus a correction to M1. |
+| `README.md` | How to run it; architecture walkthrough. |
+| `improvement.txt` | The original review that set the current work programme. |
 
 ---
 
-## 3. The `improvement_files/` Modules
+## 1. What AHRAG is
 
-The `improvement_files/` directory contains tools and scripts designed to elevate AHRAG from a proof-of-concept into a statistically validated, machine-learning-driven production model. 
+A governance-aware adaptive router for enterprise RAG. The organising claim:
 
-Initially, these files were empty templates, broken scaffolds, and relied heavily on "mock data" (e.g., hardcoded string responses, Lorem Ipsum documents, skipped ML training). **As of the current status, all of these files have been completely rewritten to interface directly with the real AHRAG engine and process genuine data.**
+> Route selection is constrained by *authorised source scope* and optimised for
+> evidence sufficiency, freshness, source authority, estimated latency and
+> estimated cost — not merely query complexity.
 
-### 3.1. Machine Learning Router (`improvement_files/ml_router_training/`)
-* **File:** `[train_router.py](file:///e:/SEM-7/Project/Project-1/improvement_files/ml_router_training/train_router.py)`
-* **Purpose:** Upgrades the rule-based governance-aware router to a Gradient-Boosted Classifier (`xgboost`). 
-* **How it works:** It boots up the `AHRAGEngine`, passes the training datasets through the engine to extract **23 real mathematical features** (like `restricted_fraction`, `hop_signal`, `lexical_specificity`), determines the "gold" route that retrieves the correct chunks cheapest, and trains an XGBoost model.
-* **Output:** Saves a trained model to `artifacts/xgboost_router.json`.
+Three behaviours follow from that, and they are what the tests and evaluation
+actually check:
 
-### 3.2. Dataset Integration (`improvement_files/datasets/`)
-* **File:** `[integrate_datasets.py](file:///e:/SEM-7/Project/Project-1/improvement_files/datasets/integrate_datasets.py)`
-* **Purpose:** Ingests external, real-world benchmark datasets into the AHRAG corpus to drastically expand the evaluation scope.
-* **How it works:** It parses thousands of raw JSON records from **FinanceBench**, **PolicyQA**, and **HotpotQA**. It maps them into AHRAG `documents` (with simulated ACL roles and metadata) and `eval_items` (queries mapped to specific gold-chunk IDs).
-* **Output:** Generates `manifest.yaml`, `eval_set.yaml`, and text files in `integrated/`.
-
-### 3.3. Public Corpus Collection (`improvement_files/corpus_sources/`)
-* **File:** `[collect_public_corpus.py](file:///e:/SEM-7/Project/Project-1/improvement_files/corpus_sources/collect_public_corpus.py)`
-* **Purpose:** Fetches genuine policy and governance documents from the web to serve as the system's foundational knowledge base.
-* **How it works:** It scrapes open-source repositories and government databases for documents like Kubernetes Troubleshooting Runbooks, Node.js Code of Conducts, and NIST Cybersecurity Guidelines.
-* **Output:** Saves real text files to `collected/corpus/` and creates a `manifest.yaml` for AHRAG ingestion.
-
-### 3.4. RAGAS Evaluation (`improvement_files/evaluation_tools/`)
-* **File:** `[evaluate_with_ragas.py](file:///e:/SEM-7/Project/Project-1/improvement_files/evaluation_tools/evaluate_with_ragas.py)`
-* **Purpose:** Integrates AHRAG with the industry-standard **RAGAS** framework to evaluate the LLM's generated text quality.
-* **How it works:** It loops through AHRAG's evaluation set, runs the full `engine.answer()` pipeline, and collects the actual generated text and retrieved contexts. It then uses RAGAS (via an OpenAI LLM judge) to score metrics like **Faithfulness**, **Answer Relevancy**, and **Context Precision**.
-* **Output:** Produces `data/ragas_input.json` and (if an API key is provided) a `_ragas_scores.json` report.
-
-### 3.5. Baseline Comparisons (`improvement_files/baseline_code/`)
-* **File:** `[compare_baselines.py](file:///e:/SEM-7/Project/Project-1/improvement_files/baseline_code/compare_baselines.py)`
-* **Purpose:** Proves mathematically that AHRAG's proposed routing (P1) is superior to standard RAG implementations.
-* **How it works:** It runs every single evaluation query through 6 different systems:
-  - **B1**: Fixed Sparse BM25
-  - **B2**: Fixed Dense Embedding
-  - **B3**: Fixed Hybrid RRF
-  - **B4**: Fixed Multi-Hop Iterative
-  - **B5**: Complexity-Only Adaptive Router (ignores ACLs/governance)
-  - **P1**: AHRAG Governance-Aware Router
-  It then calculates Recall@5 and ACL Violation rates, and computes **Paired Bootstrap Significance Tests** to determine if P1's improvements are statistically significant.
+1. **Authorisation is a hard pre-filter, not a scoring term.** A per-principal
+   `AuthorisedScope` is computed *before* routing, and every retriever is
+   restricted to it. Cost-optimal routing cannot trade governance for latency,
+   because that trade is not representable.
+2. **Adaptive routing.** Five routes — R0 abstain, R1 sparse, R2 dense,
+   R3 hybrid RRF, R4 decomposed iterative — selected per query.
+3. **Abstention and disclosure over hallucination.** Insufficient or
+   contradictory evidence produces a *typed* refusal or a clarifying question,
+   and version conflicts are disclosed rather than silently resolved.
 
 ---
 
-## 4. Current Project Status
+## 2. Architecture
 
-1. **Phase 1: Discovery & Audit (COMPLETED)**
-   - Initial codebase review was performed. The lack of functional code in `improvement_files` was identified.
-2. **Phase 2: Implementation (COMPLETED)**
-   - All mock scripts were replaced with functional Python scripts interacting with the real engine.
-   - Missing dependencies (`xgboost`, `scikit-learn`, `pyyaml`, `pydantic`) were installed.
-   - Windows terminal encoding bugs (`UnicodeEncodeError` on characters like `→`, `α`, `✓`) were resolved to ensure seamless execution on Windows.
-   - The codebase is stable.
-   - The user can execute dataset integrations, ML training, baseline comparisons, and RAGAS evaluations right now using the scripts in `improvement_files`.
-   - The AI is primed to assist with further optimizations, adding new external datasets, tuning the XGBoost hyperparameters, or modifying the core `ahrag` engine architecture if requested.
+### The routing decision is two-layer
+
+This is the part worth understanding first, because it is where the design
+claim lives:
+
+```
+  ACL pre-filter  ->  AuthorisedScope        (hard, upstream, not a utility term)
+        |
+        v
+  admissible route set   <-  governance predicates
+        |                    (empty scope; probe confidence below floor)
+        v
+  ranking, over admissible routes only:
+        P1  hand-tuned utility   U(z|x) = Q - λ_L·L - λ_C·C - λ_R·R
+        P2  trained classifier   (23 features, incl. governance + probe)
+        B6  trained classifier   (18 text-only features = Adaptive-RAG)
+```
+
+Admissibility is computed before any preference is evaluated, so no value of
+the quality, latency or cost terms can reinstate an excluded route. The learned
+router changes *which admissible route wins*; it cannot change *what is
+permitted*.
+
+### Core modules
+
+| File | Role |
+|---|---|
+| `ahrag/pipeline.py` | `AHRAGEngine` — the 11-stage lifecycle. Entry point is `engine.answer(query, user_id)`. |
+| `ahrag/governance/acl.py` | The hard ACL pre-filter; produces `AuthorisedScope`. |
+| `ahrag/routing/router.py` | `GovernanceAwareRouter` (P1), `LearnedRouter` (P2), `AdaptiveRAGRouter` (B6), `ComplexityOnlyRouter` (B5), `FixedRouter` (B1–B4), `build_router`. |
+| `ahrag/routing/features.py` | The 23 router features. |
+| `ahrag/retrieval/pipeline.py` | Per-route retrieval, all ACL-scoped. |
+| `ahrag/evidence/` | Sufficiency gate and conflict detection. |
+| `ahrag/index/` | BM25, embeddings, vector store, **and the ACL lattice / scope specialisation**. |
+| `ahrag/eval/systems.py` | The eight comparable systems. |
+| `ahrag/eval/harness.py` | Corpus + eval-set selection, label validation, corpus cache. |
+| `ahrag/stats.py` | Bootstrap CIs, paired tests, Cohen's *d*. |
+| `ahrag/models.py` | All Pydantic domain schemas. |
+| `ahrag/db.py` | SQLite storage for documents, chunks, ACL metadata, audit log. |
+
+### Modules added in the most recent session
+
+| File | Role |
+|---|---|
+| `ahrag/index/lattice.py` | ACL equivalence classes — the corpus as a lattice of subcorpora. |
+| `ahrag/index/scoped.py` | Scope-Pure Index Specialisation: per-class BM25 IDF, LSA basis, reranker. |
+| `ahrag/stats.py` | Statistics, shared by every experiment script. |
+| `ahrag/eval/harness.py` | Shared corpus/eval-set plumbing. |
+| `ahrag/_openmp.py` | Ordered optional-dependency load; prevents a hard process abort. |
 
 ---
 
-## 5. Developer Execution Guide
+## 3. Two corpora, and which one a result came from
 
-If an AI or developer needs to re-run the pipeline from scratch, follow this execution order:
+**Always state which corpus a number came from.** Conflating them is how the
+previous phase produced misleading results.
 
-1. **Ingest Datasets:**
-   ```bash
-   python improvement_files/datasets/integrate_datasets.py
-   ```
-2. **Collect Public Corpus:**
-   ```bash
-   python improvement_files/corpus_sources/collect_public_corpus.py
-   ```
-3. **Train the ML Router:**
-   ```bash
-   python improvement_files/ml_router_training/train_router.py
-   ```
-4. **Evaluate with RAGAS:**
-   ```bash
-   python improvement_files/evaluation_tools/evaluate_with_ragas.py --run
-   ```
-5. **Run Baseline Statistical Comparisons:**
-   ```bash
-   python improvement_files/baseline_code/compare_baselines.py
-   ```
+| | Demo corpus | Benchmark corpus |
+|---|---|---|
+| Documents | 9 | **6,139** |
+| Chunks | 60 | **7,082** |
+| Eval items | 32 | **965** |
+| ACL classes | 4 | **7** |
+| Supersession chains | 1 | **15** |
+| Built by | packaged in `ahrag/seed/` | `improvement_files/datasets/integrate_datasets.py` |
+| Selected with | default | `--integrated` |
 
-## 6. Key API Concepts for AI Context
-- **`AHRAGEngine.answer(query, user_id)`**: The absolute core function. Always use this to get a response. It handles everything (ACLs, routing, generation).
-- **`Database.get_chunks()`**: Used to retrieve raw data for evaluation ground-truths.
-- **ACL Scoping**: Never bypass `engine.acl.scope_for(user)`. AHRAG's main feature is that it enforces these scopes strictly.
+Every experiment script accepts `--integrated`, or `--manifest` / `--eval-set`
+for an arbitrary corpus, and **validates that the evaluation labels resolve
+against the corpus actually loaded**. That check exists because its absence
+previously allowed 83% of gold chunk IDs to point at the wrong text while every
+metric read out as a plausible-looking low score.
+
+The benchmark corpus is ingested once and cached under `data/corpus-cache/`,
+keyed by manifest content. First build is ~4 minutes; subsequent runs are ~14
+seconds.
+
+---
+
+## 4. Current status
+
+**Working and verified.** 290 tests pass. All 9 API endpoints return 200. The
+Streamlit UI runs clean under `AppTest`. ACL enforcement, conflict disclosure
+and audit content-minimisation are verified end to end over HTTP, not only in
+unit tests.
+
+**Established results.** See `FINDINGS.md` for the full set. The load-bearing
+ones:
+
+- The learned router reaches **0.783** held-out route accuracy against
+  **0.566** for the text-only Adaptive-RAG baseline on identical data — the
+  governance and probe features carry real signal.
+- The governance-scoped probe is the single load-bearing mechanism: removing it
+  drops R@5 from 0.507 to **0.013** (*d* = −1.06) and abstention
+  appropriateness by **0.698** (*d* = −1.52).
+- A neural encoder beats the offline LSA default by **+0.022 R@5, p = 0.002** —
+  significant at n ≈ 870, and *not* significant at n = 25, which is the clearest
+  illustration of why the evaluation set had to grow.
+- Unspecialised retrieval statistics leak: deleting documents a principal
+  cannot read changes their route on **33.3%** of queries. Scope-pure
+  specialisation reduces that to **0%**.
+
+**Known defects, found by the work and not yet fixed.** These are real and
+should be picked up next:
+
+1. **The evidence sufficiency gate is mis-calibrated at scale.** Disabling it
+   *improves* abstention appropriateness by +0.105 (p < 0.0001). Its thresholds
+   are absolute rerank scores tuned on 60 chunks and do not transfer to 7,082.
+2. **Abstention on unanswerable questions is unreliable.** Four of five
+   obviously-unsupported questions are answered anyway, because lexical overlap
+   with real documents clears both the probe floor and the gate.
+3. **Four governance mechanisms are inert** on the benchmark corpus: the
+   restricted-scope signal, routing freshness penalty, routing conflict signal,
+   and authority gate each produce exactly zero change on every metric.
+4. **Freshness compliance is still 1.000 everywhere**, even with enforcement
+   disabled and 15 supersession chains present. The metric does not
+   discriminate.
+
+**Not attempted, and not claimable.** Inter-annotator agreement (§2b) and human
+Likert scoring (§9c) both require a second person. Tooling can be built; the
+judgements cannot be synthesised.
+
+---
+
+## 5. Running things
+
+```bash
+python -m pytest tests/ -q                      # 290 tests
+python -m pytest tests/test_demonstration.py -s  # guided tour of the behaviours
+python -m ahrag.evaluate                         # 8 systems on the demo corpus
+
+# The experiment programme, in dependency order
+python improvement_files/datasets/integrate_datasets.py
+python improvement_files/corpus_sources/collect_public_corpus.py
+python improvement_files/ml_router_training/train_router.py --integrated
+python improvement_files/baseline_code/compare_baselines.py --integrated --by-type
+python improvement_files/baseline_code/ablation_study.py --integrated
+python improvement_files/evaluation_tools/compare_embeddings.py --integrated
+python improvement_files/evaluation_tools/measure_specialisation.py --integrated
+
+# Web
+python -m uvicorn "ahrag.api.app:create_app" --factory --port 8000
+streamlit run ahrag/ui/app.py
+```
+
+### Environment notes that will otherwise cost an hour
+
+- **Pin the backends when testing.** `AHRAG_EMBEDDING_BACKEND=lsa` and
+  `AHRAG_RERANKER=lexical`. With `auto`, installing the neural extra silently
+  changes what the system does, and on Python 3.14 loading torch across
+  session-scoped pytest fixtures segfaults the interpreter.
+- **`xgboost` must be imported before `torch`.** Both bundle an OpenMP runtime
+  and the wrong order aborts the process with no traceback.
+  `ahrag/_openmp.py` handles this; do not remove its import from
+  `ahrag/__init__.py`.
+- **One sentence-transformer model per process.** Loading a second aborts
+  similarly. Run multi-model comparisons as separate processes.
+- Optional extras: `xgboost` + `scikit-learn` (learned router),
+  `sentence-transformers` (neural encoder, needs `brew install libomp` for
+  xgboost interop), `ragas` (LLM-judge metrics, needs `OPENAI_API_KEY`).
+
+---
+
+## 6. Key API surface
+
+- **`AHRAGEngine.answer(query, user_id, history=None, write_audit=True)`** — the
+  entry point. Handles ACL scoping, probing, feature extraction, routing,
+  retrieval, evidence packing, conflict detection, sufficiency, generation,
+  citation verification and audit. Returns `AnswerResult`.
+- **`engine.acl.scope_for(user)`** — the authorised scope. Never bypass it;
+  `assert_authorised` is a defence-in-depth re-check at every stage boundary and
+  raising it indicates a pipeline bug, not user error.
+- **`ahrag.eval.harness.build_seeded_engine(manifest, settings_overrides=...)`** —
+  build an engine on a chosen corpus, with caching. Use this in scripts rather
+  than constructing `AHRAGEngine()` directly, which silently defaults to the
+  demo corpus.
+- **`ahrag.eval.harness.load_and_validate(engine, eval_set)`** — load labels and
+  verify they resolve against the loaded corpus.
+- **`ahrag.routing.build_router(config, settings, backend)`** — `governance`,
+  `learned`, `complexity`, or `adaptive-rag`.
+
+### One caution for anyone writing an experiment script
+
+Per-row keys from `ahrag.evaluate.run_item` are **not** the aggregate names from
+`ahrag.eval.metrics.aggregate`. The row key is `abstention_appropriate` (a bool
+per query); the aggregate is `abstention_appropriateness` (its mean). Reading
+the aggregate name off a row yields `None` for every item, and the metric
+silently reports "n/a" rather than failing.
