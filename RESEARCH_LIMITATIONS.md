@@ -8,6 +8,14 @@ prototype is to let a working demo stand in for evidence. AHRAG runs, its tests
 pass, and its evaluation produces real numbers — none of which means the
 underlying hypotheses have been validated.
 
+> **Read this alongside `FINDINGS.md`.** Sections 2 and 3 below were written
+> against the 9-document demo corpus, and several of their conclusions have
+> since been superseded by a 6,139-document / 965-query benchmark. Where a
+> status has changed, it is marked **UPDATED** and points at the new evidence.
+> Two conclusions moved in the project's favour (§2.3, §4.1) and one moved
+> against it (§5.3, the freshness metric). The demo-corpus caveats themselves
+> all still stand for demo-corpus numbers.
+
 ---
 
 ## 1. The separation this project maintains
@@ -69,6 +77,14 @@ estimated cost — are the ones the corpus can actually exercise.
 
 **A tie is the honest reading. It is not evidence that the router works, and it
 is not evidence that it does not.**
+
+**UPDATED at benchmark scale (`FINDINGS.md` §4.5).** With 6,139 documents and
+965 queries the systems separate cleanly, and the separation is not flattering
+to the shipped router. The learned router P2 leads on every retrieval metric
+(R@5 0.530) while being the fastest; the hand-tuned P1 (0.507) is
+*significantly worse* than B3, B4, B5, B6 and P2. So the tie was indeed a
+corpus artefact, and once removed the finding is that the **architecture**
+holds up while the **hand-picked utility weights** do not.
 
 ### 2.4 Retrieval depth was chosen to make the comparison non-vacuous
 
@@ -162,7 +178,7 @@ the stale document is more lexically relevant than the current one.
 
 ## 4. Component-level limitations
 
-### 4.1 The router is rule-based, not learned
+### 4.1 The router is rule-based, not learned — **NO LONGER TRUE**
 
 The research draft proposes a calibrated gradient-boosted or small-LM
 classifier trained on offline route labels. This prototype implements an
@@ -178,6 +194,29 @@ evidence sufficiency against annotated references, assign each query the
 lowest-cost route that clears pre-registered thresholds, train a calibrated
 classifier, and compare it against both this rule-based router and an LLM router
 on a held-out test set that was never used to set thresholds.
+
+**DONE — this is exactly what was built** (`FINDINGS.md` §4.1, §4.5). All five
+routes are executed on every one of 965 queries via `FixedRouter`; each query is
+labelled with the cheapest route achieving the best measured recall; the split
+is 60/20/20 with the test partition touched once. `LearnedRouter` (system P2)
+ranks the admissible routes with the resulting XGBoost model, and reaches 0.783
+held-out route accuracy against 0.566 for a trained text-only Adaptive-RAG
+baseline on identical data.
+
+Two things this confirmed about the paragraph above:
+
+1. The "unvalidated priors" concern was correct. An independent λ grid search
+   ranks the shipped `0.09/0.35/0.55` **7th of 27**, and P1 is significantly
+   worse than five of seven comparators at scale.
+2. The rule-based router remains the **default**, because the learned one
+   requires the optional `xgboost` extra and degrades to P1 without it. What
+   changed is that "adaptive" is now a fitted policy where the extra is
+   installed, rather than a heuristic everywhere.
+
+The learned model does **not** get to decide admissibility — it ranks only the
+routes the governance constraints already admitted, so it can change which
+admissible route wins but cannot widen what is permitted.
+`tests/test_routing.py::TestLearnedRouter` asserts that.
 
 ### 4.2 The offline embedding backend is LSA, not a neural encoder
 
@@ -367,6 +406,33 @@ chunk IDs resolve against real chunker output. The 1,125-document integrated
 corpus in `improvement_files/datasets/integrated/` cannot serve: every document
 grants `employee`, so the lattice collapses to one class and specialisation is
 provably a no-op there (E1 reports this rather than letting it pass silently).
+
+### 5.3 The freshness metric is unmeasured, not perfect
+
+Freshness compliance reports **1.000** everywhere — for all eight systems, and
+even in the ablation that switched freshness enforcement off. That figure
+should be read as *"this metric was never exercised"*.
+
+The benchmark corpus does contain 15 real supersession chains, correctly linked,
+and 38/38 of the freshness items' gold chunks were verified to be the current
+version. The defect is in the **queries**:
+`build_freshness_items` in `integrate_datasets.py` phrases them as *"What is the
+current rule in {heading}?"*. Against 7,082 chunks a query that generic cannot
+retrieve one specific chunk regardless of routing policy, and the stratified
+results confirm it — **all eight systems score exactly 0.000 Recall@5 on all 15
+freshness items**.
+
+**Consequence:** no claim about freshness handling in this project is supported
+by evidence. That includes the claim in `INVENTION_DISCLOSURE.md` §8(e) form
+("freshness-aware evidence packing correctly prefers current versions in P% of
+cases"), which remains untested at scale. The demo-corpus behaviour *is*
+verified — `tests/test_scenarios.py` and `tests/test_demonstration.py` both
+confirm the current version is preferred and the superseded one is labelled —
+but that is one supersession chain, which is the §2.1 problem again.
+
+**To fix:** generate freshness queries from distinctive content *inside* the
+versioned section rather than from its heading, so the query can actually
+retrieve its own gold chunk, then re-run the comparison.
 
 ---
 

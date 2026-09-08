@@ -11,21 +11,37 @@ is as informative as one it does.
 
 ---
 
-## 0. One-paragraph summary
+## 0. Summary
 
 The previous state of the project had real code in `improvement_files/` but the
 artifacts it produced were never consumed: the evaluation still ran on the
 9-document demo corpus, 83% of the generated gold chunk IDs pointed at the
 wrong text, and the trained router existed only as a file on disk. Fixing that
 exposed a hard blocker — the embedding backend could not fit an index at the
-scale `improvement.txt` §1 demands — which is now fixed. On the resulting
-6,139-document corpus the router was retrained from genuinely measured route
-outcomes, an Adaptive-RAG baseline was built for comparison, and a novel
-mechanism (Scope-Pure Index Specialisation) closes a measured information-flow
-channel that the project's own design document incorrectly claimed was already
-closed.
+scale `improvement.txt` §1 demands — which is now fixed.
 
----
+On the resulting 6,139-document / 965-query benchmark, the headline results are:
+
+- **The learned router (P2) is the best of eight systems on every retrieval
+  metric and also the fastest** — R@5 0.530 against 0.520 for always-maximal
+  retrieval, at 25% lower latency. It beats the trained text-only Adaptive-RAG
+  baseline 0.783 vs 0.566 on route accuracy.
+- **The shipped hand-tuned router (P1) is significantly worse than five of
+  seven comparators.** The architecture is sound; the hand-picked utility
+  weights were not, which is exactly what improvement.txt §3 alleged.
+- **Zero ACL violations across all eight systems and 965 queries.**
+- **The governance-scoped probe is load-bearing**: removing it drops R@5 from
+  0.507 to 0.013 (*d* = −1.06).
+- **A defect found by ablation**: disabling the evidence sufficiency gate
+  *improves* abstention appropriateness by +0.105 (p < 0.0001) — it is
+  mis-calibrated at scale.
+- **A novel mechanism** (Scope-Pure Index Specialisation) closes a measured
+  information-flow channel that `INVENTION_DISCLOSURE.md` M1 incorrectly
+  claimed was already closed: unreadable documents changed a principal's route
+  on 33.3% of queries. It costs 0.004 R@5 (p = 0.027) and buys no retrieval
+  gain, so the contribution is the security property alone.
+- **A defect in this session's own work**: the generated freshness stratum is
+  unanswerable by every system, so no freshness claim here is evidenced (§4.5b).
 
 ## 1. Audit: what was wrong before
 
@@ -379,7 +395,117 @@ pick. That is a small curve, but it is a *measured* one.
 
 All of the above is recorded in `RESEARCH_LIMITATIONS.md` §5.1–5.2.
 
-### 4.5 Web application — verified end to end
+### 4.5 All eight systems at benchmark scale — `compare_baselines.py --integrated`
+
+965 items, aligned on the **875** where every system produced a value.
+Every system shares one corpus, one index, one generator and one ACL layer;
+only the routing policy differs.
+
+| System | R@5 | MRR | nDCG@10 | Abstention-ok | Latency | ACL violations |
+|---|---|---|---|---|---|---|
+| B1 fixed BM25 | 0.455 [0.43,0.49] | 0.489 | 0.435 | 0.796 | 0.095 s | **0** |
+| B2 fixed dense | 0.502 [0.47,0.53] | 0.510 | 0.462 | 0.804 | 0.083 s | **0** |
+| B3 fixed hybrid RRF | 0.525 [0.49,0.56] | 0.522 | 0.481 | 0.808 | 0.101 s | **0** |
+| B4 always-maximal (R4) | 0.520 [0.49,0.55] | 0.521 | 0.478 | 0.808 | 0.109 s | **0** |
+| B5 complexity-only | 0.522 [0.49,0.55] | 0.520 | 0.479 | 0.808 | 0.103 s | **0** |
+| B6 Adaptive-RAG (trained) | 0.522 [0.49,0.55] | 0.522 | 0.481 | 0.807 | 0.095 s | **0** |
+| P1 governance-aware (rule-based) | 0.507 [0.48,0.54] | 0.512 | 0.470 | 0.802 | 0.102 s | **0** |
+| **P2 learned router** | **0.530** [0.50,0.56] | **0.525** | **0.486** | 0.802 | **0.082 s** | **0** |
+
+**Zero ACL violations for all eight.** That is the intended result rather than a
+selling point: ACL enforcement is upstream of routing, so no routing policy can
+break it. The metric exists to verify the invariant holds under every policy,
+and at 965 queries across 7 principals it does.
+
+#### The learned router wins, and the hand-tuned one loses
+
+P2 is the best system on **every** retrieval metric *and* the fastest. Against
+the hoped-for claim in improvement.txt §8(b) — "matches always-maximal
+retrieval quality while reducing estimated cost" — P2 does better than hoped:
+it **exceeds** always-maximal quality (0.530 vs 0.520) while running **25%
+faster** (0.082 s vs 0.109 s). It gets there by routing 626 of 965 queries to
+the cheap sparse route and abstaining on 142, versus B4's 965 iterative runs.
+
+The uncomfortable half of the same result is that **P1, the shipped rule-based
+governance router, is significantly worse than five of the seven comparators**:
+
+| P1 versus | Δ R@5 | p | *d* | |
+|---|---|---|---|---|
+| B1 fixed BM25 | **+0.0518** | 0.0000 | +0.211 | \*\*\* |
+| B2 fixed dense | +0.0053 | 0.559 | +0.020 | ns |
+| B3 fixed hybrid | **−0.0175** | 0.0010 | −0.128 | \*\* |
+| B4 always-maximal | **−0.0130** | 0.047 | −0.068 | \* |
+| B5 complexity-only | **−0.0147** | 0.0024 | −0.106 | \*\* |
+| B6 Adaptive-RAG | **−0.0149** | 0.027 | −0.073 | \* |
+| **P2 learned** | **−0.0232** | 0.0057 | −0.094 | \*\* |
+
+So the *architecture* is sound — the same governance constraints with a learned
+ranker on top produce the best system in the comparison — but the
+**hand-picked utility weights are not**. That is consistent with the λ grid
+search, which independently ranked the shipped `0.09/0.35/0.55` **7th of 27**.
+improvement.txt §3's complaint that the weights were "unvalidated priors" is
+confirmed, and the fix is the learned router rather than more hand-tuning.
+
+Note also that B5 (complexity-only) and B6 (Adaptive-RAG) are statistically
+indistinguishable from each other and from B3 (fixed hybrid). At this corpus
+scale, *adaptivity by itself buys nothing* — what buys something is adaptivity
+**fitted to measured outcomes**, which is P2.
+
+#### Stratified results, and two problems they expose
+
+| Query type | n | B1 | B3 | B6 | P1 | **P2** |
+|---|---|---|---|---|---|---|
+| hotpotqa_comparison | 70 | 0.850 | **0.950** | 0.907 | **0.950** | 0.907 |
+| hotpotqa_bridge | 326 | 0.817 | 0.842 | 0.844 | 0.842 | **0.848** |
+| finance_novel-generated | 49 | 0.408 | 0.558 | **0.578** | 0.490 | **0.578** |
+| finance_metrics-generated | 30 | 0.117 | 0.478 | 0.478 | 0.189 | **0.544** |
+| finance_domain-relevant | 45 | 0.189 | **0.411** | 0.411 | 0.389 | 0.389 |
+| adversarial_rambling | 21 | 0.000 | 0.254 | 0.238 | 0.143 | **0.349** |
+| adversarial_misspelled | 19 | 0.158 | 0.246 | 0.246 | 0.246 | **0.325** |
+| policy_comprehension | 300 | 0.125 | 0.160 | 0.158 | 0.160 | **0.162** |
+| **freshness_competing_versions** | 15 | **0.000** | **0.000** | **0.000** | **0.000** | **0.000** |
+| permission_boundary | 60 | — | — | — | — | — |
+| unanswerable | 30 | — | — | — | — | — |
+
+`permission_boundary` and `unanswerable` show no recall because they have no
+gold chunks by construction — recall is undefined and they are scored by
+abstention appropriateness instead. That is correct, not missing data.
+
+Two things this table exposes, one about the systems and one about my own data:
+
+**(a) P1's weakness is concentrated, not diffuse.** It collapses on
+`finance_metrics-generated` (0.189 against P2's 0.544) and
+`adversarial_rambling` (0.143 against 0.349). These are the queries where a
+long or numerically-dense question pushes the hand-tuned utility toward R3 when
+the sparse route would have found the figure. P2 learned not to. On the
+HotpotQA strata, where P1 already routes well, the two are equal or P1 is
+slightly ahead.
+
+**(b) My freshness stratum is badly constructed, and the metric it feeds is
+worthless.** All eight systems score **exactly 0.000** on all 15
+`freshness_competing_versions` items. That is not eight systems failing; it is
+my generator producing unanswerable queries. `build_freshness_items` in
+`integrate_datasets.py` phrases them as *"What is the current rule in
+{heading}?"* — and against 7,082 chunks a query that generic cannot retrieve
+one specific chunk, whatever the routing policy. It also explains why
+`freshness_compliant` reported 1.0000 in every ablation including the one that
+disabled freshness enforcement: the metric was never exercised.
+
+The 15 supersession chains in the corpus are real and correctly linked (§3
+verified 38/38 gold chunks are the current version). The **queries** are the
+defect. Fixing it means generating freshness queries from distinctive content
+*inside* the versioned section rather than from its heading. Until that is
+done, **no freshness claim in this project is supported by evidence**, and the
+1.000 figures should be read as "not measured" rather than "perfect".
+
+`policy_comprehension` at ~0.16 across all systems (n=300, 31% of the suite) is
+a genuine difficulty result rather than a defect: PolicyQA asks short
+reading-comprehension questions about privacy-policy paragraphs, and locating
+the right paragraph among 7,082 chunks is hard. It is what drags the overall
+means to ~0.5, and it is the main reason absolute recall here is far below the
+0.84 seen on the 60-chunk demo corpus.
+
+### 4.6 Web application — verified end to end
 
 All 9 endpoints return 200. Governance verified **through HTTP**, not just in
 unit tests:
@@ -395,7 +521,7 @@ unit tests:
 | Error paths | 404 unknown user, 422 empty query |
 | Streamlit UI under `AppTest` | **0 exceptions, 0 errors** |
 
-### 4.6 Test suite
+### 4.7 Test suite
 
 **246 → 280 passing, 1 skipped, 0 failures.** New: 26 non-interference tests
 (including an end-to-end theorem — same route, same evidence, same answer text,
@@ -407,29 +533,38 @@ the suite fails rather than passing vacuously if that ever changes.
 
 ---
 
-## 5. Results still pending at time of writing
+## 5. What is still outstanding
 
-These are running or queued; the scripts exist and the method is fixed, only
-the numbers are outstanding.
+Everything in improvement.txt §1–§8 has now been run. What remains is genuinely
+outstanding rather than merely unstarted:
 
-| Pending result | Command | What it will tell us |
+| Outstanding | Why | Command when ready |
 |---|---|---|
-| Remaining 5 ablations | `ablation_study.py --integrated` | Whether the risk model, cost/latency terms, authority gate, freshness enforcement and evidence gate each show a measurable effect — and on *which* metric |
-| Embedding comparison at 7,082 chunks | `compare_embeddings.py --integrated` | Whether the LSA→neural gain becomes **significant** once n=965 instead of n=25. This is the single most likely result to move from "not significant" to significant |
-| LSA scaling curve (§4c) | `compare_embeddings.py --scaling` | Whether LSA fitted on 7,082 chunks learns real term associations vs 60 |
-| Full 8-system comparison at scale | `compare_baselines.py --integrated --by-type` | P1/P2 vs B1–B6 on R@5/MRR/nDCG with CIs, *and* per-stratum breakdown |
-| SPIS on the 9-class integrated corpus | `measure_specialisation.py --integrated` | Whether specialisation improves recall once the ACL lattice is genuinely wide — the open question from §4.4 |
-| RAGAS faithfulness / relevancy | `evaluate_with_ragas.py --run` | Needs `OPENAI_API_KEY`; pipeline is wired and saves inputs regardless |
-| Demonstration scenarios | new `tests/test_demonstration.py` | Reviewable walk-through of each governance behaviour |
+| **The freshness stratum must be regenerated** | All 8 systems score 0.000 on it because the queries are too generic to retrieve their gold chunk (§4.5b). Every freshness figure in this project is therefore unmeasured, not perfect. This is the most important remaining defect. | fix `build_freshness_items` in `integrate_datasets.py`, then re-run §4.5 |
+| **Re-tune the evidence sufficiency gate** | The ablation shows disabling it *improves* abstention appropriateness by +0.105 (p<0.0001). Its thresholds are absolute rerank scores fitted to a 60-chunk corpus. | express `min_top_score` / `min_mean_score` relatively, then re-run `ablation_study.py` |
+| **`all-mpnet-base-v2` comparison** | Loading a second sentence-transformer in one process aborts on this platform. Needs one process per backend. | `compare_embeddings.py --integrated --backends mpnet` |
+| **RAGAS faithfulness / answer relevancy** | Pipeline is wired and verified (32 results, 0 errors); the judge needs `pip install ragas datasets` **and** `OPENAI_API_KEY`. Without a key the script saves its input JSON and stops, by design. | `evaluate_with_ragas.py --run --integrated` |
+| **Inter-annotator agreement** | Tooling built and its statistics verified; needs a second human. See §6. | `annotation_agreement.py export → score` |
 
-**Expected direction, stated in advance so it cannot be retrofitted:** I expect
-the embedding comparison to reach significance at n=965, the evidence-gate
-ablation to show a large abstention effect, and SPIS to remain
-quality-neutral-to-slightly-negative even on the wider lattice. If SPIS shows a
-recall gain there, that is a genuinely new result; if not, the contribution
-stays the security property alone.
+### A prediction that was recorded in advance, and held
 
----
+An earlier draft of this section, written before the runs completed, said:
+
+> "I expect the embedding comparison to reach significance at n=965, the
+> evidence-gate ablation to show a large abstention effect, and SPIS to remain
+> quality-neutral-to-slightly-negative even on the wider lattice. If SPIS shows
+> a recall gain there, that is a genuinely new result; if not, the contribution
+> stays the security property alone."
+
+All three held: the embedding gain reached p=0.002 (from p=0.52 at n=25), the
+gate ablation showed +0.105 on abstention (p<0.0001), and SPIS came out at
+−0.004 R@5. The contribution stays the security property alone.
+
+One thing was **not** predicted and is the strongest result in the project: that
+the learned router would beat every baseline *and* be the fastest system
+(§4.5). I expected it to beat the text-only Adaptive-RAG baseline, which it did
+(0.783 vs 0.566 on route accuracy), but not to overtake fixed hybrid retrieval
+and always-maximal on end-to-end recall.
 
 ## 6. What cannot be completed without other people
 

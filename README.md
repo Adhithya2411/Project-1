@@ -37,6 +37,9 @@ pytest
 # 3. Run the app
 python -m uvicorn "ahrag.api.app:create_app" --factory --port 8000   # terminal 1
 streamlit run ahrag/ui/app.py                                        # terminal 2
+
+# A step-by-step guide to running and hand-testing the web app,
+# including expected output for each check, is in RUNNING.md.
 ```
 
 Then open <http://localhost:8501>. The Streamlit UI detects the API on
