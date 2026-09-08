@@ -1,38 +1,48 @@
-"""
-Baseline Comparison for AHRAG
-================================
-Runs a side-by-side comparison of AHRAG's governance-aware router against
-the baseline routing strategies on the seeded evaluation set.
+"""Head-to-head system comparison with the statistics improvement.txt §5 asks for.
 
-This script uses the REAL AHRAG evaluation harness — the same one used by
-`python -m ahrag.evaluate` — but adds:
-  1. Per-query detailed comparison table
-  2. Route distribution analysis across systems
-  3. Bootstrap confidence intervals on all metrics
-  4. Paired bootstrap significance tests (AHRAG vs each baseline)
-  5. Export of per-query results for further analysis
+Runs every system in ``ahrag.eval.systems`` over one shared corpus and reports,
+for each pairwise comparison against the proposed system: the mean, a 95%
+bootstrap confidence interval, the paired difference, a two-sided paired
+bootstrap p-value, and Cohen's *d*. Also reports per-stratum results, because a
+single pooled average over a suite containing ACL probes, unanswerable queries
+and multi-hop questions hides more than it shows (§2d).
 
-SYSTEMS COMPARED:
-  B1: Fixed BM25 (always R1)
-  B2: Fixed Dense (always R2)
-  B3: Fixed Hybrid RRF (always R3)
-  B4: Always-maximal iterative (always R4)
-  B5: Complexity-only router (Adaptive-RAG ablation)
-  P1: AHRAG governance-aware router (proposed system)
+TWO CORRECTIONS TO THE PREVIOUS VERSION
+---------------------------------------
+1. **The paired test was not paired.** It filtered ``None`` values out of each
+   system independently and then truncated both lists to the shorter length::
 
-USAGE:
-  python improvement_files/baseline_code/compare_baselines.py
-  python improvement_files/baseline_code/compare_baselines.py --systems P1,B5,B3
-  python improvement_files/baseline_code/compare_baselines.py --output comparison.json
+       p1_values = [r[m] for r in p1_rows if r[m] is not None]
+       base_values = [r[m] for r in base_rows if r[m] is not None]
+       n = min(len(p1_values), len(base_values))
+       compare(p1_values[:n], base_values[:n])
+
+   If the two systems have ``None`` at different positions — which happens as
+   soon as one abstains where the other does not — this pairs query *i* of one
+   system against query *j* of the other. The comparison silently stops being
+   paired, which is the entire basis of the test. Here a single mask is
+   computed across all systems and applied identically, and
+   ``ahrag.stats.paired_bootstrap`` refuses misaligned input outright.
+
+2. **The p-value was the wrong quantity.** It counted resamples where the
+   difference was ``<= 0``, which estimates ``P(delta <= 0 | data)`` rather
+   than ``P(data this extreme | H0)``. See the note in ``ahrag/stats.py``.
+
+USAGE
+  python improvement_files/baseline_code/compare_baselines.py --integrated
+  python improvement_files/baseline_code/compare_baselines.py --integrated --systems P1,P2,B6
+  python improvement_files/baseline_code/compare_baselines.py --integrated --by-type
+  python improvement_files/baseline_code/compare_baselines.py --integrated --output baselines.json
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import time
-from datetime import date
+from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
@@ -40,284 +50,314 @@ import numpy as np
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
-EVAL_TODAY = date(2026, 8, 19)
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+os.environ.setdefault("HF_HUB_DISABLE_PROGRESS_BARS", "1")
+
+from ahrag.eval.harness import (  # noqa: E402
+    add_corpus_arguments,
+    build_seeded_engine,
+    load_and_validate,
+    resolve_corpus,
+)
+from ahrag.stats import (  # noqa: E402
+    bootstrap_ci,
+    cohens_d,
+    interpret_d,
+    paired_bootstrap,
+    significance_marker,
+)
+
+# Per-row keys from ``ahrag.evaluate.run_item``. ``higher_is_better`` matters
+# for reading the sign of a delta; ACL violations are the one metric where a
+# positive difference is bad.
+METRICS: list[tuple[str, str, bool]] = [
+    ("recall_at_5", "Recall@5", True),
+    ("recall_at_10", "Recall@10", True),
+    ("mrr", "MRR", True),
+    ("ndcg_at_10", "nDCG@10", True),
+    ("abstention_appropriate", "Abstention-ok", True),
+    ("citation_coverage", "Citation coverage", True),
+    ("freshness_compliant", "Freshness-ok", True),
+    ("acl_violation", "ACL violations", False),
+]
+
+PROPOSED = "P1"
 
 
-def bootstrap_ci(values, n_bootstrap=1000, ci=0.95):
-    """Compute bootstrap confidence interval."""
-    rng = np.random.RandomState(1729)
-    n = len(values)
-    if n == 0:
-        return 0.0, 0.0, 0.0
-    bootstrap_means = np.array([
-        np.mean(rng.choice(values, size=n, replace=True))
-        for _ in range(n_bootstrap)
-    ])
-    alpha = (1 - ci) / 2
-    return (
-        float(np.mean(values)),
-        float(np.percentile(bootstrap_means, alpha * 100)),
-        float(np.percentile(bootstrap_means, (1 - alpha) * 100)),
-    )
-
-
-def paired_bootstrap_test(a_scores, b_scores, n_bootstrap=10000):
-    """Paired bootstrap test: p-value that A is NOT better than B."""
-    rng = np.random.RandomState(1729)
-    n = len(a_scores)
-    count = 0
-    for _ in range(n_bootstrap):
-        idx = rng.choice(n, size=n, replace=True)
-        if np.mean(a_scores[idx]) <= np.mean(b_scores[idx]):
-            count += 1
-    return count / n_bootstrap
-
-
-def run_comparison(system_keys: list[str] | None = None):
-    """
-    Run the full AHRAG evaluation with all systems and produce a comparison.
-
-    Returns: (per_query_rows, system_summaries, per_system_rows)
-    """
-    from ahrag.config import RouterConfig, Settings
-    from ahrag.db import Database
-    from ahrag.eval.dataset import load_eval_set
-    from ahrag.eval.metrics import aggregate
-    from ahrag.eval.systems import build_systems
+def collect_rows(engine, systems, items, verbose: bool = True):
+    """Run every system over every item, sharing one index."""
     from ahrag.evaluate import run_item
-    from ahrag.pipeline import AHRAGEngine
 
-    # Boot the shared engine
-    print("[1/4] Initialising AHRAG engine...")
-    settings = Settings()
-    config = RouterConfig.load(settings.router_config)
-    db = Database(settings.db_path)
-
-    # Build a seeded engine for the database
-    seed_engine = AHRAGEngine(settings=settings, config=config, db=db, today=EVAL_TODAY)
-    seed_engine.ensure_seeded()
-    info = seed_engine.backend_info()
-    print(f"  Corpus: {info.get('documents', '?')} documents, {db.count_chunks()} chunks")
-    print()
-
-    # Build all 6 systems
-    print("[2/4] Building evaluation systems...")
-    all_systems = build_systems(settings, config, db, today=EVAL_TODAY)
-
-    if system_keys:
-        systems = [s for s in all_systems if s.key in system_keys]
-        if not systems:
-            print(f"ERROR: No matching systems for {system_keys}")
-            print(f"Available: {[s.key for s in all_systems]}")
-            sys.exit(1)
-    else:
-        systems = all_systems
-
-    print(f"  Systems: {', '.join(s.key for s in systems)}")
-    print()
-
-    # Load evaluation set
-    items = load_eval_set()
-    print(f"  Evaluation items: {len(items)}")
-    print()
-
-    # Run evaluation
-    print("[3/4] Running evaluation...")
-    all_rows: dict[str, list[dict]] = {}
-    summaries: dict[str, dict] = {}
-
+    results: dict[str, list[dict]] = {}
     for system in systems:
+        # All systems share the base engine's corpus, index and ACL snapshot;
+        # only the router differs. Rebuilding the embedding space per system
+        # would multiply the run time and change nothing.
+        system.engine.index = engine.index
+        system.engine.acl = engine.acl
+        system.engine.retrieval.index = engine.index
+        system.engine.retrieval.acl = engine.acl
+        system.engine.validator.acl = engine.acl
+
         started = time.perf_counter()
         rows = [run_item(system, item, system.engine) for item in items]
         elapsed = time.perf_counter() - started
+        results[system.key] = rows
 
-        all_rows[system.key] = rows
-        summaries[system.key] = aggregate(rows)
-
-        # Quick summary line
-        s = summaries[system.key]
-        recall = s.get("recall_at_5")
-        recall_str = f"{recall:.3f}" if recall is not None else "n/a"
-        acl = s.get("acl_violation_rate", 0)
-        abst = s.get("abstention_appropriateness", 0)
-        print(f"  {system.key:4s} R@5={recall_str:>5s}  ACL-v={acl:.3f}  Abst-ok={abst:.3f}  ({elapsed:.2f}s)")
-
-    print()
-    return all_rows, summaries, systems
+        recall = [r["recall_at_5"] for r in rows if r["recall_at_5"] is not None]
+        if verbose:
+            mean_recall = f"{np.mean(recall):.4f}" if recall else "n/a"
+            violations = sum(1 for r in rows if r["acl_violation"])
+            errors = sum(1 for r in rows if r.get("error"))
+            print(f"  {system.key:4s} {system.engine.router.name:34s} "
+                  f"R@5={mean_recall:>6s}  ACL-v={violations:<3d} "
+                  f"err={errors:<3d} ({elapsed:.1f}s)")
+    return results
 
 
-def print_detailed_comparison(all_rows, summaries, systems):
-    """Print a detailed comparison report with CIs and significance tests."""
+def aligned_vectors(
+    results: dict[str, list[dict]], metric: str
+) -> dict[str, np.ndarray]:
+    """Extract item-aligned metric vectors across all systems.
 
-    print("=" * 94)
-    print("DETAILED COMPARISON REPORT")
-    print("=" * 94)
-    print()
-
-    # Metric comparison table with CIs
-    metrics = [
-        ("recall_at_5", "Recall@5"),
-        ("recall_at_10", "Recall@10"),
-        ("mrr", "MRR"),
-        ("ndcg_at_10", "nDCG@10"),
-        ("abstention_appropriateness", "Abstention-ok"),
-        ("acl_violation_rate", "ACL Violation"),
-    ]
-
-    print(f"{'System':6s} {'Metric':20s} {'Mean':>7s} {'95% CI':>18s}")
-    print("-" * 55)
-
-    for system in systems:
-        for metric_key, metric_name in metrics:
-            # Get per-query values
-            rows = all_rows[system.key]
-            values = [r.get(metric_key, 0) for r in rows if r.get(metric_key) is not None]
-            if not values:
-                continue
-
-            values_arr = np.array(values, dtype=np.float64)
-            mean, lo, hi = bootstrap_ci(values_arr)
-            print(f"{system.key:6s} {metric_name:20s} {mean:7.4f} [{lo:.4f}, {hi:.4f}]")
-        print()
-
-    # Route distribution comparison
-    print("-" * 55)
-    print("ROUTE DISTRIBUTION")
-    print("-" * 55)
-
-    route_names = ["R0", "R1", "R2", "R3", "R4", "ERROR"]
-    print(f"{'':6s}", end="")
-    for r in route_names:
-        print(f" {r:>5s}", end="")
-    print()
-
-    for system in systems:
-        counts = {r: 0 for r in route_names}
-        for row in all_rows[system.key]:
-            route = row.get("route", "ERROR")
-            if route in counts:
-                counts[route] += 1
-            else:
-                counts["ERROR"] += 1
-
-        print(f"{system.key:6s}", end="")
-        for r in route_names:
-            print(f" {counts[r]:5d}", end="")
-        print()
-
-    # Significance tests: P1 vs each baseline
-    p1_rows = all_rows.get("P1")
-    if not p1_rows:
-        print("\n  (P1 not in systems — skipping significance tests)")
-        return
-
-    print()
-    print("-" * 55)
-    print("SIGNIFICANCE TESTS (P1 vs each baseline)")
-    print("-" * 55)
-    print(f"{'Comparison':20s} {'Metric':15s} {'Delta':>8s} {'p-value':>8s} {'Sig?':>6s}")
-
-    for system in systems:
-        if system.key == "P1":
-            continue
-
-        for metric_key, metric_name in [("recall_at_5", "R@5"), ("mrr", "MRR")]:
-            p1_values = np.array([
-                r.get(metric_key, 0) for r in p1_rows
-                if r.get(metric_key) is not None
-            ], dtype=np.float64)
-            base_values = np.array([
-                r.get(metric_key, 0) for r in all_rows[system.key]
-                if r.get(metric_key) is not None
-            ], dtype=np.float64)
-
-            if len(p1_values) == 0 or len(base_values) == 0:
-                continue
-
-            # Align lengths
-            n = min(len(p1_values), len(base_values))
-            p1_v = p1_values[:n]
-            base_v = base_values[:n]
-
-            diff = float(np.mean(p1_v) - np.mean(base_v))
-            p_val = paired_bootstrap_test(p1_v, base_v)
-            sig = "***" if p_val < 0.001 else "**" if p_val < 0.01 else "*" if p_val < 0.05 else "no"
-
-            print(f"P1 vs {system.key:14s} {metric_name:15s} {diff:+8.4f} {p_val:8.4f} {sig:>6s}")
-
-    # Per-query comparison (P1 vs B5 specifically — the key ablation)
-    b5_rows = all_rows.get("B5")
-    if b5_rows:
-        print()
-        print("-" * 94)
-        print("PER-QUERY COMPARISON: P1 (Governance-Aware) vs B5 (Complexity-Only)")
-        print("-" * 94)
-        print(f"{'ID':12s} {'P1->':>4s} {'B5->':>4s} {'P1-R@5':>7s} {'B5-R@5':>7s} {'Delta':>7s} {'Notes'}")
-
-        for p1_row, b5_row in zip(p1_rows, b5_rows):
-            p1_route = p1_row.get("route", "?")
-            b5_route = b5_row.get("route", "?")
-            p1_r5 = p1_row.get("recall_at_5", 0) or 0
-            b5_r5 = b5_row.get("recall_at_5", 0) or 0
-            delta = p1_r5 - b5_r5
-            query_id = p1_row.get("query_id", "?")
-
-            notes = ""
-            if p1_row.get("acl_violation"):
-                notes += "ACL-VIOLATION "
-            if b5_row.get("acl_violation"):
-                notes += "B5-ACL-VIOLATION "
-            if delta > 0:
-                notes += "P1-WINS"
-            elif delta < 0:
-                notes += "B5-WINS"
-            else:
-                notes += "TIE"
-
-            delta_str = f"{delta:+.3f}" if delta != 0 else "  0.000"
-            p1_r5_str = f"{p1_r5:.3f}" if p1_r5 is not None else "  n/a"
-            b5_r5_str = f"{b5_r5:.3f}" if b5_r5 is not None else "  n/a"
-
-            print(f"{query_id:12s} {p1_route:>4s} {b5_route:>4s} {p1_r5_str:>7s} {b5_r5_str:>7s} {delta_str:>7s} {notes}")
+    A single mask is built from the items where *every* system produced a
+    value, then applied identically. This is the fix for the pairing bug
+    described in the module docstring: filtering per system and truncating
+    produces vectors of equal length that are no longer item-aligned.
+    """
+    keys = list(results)
+    if not keys:
+        return {}
+    length = len(results[keys[0]])
+    mask = np.ones(length, dtype=bool)
+    for key in keys:
+        rows = results[key]
+        for index in range(length):
+            value = rows[index].get(metric)
+            if value is None:
+                mask[index] = False
+    return {
+        key: np.array(
+            [float(results[key][i][metric]) for i in range(length) if mask[i]],
+            dtype=np.float64,
+        )
+        for key in keys
+    }
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description="Compare AHRAG against baselines")
-    parser.add_argument(
-        "--systems", type=str, default=None,
-        help="Comma-separated system keys to compare (default: all)",
-    )
-    parser.add_argument(
-        "--output", type=str, default=None,
-        help="Save per-query results to JSON file",
-    )
+    add_corpus_arguments(parser)
+    parser.add_argument("--systems", type=str, default=None,
+                        help="Comma-separated system keys (default: all)")
+    parser.add_argument("--proposed", type=str, default=PROPOSED,
+                        help="System used as the comparison point")
+    parser.add_argument("--by-type", action="store_true",
+                        help="Also report Recall@5 per query type (§2d)")
+    parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument("--output", type=str, default=None)
     args = parser.parse_args()
 
-    system_keys = args.systems.split(",") if args.systems else None
+    manifest, eval_set = resolve_corpus(args)
 
-    print("=" * 94)
-    print("AHRAG Baseline Comparison")
-    print("=" * 94)
+    print("=" * 100)
+    print("AHRAG BASELINE COMPARISON")
+    print("=" * 100)
     print()
 
-    all_rows, summaries, systems = run_comparison(system_keys)
+    print("[1/4] Loading corpus...")
+    engine = build_seeded_engine(manifest, rebuild_cache=args.rebuild_cache)
+    items, label_report = load_and_validate(engine, eval_set)
+    if args.limit:
+        items = items[: args.limit]
+        print(f"  limited to {len(items)} queries")
+    print(f"  corpus: {len(engine.db.get_documents())} documents, "
+          f"{engine.db.count_chunks()} chunks")
+    print(f"  embedder: {engine.index.embedder_name}")
+    print()
 
-    print("[4/4] Generating comparison report...\n")
-    print_detailed_comparison(all_rows, summaries, systems)
+    print("[2/4] Building systems...")
+    from ahrag.eval.systems import build_systems
+
+    all_systems = build_systems(
+        engine.settings, engine.config, engine.db, today=engine.freshness.today
+    )
+    if args.systems:
+        wanted = {k.strip() for k in args.systems.split(",")}
+        systems = [s for s in all_systems if s.key in wanted]
+        if not systems:
+            print(f"  no systems matched {sorted(wanted)}; "
+                  f"available: {[s.key for s in all_systems]}")
+            sys.exit(1)
+    else:
+        systems = all_systems
+    print(f"  {', '.join(s.key for s in systems)}")
+    print()
+
+    print("[3/4] Running evaluation...")
+    results = collect_rows(engine, systems, items)
+    print()
+
+    print("[4/4] Statistics")
+    print()
+    print("=" * 100)
+    print("PER-SYSTEM RESULTS (mean [95% bootstrap CI])")
+    print("=" * 100)
+    shown = METRICS[:5]
+    print(f"  {'sys':5s}" + "".join(f"{label[:15]:>18s}" for _, label, _ in shown))
+    print("-" * 100)
+
+    vectors_by_metric = {
+        metric: aligned_vectors(results, metric) for metric, _, _ in METRICS
+    }
+    for system in systems:
+        cells = []
+        for metric, _, _ in shown:
+            values = vectors_by_metric[metric].get(system.key)
+            if values is None or values.size == 0:
+                cells.append(f"{'n/a':>18s}")
+                continue
+            mean, low, high = bootstrap_ci(values)
+            cells.append(f"{mean:.3f} [{low:.2f},{high:.2f}]".rjust(18))
+        print(f"  {system.key:5s}" + "".join(cells))
+    print()
+    n_used = next(
+        (v[systems[0].key].size for v in vectors_by_metric.values()
+         if systems[0].key in v and v[systems[0].key].size),
+        0,
+    )
+    print(f"  Aligned on {n_used} items where every system produced a value "
+          f"(of {len(items)} total).")
+    print()
+
+    proposed = args.proposed if any(s.key == args.proposed for s in systems) else systems[-1].key
+    print("=" * 100)
+    print(f"PAIRWISE COMPARISONS versus {proposed}")
+    print("=" * 100)
+    print(f"  {'vs':6s} {'metric':20s} {proposed:>8s} {'other':>8s} "
+          f"{'delta':>9s} {'p':>8s} {'d':>7s} {'':4s} effect")
+    print("-" * 100)
+
+    comparisons: dict[str, dict] = {}
+    for system in systems:
+        if system.key == proposed:
+            continue
+        comparisons[system.key] = {}
+        for metric, label, higher_better in METRICS:
+            vectors = vectors_by_metric[metric]
+            if proposed not in vectors or system.key not in vectors:
+                continue
+            treatment = vectors[proposed]
+            control = vectors[system.key]
+            if treatment.size == 0:
+                continue
+            delta, p_value = paired_bootstrap(treatment, control)
+            effect = cohens_d(treatment, control)
+            comparisons[system.key][metric] = {
+                "proposed_mean": float(treatment.mean()),
+                "other_mean": float(control.mean()),
+                "delta": delta,
+                "p_value": p_value,
+                "cohens_d": effect,
+                "effect_size": interpret_d(effect),
+                "higher_is_better": higher_better,
+                "significant_at_05": bool(p_value < 0.05),
+            }
+            print(f"  {system.key:6s} {label:20s} {treatment.mean():8.3f} "
+                  f"{control.mean():8.3f} {delta:+9.4f} {p_value:8.4f} "
+                  f"{effect:+7.3f} {significance_marker(p_value):4s} "
+                  f"{interpret_d(effect)}")
+        print()
+
+    print("=" * 100)
+    print("ROUTE DISTRIBUTION, EFFICIENCY, AND ABSTENTION")
+    print("=" * 100)
+    print(f"  {'sys':5s} {'routes':40s} {'latency':>10s} {'cost':>11s} {'abstain':>9s}")
+    print("-" * 100)
+    efficiency: dict[str, dict] = {}
+    for system in systems:
+        rows = results[system.key]
+        counts: dict[str, int] = defaultdict(int)
+        for row in rows:
+            counts[row.get("route", "?")] += 1
+        latency = float(np.mean([r.get("latency_s") or 0.0 for r in rows]))
+        cost = float(np.mean([r.get("estimated_cost_usd") or 0.0 for r in rows]))
+        abstained = sum(1 for r in rows if r.get("abstained")) / max(1, len(rows))
+        efficiency[system.key] = {
+            "route_distribution": dict(sorted(counts.items())),
+            "mean_latency_s": latency,
+            "mean_cost_usd": cost,
+            "abstention_rate": abstained,
+        }
+        route_text = " ".join(f"{k}:{v}" for k, v in sorted(counts.items()))
+        print(f"  {system.key:5s} {route_text:40s} {latency:9.4f}s "
+              f"${cost:.6f} {abstained:9.3f}")
+    print()
+
+    per_type: dict[str, dict] = {}
+    if args.by_type:
+        print("=" * 100)
+        print("RECALL@5 BY QUERY TYPE (stratified, §2d)")
+        print("=" * 100)
+        types = sorted({item.query_type for item in items})
+        header = f"  {'query type':34s}" + "".join(f"{s.key:>8s}" for s in systems)
+        print(header + f"{'n':>6s}")
+        print("-" * 100)
+        for query_type in types:
+            indices = [i for i, item in enumerate(items) if item.query_type == query_type]
+            row_cells = []
+            per_type[query_type] = {}
+            count = 0
+            for system in systems:
+                rows = results[system.key]
+                values = [
+                    rows[i]["recall_at_5"] for i in indices
+                    if rows[i]["recall_at_5"] is not None
+                ]
+                count = max(count, len(values))
+                if values:
+                    mean = float(np.mean(values))
+                    per_type[query_type][system.key] = mean
+                    row_cells.append(f"{mean:8.3f}")
+                else:
+                    row_cells.append(f"{'—':>8s}")
+            print(f"  {query_type:34s}" + "".join(row_cells) + f"{count:6d}")
+        print()
 
     if args.output:
-        output_path = Path(args.output)
-        output_data = {
-            "reference_date": EVAL_TODAY.isoformat(),
-            "systems": {s.key: {"name": s.name, "description": s.description} for s in systems},
-            "summaries": summaries,
-            "per_query": {key: rows for key, rows in all_rows.items()},
+        payload = {
+            "corpus": str(manifest) if manifest else "seed",
+            "eval_set": str(eval_set) if eval_set else "seed",
+            "label_report": label_report,
+            "embedder": engine.index.embedder_name,
+            "items": len(items),
+            "aligned_items": int(n_used),
+            "proposed": proposed,
+            "systems": {
+                s.key: {"name": s.name, "description": s.description} for s in systems
+            },
+            "per_system": {
+                s.key: {
+                    metric: dict(
+                        zip(
+                            ("mean", "ci_low", "ci_high"),
+                            bootstrap_ci(vectors_by_metric[metric][s.key]),
+                        )
+                    )
+                    for metric, _, _ in METRICS
+                    if s.key in vectors_by_metric[metric]
+                    and vectors_by_metric[metric][s.key].size
+                }
+                for s in systems
+            },
+            "comparisons": comparisons,
+            "efficiency": efficiency,
+            "recall_by_query_type": per_type,
         }
-        with output_path.open("w", encoding="utf-8") as f:
-            json.dump(output_data, f, indent=2, default=str)
-        print(f"\nResults saved to: {output_path}")
-
-    print(f"\nComparison complete.")
+        Path(args.output).write_text(
+            json.dumps(payload, indent=2, default=str), encoding="utf-8"
+        )
+        print(f"Report written to {args.output}")
 
 
 if __name__ == "__main__":

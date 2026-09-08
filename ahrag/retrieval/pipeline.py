@@ -9,16 +9,18 @@ from __future__ import annotations
 
 import logging
 import time
+from collections import OrderedDict
 from typing import Sequence
 
 from ..config import RouterConfig, Settings
 from ..governance.acl import AccessControl
+from ..index.scoped import ScopedIndex
 from ..index.store import IndexBundle
 from ..models import AuthorisedScope, Chunk, Route, RetrievalTrace, ScoredChunk, User
 from ..routing.features import ProbeSignals
 from .decompose import decompose_query, iteration_weights
 from .fusion import rank_positions, reciprocal_rank_fusion
-from .rerank import Reranker
+from .rerank import LexicalReranker, Reranker
 
 logger = logging.getLogger(__name__)
 
@@ -40,6 +42,38 @@ class RetrievalEngine:
         self.reranker = reranker
         self.config = config
         self.settings = settings
+        # Per-ACL-class rerankers. The lexical reranker fits IDF over a corpus,
+        # so a globally-fitted one is the third interference channel alongside
+        # BM25 IDF and the LSA basis: it sets the *final* ordering, using term
+        # statistics drawn from documents the principal cannot read.
+        self._scoped_rerankers: OrderedDict[str, Reranker] = OrderedDict()
+
+    def invalidate_scoped_rerankers(self) -> None:
+        """Drop cached per-class rerankers. Called after re-ingestion."""
+        self._scoped_rerankers.clear()
+
+    def _reranker_for(self, scoped: ScopedIndex) -> Reranker:
+        """Return a reranker whose statistics are pure with respect to ``scoped``.
+
+        A cross-encoder scores (query, passage) pairs directly and holds no
+        corpus statistics, so it is already scope-pure and is returned as-is.
+        The lexical reranker is refitted on the class subcorpus and cached under
+        the same cap as the indexes themselves.
+        """
+        if not scoped.specialised or not callable(getattr(self.reranker, "fit", None)):
+            return self.reranker
+
+        cached = self._scoped_rerankers.get(scoped.signature)
+        if cached is not None:
+            self._scoped_rerankers.move_to_end(scoped.signature)
+            return cached
+
+        cap = max(1, int(self.settings.specialisation_max_classes))
+        if len(self._scoped_rerankers) >= cap:
+            self._scoped_rerankers.popitem(last=False)
+        built = LexicalReranker(scoped.bundle.chunks)
+        self._scoped_rerankers[scoped.signature] = built
+        return built
 
     # -- probe -------------------------------------------------------------
 
@@ -62,15 +96,17 @@ class RetrievalEngine:
         if not allowed:
             return ProbeSignals(elapsed_ms=0.0)
 
+        index = self.index.for_scope(scope)
+
         try:
-            sparse_hits = self.index.sparse.search(query, top_k, allowed)
+            sparse_hits = index.sparse.search(query, top_k, allowed)
         except (ValueError, RuntimeError) as exc:
             logger.warning("Sparse probe failed: %s", exc)
             sparse_hits = []
 
         try:
-            query_vector = self.index.encode_query(query)
-            dense_hits = self.index.vectors.search(query_vector, top_k, allowed)
+            query_vector = index.encode_query(query)
+            dense_hits = index.vectors.search(query_vector, top_k, allowed)
         except (ValueError, RuntimeError) as exc:
             logger.warning("Dense probe failed: %s", exc)
             dense_hits = []
@@ -85,7 +121,11 @@ class RetrievalEngine:
         sparse_confidence = 0.0
         if sparse_hits:
             best_raw = sparse_hits[0][1]
-            saturated = best_raw / (best_raw + 6.0)
+            # Saturation constant is calibrated from the *authorised* subcorpus
+            # (see index/scoped.py), so `min_probe_for_answering` means the same
+            # thing to a principal reading 35 chunks and one reading 54. With
+            # specialisation off this is the historic constant 6.0.
+            saturated = best_raw / (best_raw + index.saturation)
             margin = 1.0
             if len(sparse_hits) > 1 and sparse_hits[0][1] > 0:
                 margin = 1.0 - (sparse_hits[1][1] / sparse_hits[0][1])
@@ -149,21 +189,25 @@ class RetrievalEngine:
         if route is Route.R0 or not scope.allowed_chunk_ids:
             return [], trace
 
+        scoped = self.index.for_scope(scope)
+        trace.index_class = scoped.signature[:12]
+        trace.index_specialised = scoped.specialised
+
         if route is Route.R1:
-            candidates = self._sparse_only(query, scope, trace)
+            candidates = self._sparse_only(query, scope, trace, scoped)
         elif route is Route.R2:
-            candidates = self._dense_only(query, scope, trace)
+            candidates = self._dense_only(query, scope, trace, scoped)
         elif route is Route.R3:
-            candidates = self._hybrid(query, scope, trace)
+            candidates = self._hybrid(query, scope, trace, scoped)
         else:
-            candidates = self._iterative_hybrid(query, scope, trace)
+            candidates = self._iterative_hybrid(query, scope, trace, scoped)
 
         # Defence in depth: verify before reranking, which is the first stage
         # where chunk *content* influences ordering.
         self.acl.assert_authorised(candidates, user, stage="pre-rerank")
 
         started = time.perf_counter()
-        reranked = self.reranker.rerank(
+        reranked = self._reranker_for(scoped).rerank(
             query, candidates, self.config.retrieval.rerank_top_k
         )
         trace.timings_ms["rerank"] = round((time.perf_counter() - started) * 1000, 3)
@@ -180,11 +224,15 @@ class RetrievalEngine:
     # -- route implementations ---------------------------------------------
 
     def _sparse_only(
-        self, query: str, scope: AuthorisedScope, trace: RetrievalTrace
+        self,
+        query: str,
+        scope: AuthorisedScope,
+        trace: RetrievalTrace,
+        scoped: ScopedIndex,
     ) -> list[ScoredChunk]:
-        """R1: BM25 over the authorised pool."""
+        """R1: BM25 over the authorised pool, using that pool's own statistics."""
         started = time.perf_counter()
-        hits = self.index.sparse.search(
+        hits = scoped.sparse.search(
             query, self.config.retrieval.candidate_top_k, scope.allowed_chunk_ids
         )
         trace.timings_ms["sparse"] = round((time.perf_counter() - started) * 1000, 3)
@@ -193,7 +241,7 @@ class RetrievalEngine:
 
         out: list[ScoredChunk] = []
         for rank, (chunk_id, _raw, normalised) in enumerate(hits, start=1):
-            chunk = self.index.get(chunk_id)
+            chunk = scoped.get(chunk_id)
             if chunk is None:
                 continue
             out.append(
@@ -207,13 +255,17 @@ class RetrievalEngine:
         return out
 
     def _dense_only(
-        self, query: str, scope: AuthorisedScope, trace: RetrievalTrace
+        self,
+        query: str,
+        scope: AuthorisedScope,
+        trace: RetrievalTrace,
+        scoped: ScopedIndex,
     ) -> list[ScoredChunk]:
-        """R2: vector search over the authorised pool."""
+        """R2: vector search over the authorised pool, in that pool's latent space."""
         started = time.perf_counter()
         try:
-            query_vector = self.index.encode_query(query)
-            hits = self.index.vectors.search(
+            query_vector = scoped.encode_query(query)
+            hits = scoped.vectors.search(
                 query_vector, self.config.retrieval.candidate_top_k, scope.allowed_chunk_ids
             )
         except (ValueError, RuntimeError) as exc:
@@ -225,7 +277,7 @@ class RetrievalEngine:
 
         out: list[ScoredChunk] = []
         for rank, (chunk_id, score) in enumerate(hits, start=1):
-            chunk = self.index.get(chunk_id)
+            chunk = scoped.get(chunk_id)
             if chunk is None:
                 continue
             out.append(
@@ -239,11 +291,15 @@ class RetrievalEngine:
         return out
 
     def _hybrid(
-        self, query: str, scope: AuthorisedScope, trace: RetrievalTrace
+        self,
+        query: str,
+        scope: AuthorisedScope,
+        trace: RetrievalTrace,
+        scoped: ScopedIndex,
     ) -> list[ScoredChunk]:
         """R3: sparse + dense, fused with RRF."""
-        sparse = self._sparse_only(query, scope, trace)
-        dense = self._dense_only(query, scope, trace)
+        sparse = self._sparse_only(query, scope, trace, scoped)
+        dense = self._dense_only(query, scope, trace, scoped)
         trace.subqueries = [query]
 
         started = time.perf_counter()
@@ -257,7 +313,11 @@ class RetrievalEngine:
         return fused
 
     def _iterative_hybrid(
-        self, query: str, scope: AuthorisedScope, trace: RetrievalTrace
+        self,
+        query: str,
+        scope: AuthorisedScope,
+        trace: RetrievalTrace,
+        scoped: ScopedIndex,
     ) -> list[ScoredChunk]:
         """R4: decompose, run hybrid retrieval per sub-query, fuse across all."""
         params = self.config.retrieval
@@ -272,8 +332,12 @@ class RetrievalEngine:
         for index, subquery in enumerate(subqueries):
             started = time.perf_counter()
             sub_trace = RetrievalTrace(route=Route.R4)
-            sparse = self._sparse_only(subquery, scope, sub_trace)[: params.r4_subquery_top_k]
-            dense = self._dense_only(subquery, scope, sub_trace)[: params.r4_subquery_top_k]
+            sparse = self._sparse_only(subquery, scope, sub_trace, scoped)[
+                : params.r4_subquery_top_k
+            ]
+            dense = self._dense_only(subquery, scope, sub_trace, scoped)[
+                : params.r4_subquery_top_k
+            ]
             elapsed = round((time.perf_counter() - started) * 1000, 3)
 
             for item in list(sparse) + list(dense):

@@ -3,9 +3,25 @@
 The engine is session-scoped over a temporary database: seeding and index
 building take a second or two, and every test wants the same seeded corpus.
 Tests that mutate the corpus use the ``fresh_engine`` fixture instead.
+
+The environment is pinned to the deterministic offline backends before any
+``ahrag`` module is imported. Without this the suite quietly changes meaning
+when the optional neural extras are installed: ``embedding_backend="auto"``
+starts loading a downloaded transformer, score assertions begin depending on
+model weights, and on Python 3.14 importing torch across session-scoped
+fixtures segfaults the interpreter partway through the run. Backend
+comparisons are a separate experiment
+(``improvement_files/evaluation_tools/compare_embeddings.py``), not something
+the unit suite should be sensitive to.
 """
 
 from __future__ import annotations
+
+import os
+
+os.environ.setdefault("AHRAG_EMBEDDING_BACKEND", "lsa")
+os.environ.setdefault("AHRAG_RERANKER", "lexical")
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
 from datetime import date
 from pathlib import Path
@@ -32,6 +48,16 @@ def settings(tmp_path_factory: pytest.TempPathFactory) -> Settings:
         db_path=data_dir / "test.sqlite3",
         router_config=REPO_ROOT / "config" / "router.yaml",
         verbose_audit=False,
+        # Pin the deterministic offline backends rather than inheriting
+        # "auto". Otherwise the suite silently changes behaviour the moment
+        # sentence-transformers is installed — assertions about scores start
+        # depending on a downloaded model, and on Python 3.14 loading torch
+        # inside a session-scoped fixture segfaults the interpreter outright.
+        # Backend comparisons belong in
+        # improvement_files/evaluation_tools/compare_embeddings.py, which
+        # requests each backend explicitly.
+        embedding_backend="lsa",
+        reranker="lexical",
     )
 
 
@@ -61,6 +87,8 @@ def fresh_engine(
         data_dir=tmp_path,
         db_path=tmp_path / "fresh.sqlite3",
         router_config=REPO_ROOT / "config" / "router.yaml",
+        embedding_backend="lsa",
+        reranker="lexical",
     )
     db = Database(local_settings.db_path)
     built = AHRAGEngine(

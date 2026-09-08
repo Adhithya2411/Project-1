@@ -1,0 +1,1 @@
+pixel data We use small image files called web pixels to collect activity information to help understand how people use the service so we can make it better. We use this information internally only, and we remove information that could be used to identify an individual user after 90 days. We only link this information to your reddit account when you are signed in.

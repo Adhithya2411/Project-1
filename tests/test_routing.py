@@ -438,3 +438,122 @@ class TestConfigDriven:
         bad.write_text("- just\n- a\n- list\n")
         with pytest.raises(ValueError):
             RouterConfig.load(bad)
+
+
+class TestLearnedRouter:
+    """The learned router must not be able to widen what is permitted.
+
+    improvement.txt §3 asks for a trained router. The risk in granting that is
+    that a classifier trained to maximise route accuracy learns to answer in
+    situations the governance constraints forbid. These tests assert the
+    architectural answer: the model ranks the *admissible* set, and
+    admissibility is computed by the same code path as the rule-based router.
+    """
+
+    @pytest.fixture
+    def learned(self, config, settings):  # noqa: ANN201
+        from ahrag.routing.router import LearnedRouter
+
+        return LearnedRouter(config, settings)
+
+    def test_empty_scope_forces_r0_regardless_of_model(self, learned) -> None:
+        """No prediction can answer for a principal with nothing in scope."""
+        empty = AuthorisedScope(
+            user_id="u",
+            roles=[],
+            allowed_chunk_ids=[],
+            allowed_doc_ids=[],
+            total_chunks=60,
+            withheld_count=60,
+        )
+        features = RouterFeatures(
+            sparse_confidence=1.0, dense_confidence=1.0, identifier_signal=1.0
+        )
+        decision = learned.decide(features, empty)
+        assert decision.route is Route.R0
+        for route in (Route.R1, Route.R2, Route.R3, Route.R4):
+            utility = decision.utility_of(route)
+            assert utility is not None and not utility.admissible
+
+    def test_low_probe_confidence_forces_r0_regardless_of_model(self, learned) -> None:
+        """Below the probe floor the learned router abstains like the rule-based one."""
+        features = RouterFeatures(sparse_confidence=0.01, dense_confidence=0.01)
+        decision = learned.decide(features, _scope())
+        assert decision.route is Route.R0
+        assert decision.hard_constraints_applied
+
+    def test_chosen_route_is_always_admissible(self, learned) -> None:
+        """Across a spread of feature vectors, the choice is never an excluded route."""
+        cases = [
+            RouterFeatures(sparse_confidence=0.9, dense_confidence=0.2),
+            RouterFeatures(sparse_confidence=0.2, dense_confidence=0.9),
+            RouterFeatures(sparse_confidence=0.5, dense_confidence=0.5, hop_signal=1.0),
+            RouterFeatures(
+                sparse_confidence=0.4, dense_confidence=0.4, comparison_signal=1.0
+            ),
+            RouterFeatures(
+                sparse_confidence=0.3, dense_confidence=0.3, restricted_fraction=0.9
+            ),
+        ]
+        for features in cases:
+            decision = learned.decide(features, _scope())
+            utility = decision.utility_of(decision.route)
+            assert utility is not None and utility.admissible, (
+                f"chose inadmissible {decision.route} for {features}"
+            )
+
+    def test_missing_model_degrades_to_rule_based(self, config, settings, tmp_path) -> None:
+        """A deployment without a trained artifact still routes."""
+        from ahrag.routing.router import LearnedRouter
+
+        router = LearnedRouter(config, settings, model_path=tmp_path / "absent.json")
+        assert not router.loaded
+        assert "fallback" in router.name
+        decision = router.decide(
+            RouterFeatures(sparse_confidence=0.8, dense_confidence=0.6), _scope()
+        )
+        assert decision.route in {Route.R0, Route.R1, Route.R2, Route.R3, Route.R4}
+
+    def test_decision_explains_governance_exclusions(self, learned) -> None:
+        """An abstention must say why, using only in-scope information."""
+        empty = AuthorisedScope(
+            user_id="u",
+            roles=[],
+            allowed_chunk_ids=[],
+            allowed_doc_ids=[],
+            total_chunks=60,
+            withheld_count=60,
+        )
+        decision = learned.decide(RouterFeatures(sparse_confidence=1.0), empty)
+        joined = " ".join(decision.reasons).lower()
+        assert "admissible" in joined or "scope" in joined
+
+
+class TestRouterBackendFactory:
+    """`build_router` is what `Settings.router_backend` selects through."""
+
+    def test_each_backend_builds(self, config, settings) -> None:
+        """All three documented backends construct."""
+        from ahrag.routing.router import (
+            ComplexityOnlyRouter,
+            GovernanceAwareRouter,
+            LearnedRouter,
+            build_router,
+        )
+
+        assert isinstance(build_router(config, settings, "governance"), GovernanceAwareRouter)
+        assert isinstance(build_router(config, settings, "learned"), LearnedRouter)
+        assert isinstance(build_router(config, settings, "complexity"), ComplexityOnlyRouter)
+
+    def test_unknown_backend_is_an_error(self, config, settings) -> None:
+        """A typo in configuration must not silently pick a policy."""
+        from ahrag.routing.router import build_router
+
+        with pytest.raises(ValueError, match="Unknown router backend"):
+            build_router(config, settings, "nonsense")
+
+    def test_default_backend_is_governance_aware(self, config, settings) -> None:
+        """The shipped default is unchanged by the addition of a learned option."""
+        from ahrag.routing.router import GovernanceAwareRouter, build_router
+
+        assert isinstance(build_router(config, settings), GovernanceAwareRouter)

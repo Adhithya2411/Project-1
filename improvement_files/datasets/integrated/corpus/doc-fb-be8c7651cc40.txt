@@ -72,8 +72,6 @@ Foreign exchange forwards
 85
 Verizon 2021 Annual Report on Form 10-K
 
----
-
 for assets and liabilities. We record these translation adjustments in Accumulated other comprehensive loss, a separate component of Equity, 
 in our consolidated balance sheets. We record exchange gains and losses resulting from the conversion of transaction currency to functional 
 currency as a component of Other income (expense), net. 
@@ -113,8 +111,6 @@ the power to make the decisions that most significantly affect the economic perf
 the right to receive benefits that could potentially be significant to the VIE.
 63
 Verizon 2021 Annual Report on Form 10-K
-
----
 
 fair value is measured using the NAV per share as a practical expedient are not leveled within the fair value hierarchy but are included in total 
 investments. 

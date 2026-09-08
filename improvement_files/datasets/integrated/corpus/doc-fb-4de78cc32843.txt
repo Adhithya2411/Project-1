@@ -156,8 +156,6 @@ $
 See accompanying notes to consolidated financial statements.
 106
 
----
-
 Index to Consolidated Financial Statements
 Consolidated Balance Sheets
 At December 31,
@@ -301,8 +299,6 @@ $
 See accompanying notes to consolidated financial statements.
 108
 
----
-
 to be class actions and/or involve parties seeking large and/or indeterminate amounts, including punitive or exemplary damages, and may remain unresolved
 for several years. The Company also may be named from time to time in qui tam actions initiated by private third parties that could also be separately pursued
 by a governmental body. The results of legal proceedings, including government investigations, are often uncertain and difficult to predict, and the costs
@@ -343,8 +339,6 @@ to be submitted, to Part D of the Medicare program Prescription Drug Event data 
 prices paid by the Companys PBM to pharmacies for drugs dispensed to Part D beneficiaries with prescription benefits administered by the Companys PBM.
 The Company is defending itself against these claims.
 171
-
----
 
 Controlled Substances Litigation, Audits and Subpoenas
 In December 2017, the U.S. Judicial Panel on Multidistrict Litigation consolidated numerous cases filed against various defendants by plaintiffs such as
@@ -387,8 +381,6 @@ agreement would resolve substantially all opioid claims against Company entities
 settlement would be $113 million in opioid remediation and $18 million in attorneys fees and costs. The amounts would be payable over 10 years, beginning
 in 2023. The agreement is contingent upon sufficient participation by tribes.
 172
-
----
 
 Table of Contents
 PART II

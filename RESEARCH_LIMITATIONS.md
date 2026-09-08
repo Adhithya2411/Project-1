@@ -294,6 +294,80 @@ unauthorised chunk reached evidence, citations, generation, or the audit log.
 The invariant is structural — unauthorised chunks are never candidates — which is
 a stronger position than filtering after the fact. It is not a proof.
 
+### 5.1 It also did not mean non-interference, until recently
+
+The claim above concerns *which chunks reach an answer*. It says nothing about
+whether unauthorised chunks **influenced** the answer, and by default they do.
+
+BM25 IDF and average document length, the TF-IDF vocabulary and LSA basis, and
+the lexical reranker's IDF were all fitted over the **whole** corpus and only
+then restricted at query time. The scores of authorised chunks were therefore a
+function of unauthorised content. Because `sparse_confidence` derives from the
+raw BM25 score and is tested against the hard `min_probe_for_answering`
+constraint, this reached a governance decision: a restricted principal's
+*abstention* depended on documents it could not read.
+
+Measured by `improvement_files/evaluation_tools/measure_specialisation.py` (E2),
+holding a principal's authorised subcorpus fixed and deleting everything outside
+it, over 24 observer/query pairs:
+
+| Condition | Kendall tau-b | Top-1 flips | Order changes | Route changes |
+|---|---|---|---|---|
+| Unspecialised (default) | 0.950 | 8.3% | 20.8% | **33.3%** |
+| SPIS, lambda = 0 | **1.000** | **0%** | **0%** | **0%** |
+
+No restricted text is ever returned in either condition, so this is not an
+access-control violation. It is an information-flow violation, and the
+distinction matters: **access control constrains outputs; non-interference
+constrains dependence.** AHRAG enforced the first and, by default, still does not
+enforce the second.
+
+`Settings.index_specialisation` fixes it by fitting all three statistics per ACL
+equivalence class (`ahrag/index/scoped.py`), asserted by 26 tests in
+`tests/test_noninterference.py`. It is **off by default**, so every number
+elsewhere in this document and in the README was produced by the interfering
+configuration.
+
+### 5.2 Scope-Pure Index Specialisation does not improve retrieval quality here
+
+This is a negative result and is reported as one.
+
+On the 9-document seed corpus, over 32 items (25 answerable), with 2000-sample
+paired bootstrap and Cohen's *d*:
+
+| Metric | Unspecialised | SPIS lambda=0 | Delta | p | d |
+|---|---|---|---|---|---|
+| Recall@5 | 0.840 | 0.840 | +0.0000 | 1.000 | 0.000 |
+| MRR | 0.753 | 0.750 | −0.0033 | 0.623 | −0.200 |
+| nDCG@10 | 0.758 | 0.756 | −0.0017 | 0.453 | −0.200 |
+| Abstention appropriateness | 0.875 | 0.812 | **−0.0625** | 0.247 | −0.254 |
+
+Nothing here is significant, and the point estimates that do move, move the
+wrong way. Three things follow:
+
+1. **The purity property is free but not profitable at this scale.** §2.1
+   already explains why: at 60 chunks almost everything is findable by any
+   route, so changing the *weights* changes the *order* without changing what
+   lands in the top 5. The interference result does not depend on corpus size;
+   the quality result does.
+2. **The abstention regression is real and traced.** It costs 2 of 32 items.
+   Because lambda=0.5 and lambda=1 restore MRR and nDCG to baseline exactly
+   while abstention stays at 0.812, the cause is the class-local **LSA basis**,
+   not the IDF shrinkage. A per-class basis fitted on 35 chunks is weaker than
+   one fitted on 60 — the small-sample problem of §4.2, reappearing per class.
+3. **The lambda frontier is currently only half a frontier.** `lambda` governs
+   the sparse channel only; the dense basis is class-local whenever
+   specialisation is on. A complete purity/utility curve needs a dense analogue
+   (interpolating the SVD basis, or the IDF inside `LSAEmbedder`), which is not
+   implemented.
+
+**To fix:** the same thing §2.1 and §2.2 already require — a corpus of 500+
+documents with genuinely varied ACL role-sets, and an evaluation set whose gold
+chunk IDs resolve against real chunker output. The 1,125-document integrated
+corpus in `improvement_files/datasets/integrated/` cannot serve: every document
+grants `employee`, so the lattice collapses to one class and specialisation is
+provably a no-op there (E1 reports this rather than letting it pass silently).
+
 ---
 
 ## 6. Engineering limitations

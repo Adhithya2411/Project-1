@@ -97,8 +97,6 @@ Net loss attributable to Boeing Shareholders
 This information is an integral part of the Notes to the Consolidated Financial Statements. See Note 22 for further segment results.
 58
 
----
-
 Table of Contents
 based upon current information, that the outcome of any such legal proceeding, claim, or government dispute and investigation will not have a
 material effect on our financial position, results of operations or cash flows. Where it is reasonably possible that we will incur losses in excess of
@@ -134,8 +132,6 @@ on commercial spare parts contracts is recognized at the point in time when a sp
 contracts is generally recognized over the contract term (over time) as costs are incurred.
 BCC facilitates, arranges, structures and provides selective financing solutions for our customers.
 109
-
----
 
 Table of Contents
 The Boeing Company and Subsidiaries
@@ -238,8 +234,6 @@ Diluted loss per share
 See Notes to the Consolidated Financial Statements on pages 59 - 114.
 53
 
----
-
 Table of Contents
 Forward-looking statements are based on expectations and assumptions that we believe to be reasonable when made, but that may not prove to
 be accurate. These statements are not guarantees and are subject to risks, uncertainties and changes in circumstances that are difficult to
@@ -276,8 +270,6 @@ exercise purchase options, fulfill existing purchase commitments or purchase add
 airline consolidations or financial challenges involving any of our major commercial airline customers could significantly reduce our revenues and
 limit our opportunity to generate profits from those customers.
 6
-
----
 
 Table of Contents
 commercial aircraft assembly facilities are delayed or create significant disruption to our production system, or if our suppliers cannot timely
@@ -318,8 +310,6 @@ delays of existing contracts or programs, or future program opportunities. Any o
 Companys financial position, results of operations and/or cash flows.
 8
 
----
-
 Table of Contents
 guarantees, partner performance and indemnifications. Consolidations of joint ventures could also impact our reported results of operations or
 financial position. While we believe that we have established appropriate and adequate procedures and processes to mitigate these risks, there
@@ -355,8 +345,6 @@ Furthermore, if any audit, inquiry or investigation uncovers improper or illegal
 administrative sanctions, including termination of contracts, forfeiture of profits, suspension of payments, fines and suspension or debarment
 from doing business with the U.S. government. We also
 12
-
----
 
 Table of Contents
 Airlines also are experiencing increased fuel and other costs, and the global economy is experiencing high inflation.

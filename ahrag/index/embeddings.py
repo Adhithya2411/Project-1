@@ -124,6 +124,12 @@ class LSAEmbedder:
     query) is embedded by folding its TF-IDF weights against those term vectors.
     """
 
+    # Above this many dense matrix cells (terms x documents) the exact
+    # ``np.linalg.svd`` path is abandoned for a randomized truncated SVD that
+    # never materialises the matrix. 60M cells is ~240 MB in float32, which is
+    # the point where the dense path stops being a reasonable thing to do.
+    DENSE_CELL_LIMIT = 60_000_000
+
     def __init__(self, dim: int = 192, min_df: int = 1) -> None:
         """Configure latent dimensionality and minimum document frequency."""
         if dim <= 0:
@@ -160,29 +166,28 @@ class LSAEmbedder:
 
         self._vocab = {term: i for i, term in enumerate(vocab_terms)}
         n_docs = len(texts)
+        n_terms = len(vocab_terms)
         self._idf = np.array(
             [math.log((1 + n_docs) / (1 + df[term])) + 1.0 for term in vocab_terms],
             dtype=np.float32,
         )
 
-        # Term-document TF-IDF matrix, columns L2-normalised.
-        matrix = np.zeros((len(vocab_terms), n_docs), dtype=np.float32)
-        for col, tokens in enumerate(doc_tokens):
-            counts = Counter(tokens)
-            for term, count in counts.items():
-                row = self._vocab.get(term)
-                if row is not None:
-                    matrix[row, col] = (1.0 + math.log(count)) * self._idf[row]
-        norms = np.linalg.norm(matrix, axis=0, keepdims=True)
-        matrix = matrix / np.maximum(norms, 1e-9)
-
-        rank = int(min(self.dim, min(matrix.shape) - 1))
+        rank = int(min(self.dim, min(n_terms, n_docs) - 1))
         if rank < 2:
             raise ValueError("Corpus too small to fit an LSA space")
-        try:
-            u, s, _ = np.linalg.svd(matrix, full_matrices=False)
-        except np.linalg.LinAlgError as exc:  # pragma: no cover - numerical edge
-            raise ValueError(f"SVD failed while fitting LSA space: {exc}") from exc
+
+        # The dense term-document matrix is quadratic in corpus size and becomes
+        # unusable well before the scale this system is meant to handle: at
+        # ~6k documents the vocabulary reaches ~43k terms, so the matrix is
+        # 1.2 GB and a full SVD on it does not finish. Below the limit keep the
+        # exact path, so small-corpus behaviour is bit-identical to before.
+        cells = n_terms * n_docs
+        if cells <= self.DENSE_CELL_LIMIT:
+            u, s = self._fit_dense(doc_tokens, n_terms, n_docs, rank)
+            method = "exact"
+        else:
+            u, s = self._fit_randomized(doc_tokens, n_terms, n_docs, rank)
+            method = "randomized"
 
         # Term vectors scaled by singular values: dominant semantic axes get
         # more weight, and the truncated tail (where rare identifiers live) is
@@ -191,11 +196,124 @@ class LSAEmbedder:
         self.dim = rank
         self._fitted = True
         logger.info(
-            "Fitted LSA space: %d terms, %d docs, rank %d",
-            len(vocab_terms),
+            "Fitted LSA space: %d terms, %d docs, rank %d (%s SVD)",
+            n_terms,
             n_docs,
             rank,
+            method,
         )
+
+    # -- factorisation backends --------------------------------------------
+
+    def _column_weights(self, tokens: Sequence[str]) -> tuple[np.ndarray, np.ndarray]:
+        """Return ``(row_indices, tf_idf_values)`` for one document column.
+
+        Values are L2-normalised within the column, matching the dense path,
+        so a long document does not dominate the factorisation.
+        """
+        counts = Counter(tokens)
+        rows: list[int] = []
+        values: list[float] = []
+        for term, count in counts.items():
+            row = self._vocab.get(term)
+            if row is not None:
+                rows.append(row)
+                values.append((1.0 + math.log(count)) * float(self._idf[row]))
+        if not rows:
+            return np.zeros(0, dtype=np.int64), np.zeros(0, dtype=np.float32)
+        vector = np.asarray(values, dtype=np.float32)
+        norm = float(np.linalg.norm(vector))
+        if norm > 0:
+            vector /= norm
+        return np.asarray(rows, dtype=np.int64), vector
+
+    def _fit_dense(
+        self,
+        doc_tokens: Sequence[Sequence[str]],
+        n_terms: int,
+        n_docs: int,
+        rank: int,
+    ) -> tuple[np.ndarray, np.ndarray]:
+        """Exact truncated SVD via a dense term-document matrix."""
+        matrix = np.zeros((n_terms, n_docs), dtype=np.float32)
+        for col, tokens in enumerate(doc_tokens):
+            rows, values = self._column_weights(tokens)
+            if rows.size:
+                matrix[rows, col] = values
+        try:
+            u, s, _ = np.linalg.svd(matrix, full_matrices=False)
+        except np.linalg.LinAlgError as exc:  # pragma: no cover - numerical edge
+            raise ValueError(f"SVD failed while fitting LSA space: {exc}") from exc
+        return u, s
+
+    def _fit_randomized(
+        self,
+        doc_tokens: Sequence[Sequence[str]],
+        n_terms: int,
+        n_docs: int,
+        rank: int,
+        oversampling: int = 10,
+        power_iterations: int = 2,
+    ) -> tuple[np.ndarray, np.ndarray]:
+        """Randomized truncated SVD (Halko, Martinsson & Tropp 2011).
+
+        The matrix is never materialised. Only two products are needed —
+        ``A @ X`` and ``A.T @ Y`` — and each is accumulated column by column
+        from the sparse per-document term weights, so peak memory is
+        ``O(n_terms * (rank + oversampling))`` rather than
+        ``O(n_terms * n_docs)``.
+
+        Two power iterations are used because TF-IDF spectra decay slowly; with
+        none, the leading subspace is noticeably contaminated by the tail.
+
+        Args:
+            doc_tokens: Tokenised corpus, one sequence per document.
+            n_terms: Vocabulary size.
+            n_docs: Document count.
+            rank: Target latent dimensionality.
+            oversampling: Extra sketch columns, discarded after factorisation.
+            power_iterations: Subspace refinement passes.
+
+        Returns:
+            ``(u, s)`` truncated to ``rank + oversampling`` columns, matching
+            the shape contract of :meth:`_fit_dense`.
+        """
+        sketch_width = min(rank + oversampling, n_docs)
+        # Column weights are needed on every pass; computing them once trades
+        # a modest amount of memory for a large amount of repeated tokenisation.
+        columns = [self._column_weights(tokens) for tokens in doc_tokens]
+
+        def a_matmul(block: np.ndarray) -> np.ndarray:
+            """Return ``A @ block`` for a ``(n_docs, k)`` block."""
+            out = np.zeros((n_terms, block.shape[1]), dtype=np.float32)
+            for col, (rows, values) in enumerate(columns):
+                if rows.size:
+                    # Outer product of one sparse column with its row of `block`.
+                    np.add.at(out, rows, np.outer(values, block[col]))
+            return out
+
+        def at_matmul(block: np.ndarray) -> np.ndarray:
+            """Return ``A.T @ block`` for a ``(n_terms, k)`` block."""
+            out = np.zeros((n_docs, block.shape[1]), dtype=np.float32)
+            for col, (rows, values) in enumerate(columns):
+                if rows.size:
+                    out[col] = values @ block[rows]
+            return out
+
+        rng = np.random.RandomState(1729)
+        sketch = rng.normal(size=(n_docs, sketch_width)).astype(np.float32)
+
+        basis, _ = np.linalg.qr(a_matmul(sketch))
+        for _ in range(power_iterations):
+            basis, _ = np.linalg.qr(a_matmul(at_matmul(basis)))
+
+        # Project onto the captured subspace and factorise the small matrix.
+        projected = at_matmul(basis).T  # (sketch_width, n_docs)
+        try:
+            u_small, s, _ = np.linalg.svd(projected, full_matrices=False)
+        except np.linalg.LinAlgError as exc:  # pragma: no cover - numerical edge
+            raise ValueError(f"SVD failed while fitting LSA space: {exc}") from exc
+        return (basis @ u_small).astype(np.float32), s.astype(np.float32)
 
     def encode(self, texts: Sequence[str]) -> np.ndarray:
         """Fold ``texts`` into the learned latent space.
@@ -247,7 +365,12 @@ class SentenceTransformerEmbedder:
                 f"Could not load embedding model {model_name!r}: {exc}"
             ) from exc
         self.name = f"sentence-transformers:{model_name}"
-        self.dim = int(self._model.get_sentence_embedding_dimension())
+        # Renamed in sentence-transformers 3.x; the old name still works but
+        # emits a FutureWarning on every construction.
+        dimension = getattr(self._model, "get_embedding_dimension", None)
+        if not callable(dimension):
+            dimension = self._model.get_sentence_embedding_dimension
+        self.dim = int(dimension())
 
     def fit(self, texts: Sequence[str]) -> None:
         """No-op: the encoder is pre-trained."""

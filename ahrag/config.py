@@ -56,6 +56,46 @@ class Settings(BaseSettings):
     chunk_target_chars: int = 900
     chunk_overlap_chars: int = 150
 
+    # Routing policy. "governance" is the shipped rule-based router;
+    # "learned" uses the trained classifier from
+    # improvement_files/ml_router_training/ and degrades to "governance"
+    # when no model artifact is present. "complexity" is the Adaptive-RAG
+    # style ablation. In every case the hard governance constraints run
+    # first; the backend only changes how admissible routes are ranked.
+    router_backend: str = "governance"
+
+    # -- Scope-Pure Index Specialisation (see ahrag/index/scoped.py) --------
+    # Off by default: the unspecialised system is the reference point for the
+    # ablation, and leaving it as the default keeps every existing result
+    # reproducible.
+    index_specialisation: bool = False
+    # Information-flow budget for the *sparse* channel, not an ordinary
+    # hyperparameter. 0.0 leaves class-local IDF untouched and is provably
+    # non-interfering; 1.0 restores the global IDF values. Anything in between
+    # trades purity for estimator stability on small scopes.
+    # Note the scope of this knob: it governs BM25 IDF only. The LSA basis is
+    # class-local whenever specialisation is on, so lambda=1 does *not*
+    # reproduce the unspecialised system. A complete frontier would need a
+    # dense analogue; see RESEARCH_LIMITATIONS.md.
+    specialisation_lambda: float = 0.0
+    # LRU cap on cached per-class indexes. Bounds memory against a corpus whose
+    # ACL lattice is wider than expected; excess classes fall back to global.
+    specialisation_max_classes: int = 8
+    # Per-class recalibration of the BM25 saturation constant is a *separate*
+    # change from index purity, and it is off by default for a specific reason:
+    # `min_probe_for_answering` in config/router.yaml was hand-tuned against the
+    # historic constant 6.0, so rescaling confidence silently invalidates that
+    # threshold. Enabling this requires re-tuning the threshold jointly, which
+    # is the search improvement.txt §3(d) asks for and which has not been run.
+    # Left on with the default threshold, it shifts routes for reasons that have
+    # nothing to do with retrieval quality.
+    specialisation_calibrate_confidence: bool = False
+    # Quantile of a class's own match-score distribution taken as the
+    # saturation point. 0.25 mirrors where the historic constant 6.0 sits in the
+    # observed distribution of real evaluation-query top-1 scores (22nd
+    # percentile on the seed corpus).
+    specialisation_confidence_quantile: float = 0.25
+
     anthropic_model: str = "claude-sonnet-5"
     generation_max_tokens: int = 800
     cost_per_mtok_input: float = 3.0

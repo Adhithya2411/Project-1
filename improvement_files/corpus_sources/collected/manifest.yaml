@@ -1,7 +1,272 @@
 documents:
-- doc_id: doc-pub-bacda842f062
-  path: corpus/doc-pub-bacda842f062.md
-  title: Node.js Code of Conduct
+- doc_id: doc-pub-7be434274b72
+  path: corpus/doc-pub-7be434274b72.md
+  title: "Kubernetes: Troubleshoot Pods \u2014 Diagnosing the problem"
+  doc_type: runbook
+  owner: Kubernetes SIG Docs
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-d7afd50dc9d4
+  path: corpus/doc-pub-d7afd50dc9d4.md
+  title: "Kubernetes: Troubleshoot Services \u2014 Running commands in a Pod"
+  doc_type: runbook
+  owner: Kubernetes SIG Docs
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-b89441e65bfc
+  path: corpus/doc-pub-b89441e65bfc.md
+  title: "Kubernetes: Troubleshoot Services \u2014 Setup"
+  doc_type: runbook
+  owner: Kubernetes SIG Docs
+  acl_roles:
+  - engineering
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-47591c6e6d06
+  path: corpus/doc-pub-47591c6e6d06.md
+  title: "Kubernetes: Troubleshoot Services \u2014 Does the Service exist?"
+  doc_type: runbook
+  owner: Kubernetes SIG Docs
+  acl_roles:
+  - engineering
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-deb2d124c521
+  path: corpus/doc-pub-deb2d124c521.md
+  title: "Kubernetes: Troubleshoot Services \u2014 Does the Service work by DNS name?"
+  doc_type: runbook
+  owner: Kubernetes SIG Docs
+  acl_roles:
+  - engineering
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-85f4c119a968
+  path: corpus/doc-pub-85f4c119a968.md
+  title: "Kubernetes: Troubleshoot Services \u2014 Is the Service defined correctly?"
+  doc_type: runbook
+  owner: Kubernetes SIG Docs
+  acl_roles:
+  - engineering
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-a3ad992e3a5d
+  path: corpus/doc-pub-a3ad992e3a5d.md
+  title: "Kubernetes: Troubleshoot Services \u2014 Does the Service have any EndpointSlices?"
+  doc_type: runbook
+  owner: Kubernetes SIG Docs
+  acl_roles:
+  - engineering
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-826a94564e09
+  path: corpus/doc-pub-826a94564e09.md
+  title: "Kubernetes: Troubleshoot Services \u2014 Are the Pods working?"
+  doc_type: runbook
+  owner: Kubernetes SIG Docs
+  acl_roles:
+  - engineering
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-c985c5de5dde
+  path: corpus/doc-pub-c985c5de5dde.md
+  title: "Kubernetes: Troubleshoot Services \u2014 Is the kube-proxy working?"
+  doc_type: runbook
+  owner: Kubernetes SIG Docs
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-fe7548485e56
+  path: corpus/doc-pub-fe7548485e56.md
+  title: "Kubernetes: Troubleshoot Clusters \u2014 Listing your cluster"
+  doc_type: runbook
+  owner: Kubernetes SIG Docs
+  acl_roles:
+  - engineering
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-e5e65f6e3d16
+  path: corpus/doc-pub-e5e65f6e3d16.md
+  title: "Kubernetes: Troubleshoot Clusters \u2014 Looking at logs"
+  doc_type: runbook
+  owner: Kubernetes SIG Docs
+  acl_roles:
+  - engineering
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-a6ad5ff7b88b
+  path: corpus/doc-pub-a6ad5ff7b88b.md
+  title: "Kubernetes: Troubleshoot Clusters \u2014 Cluster failure modes"
+  doc_type: runbook
+  owner: Kubernetes SIG Docs
+  acl_roles:
+  - engineering
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-12dbb120f27a
+  path: corpus/doc-pub-12dbb120f27a.md
+  title: "Kubernetes: Troubleshoot Clusters \u2014 * Learn about the metrics available\
+    \ in the"
+  doc_type: runbook
+  owner: Kubernetes SIG Docs
+  acl_roles:
+  - engineering
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-9e3938411cf0
+  path: corpus/doc-pub-9e3938411cf0.md
+  title: 'NIST SP 800-63B: Authenticator and Verifier Requirements'
+  doc_type: policy
+  owner: NIST
+  acl_roles: &id001
+  - employee
+  - manager
+  created_date: '2025-06-24'
+  effective_date: '2025-08-23'
+  version: '2.0'
+  authority_score: 5
+  policy_family: pub-family-000
+  supersedes: doc-pub-9e3938411cf0-v1
+- doc_id: doc-pub-5e5a90ac9781
+  path: corpus/doc-pub-5e5a90ac9781.md
+  title: 'NIST SP 800-63B: Authenticator Assurance Levels'
+  doc_type: policy
+  owner: NIST
+  acl_roles: &id002
+  - engineering
+  created_date: '2025-06-24'
+  effective_date: '2025-08-23'
+  version: '2.0'
+  authority_score: 5
+  policy_family: pub-family-001
+  supersedes: doc-pub-5e5a90ac9781-v1
+- doc_id: doc-pub-c8b0fc2f83c9
+  path: corpus/doc-pub-c8b0fc2f83c9.md
+  title: 'NIST SP 800-63: Digital Identity Risk Management'
+  doc_type: policy
+  owner: NIST
+  acl_roles: &id003
+  - employee
+  created_date: '2025-06-24'
+  effective_date: '2025-08-23'
+  version: '2.0'
+  authority_score: 5
+  policy_family: pub-family-002
+  supersedes: doc-pub-c8b0fc2f83c9-v1
+- doc_id: doc-pub-ef498a0d6c09
+  path: corpus/doc-pub-ef498a0d6c09.md
+  title: "Node.js Collaborator Guide \u2014 Contents"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles: &id004
+  - employee
+  created_date: '2025-06-24'
+  effective_date: '2025-08-23'
+  version: '2.0'
+  authority_score: 4
+  policy_family: pub-family-003
+  supersedes: doc-pub-ef498a0d6c09-v1
+- doc_id: doc-pub-75e3d58d269b
+  path: corpus/doc-pub-75e3d58d269b.md
+  title: "Node.js Collaborator Guide \u2014 Issues and pull requests"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles: &id005
+  - engineering
+  created_date: '2025-06-24'
+  effective_date: '2025-08-23'
+  version: '2.0'
+  authority_score: 4
+  policy_family: pub-family-004
+  supersedes: doc-pub-75e3d58d269b-v1
+- doc_id: doc-pub-261b0d562216
+  path: corpus/doc-pub-261b0d562216.md
+  title: "Node.js Collaborator Guide \u2014 Accepting modifications"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles: &id006
+  - hr
+  created_date: '2025-06-24'
+  effective_date: '2025-08-23'
+  version: '2.0'
+  authority_score: 4
+  policy_family: pub-family-005
+  supersedes: doc-pub-261b0d562216-v1
+- doc_id: doc-pub-15b050f56d26
+  path: corpus/doc-pub-15b050f56d26.md
+  title: "Node.js Collaborator Guide \u2014 Landing pull requests"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles: &id007
+  - engineering
+  created_date: '2025-06-24'
+  effective_date: '2025-08-23'
+  version: '2.0'
+  authority_score: 4
+  policy_family: pub-family-006
+  supersedes: doc-pub-15b050f56d26-v1
+- doc_id: doc-pub-c977325f8f2f
+  path: corpus/doc-pub-c977325f8f2f.md
+  title: "Node.js Collaborator Guide \u2014 Who to CC in the issue tracker"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles: &id008
+  - employee
+  - manager
+  created_date: '2025-06-24'
+  effective_date: '2025-08-23'
+  version: '2.0'
+  authority_score: 4
+  policy_family: pub-family-007
+  supersedes: doc-pub-c977325f8f2f-v1
+- doc_id: doc-pub-19e9fa96d31e
+  path: corpus/doc-pub-19e9fa96d31e.md
+  title: "Node.js Collaborator Guide \u2014 Labels"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles:
+  - employee
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-a42376c7ff4e
+  path: corpus/doc-pub-a42376c7ff4e.md
+  title: "Node.js Security Policy \u2014 Reporting a bug in Node.js"
   doc_type: policy
   owner: Node.js Foundation
   acl_roles:
@@ -9,40 +274,217 @@ documents:
   created_date: '2024-01-01'
   effective_date: '2024-01-01'
   version: '1.0'
-  authority_score: 3
+  authority_score: 4
+- doc_id: doc-pub-c76e5c43d1fa
+  path: corpus/doc-pub-c76e5c43d1fa.md
+  title: "Node.js Security Policy \u2014 Disclosure policy"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-6dafa97d01cb
+  path: corpus/doc-pub-6dafa97d01cb.md
+  title: "Node.js Security Policy \u2014 Code of Conduct and Vulnerability Reporting\
+    \ Guidelines"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles:
+  - legal
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-467406b34fbc
+  path: corpus/doc-pub-467406b34fbc.md
+  title: "Node.js Security Policy \u2014 The Node.js threat model"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles:
+  - engineering
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-b1971e016834
+  path: corpus/doc-pub-b1971e016834.md
+  title: "Node.js Security Policy \u2014 Receiving security updates"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles:
+  - legal
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-1261a99e5640
+  path: corpus/doc-pub-1261a99e5640.md
+  title: "Node.js Security Policy \u2014 Node.js Security Team"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles:
+  - finance
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-cd9fb6057ad8
+  path: corpus/doc-pub-cd9fb6057ad8.md
+  title: "Node.js Security Policy \u2014 Team responsible for Triaging security reports"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles:
+  - legal
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-f8f3c5303b9d
+  path: corpus/doc-pub-f8f3c5303b9d.md
+  title: "Node.js Security Policy \u2014 Team with access to private security reports\
+    \ against Node.js"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles:
+  - legal
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-1fa3917dadf2
+  path: corpus/doc-pub-1fa3917dadf2.md
+  title: "Node.js Security Policy \u2014 Team with access to private security patches\
+    \ to Node.js"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles:
+  - engineering
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
 - doc_id: doc-pub-9a4ef226f851
   path: corpus/doc-pub-9a4ef226f851.md
   title: Node.js Contributing Guide
   doc_type: policy
   owner: Node.js Foundation
   acl_roles:
-  - employee
+  - legal
   created_date: '2024-01-01'
   effective_date: '2024-01-01'
   version: '1.0'
-  authority_score: 3
-- doc_id: doc-pub-06b6c9697adf
-  path: corpus/doc-pub-06b6c9697adf.md
-  title: Node.js Security Policy
+  authority_score: 4
+- doc_id: doc-pub-2b2d3bd1da12
+  path: corpus/doc-pub-2b2d3bd1da12.md
+  title: "Kubernetes Contributor Guide \u2014 Overview"
   doc_type: policy
-  owner: Node.js Foundation
+  owner: Kubernetes Community
+  acl_roles:
+  - finance
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-540d7c4ebdf6
+  path: corpus/doc-pub-540d7c4ebdf6.md
+  title: "Kubernetes Contributor Guide \u2014 Welcome"
+  doc_type: policy
+  owner: Kubernetes Community
   acl_roles:
   - employee
   created_date: '2024-01-01'
   effective_date: '2024-01-01'
   version: '1.0'
-  authority_score: 3
-- doc_id: doc-pub-e582b090cc9c
-  path: corpus/doc-pub-e582b090cc9c.md
-  title: Rust Code of Conduct
+  authority_score: 4
+- doc_id: doc-pub-20b79ba40c62
+  path: corpus/doc-pub-20b79ba40c62.md
+  title: "Kubernetes Contributor Guide \u2014 Prerequisites"
   doc_type: policy
-  owner: Rust Foundation
+  owner: Kubernetes Community
   acl_roles:
-  - employee
+  - finance
+  - manager
   created_date: '2024-01-01'
   effective_date: '2024-01-01'
   version: '1.0'
-  authority_score: 3
+  authority_score: 4
+- doc_id: doc-pub-12a57dd8fe67
+  path: corpus/doc-pub-12a57dd8fe67.md
+  title: "Kubernetes Contributor Guide \u2014 Community"
+  doc_type: policy
+  owner: Kubernetes Community
+  acl_roles:
+  - employee
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-cc83b202baf2
+  path: corpus/doc-pub-cc83b202baf2.md
+  title: "Kubernetes Contributor Guide \u2014 Advanced Topics"
+  doc_type: policy
+  owner: Kubernetes Community
+  acl_roles:
+  - employee
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-69bf588ae4d7
+  path: corpus/doc-pub-69bf588ae4d7.md
+  title: "Kubernetes Project Governance \u2014 Overview"
+  doc_type: policy
+  owner: Kubernetes Community
+  acl_roles:
+  - finance
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-887c70e84417
+  path: corpus/doc-pub-887c70e84417.md
+  title: "Kubernetes Project Governance \u2014 SIGs"
+  doc_type: policy
+  owner: Kubernetes Community
+  acl_roles:
+  - employee
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-b2b22255d495
+  path: corpus/doc-pub-b2b22255d495.md
+  title: "Kubernetes Project Governance \u2014 Committees"
+  doc_type: policy
+  owner: Kubernetes Community
+  acl_roles:
+  - finance
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-c73416d32610
+  path: corpus/doc-pub-c73416d32610.md
+  title: "Kubernetes Project Governance \u2014 Cross-project Communication and Coordination"
+  doc_type: policy
+  owner: Kubernetes Community
+  acl_roles:
+  - employee
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
 - doc_id: doc-pub-6f090465843a
   path: corpus/doc-pub-6f090465843a.md
   title: Rust Contributing Guide
@@ -50,63 +492,363 @@ documents:
   owner: Rust Foundation
   acl_roles:
   - employee
+  - manager
   created_date: '2024-01-01'
   effective_date: '2024-01-01'
   version: '1.0'
-  authority_score: 3
-- doc_id: doc-pub-052da426294a
-  path: corpus/doc-pub-052da426294a.md
-  title: CPython Project Overview
-  doc_type: wiki
+  authority_score: 4
+- doc_id: doc-pub-96a5a07df37e
+  path: corpus/doc-pub-96a5a07df37e.md
+  title: Django Contributing Guide
+  doc_type: policy
+  owner: Django Software Foundation
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-472ea80f218e
+  path: corpus/doc-pub-472ea80f218e.md
+  title: "PyCon Code of Conduct \u2014 Overview"
+  doc_type: policy
   owner: Python Software Foundation
   acl_roles:
   - employee
   created_date: '2024-01-01'
   effective_date: '2024-01-01'
   version: '1.0'
-  authority_score: 3
-- doc_id: doc-pub-962b62248b20
-  path: corpus/doc-pub-962b62248b20.md
-  title: VS Code Contributing Guide
+  authority_score: 4
+- doc_id: doc-pub-721520df22a9
+  path: corpus/doc-pub-721520df22a9.md
+  title: "PyCon Code of Conduct \u2014 Our Standards"
   doc_type: policy
-  owner: Microsoft
+  owner: Python Software Foundation
   acl_roles:
   - employee
   created_date: '2024-01-01'
   effective_date: '2024-01-01'
   version: '1.0'
-  authority_score: 3
-- doc_id: doc-pub-0ae513fc635f
-  path: corpus/doc-pub-0ae513fc635f.md
-  title: Go Contributing Guide
+  authority_score: 4
+- doc_id: doc-pub-73fa9df1cc68
+  path: corpus/doc-pub-73fa9df1cc68.md
+  title: "PyCon Code of Conduct \u2014 Scope"
   doc_type: policy
-  owner: Go Authors
+  owner: Python Software Foundation
   acl_roles:
   - employee
   created_date: '2024-01-01'
   effective_date: '2024-01-01'
   version: '1.0'
-  authority_score: 3
-- doc_id: doc-pub-4cb3ed4320f2
-  path: corpus/doc-pub-4cb3ed4320f2.md
-  title: Go Security Policy
+  authority_score: 4
+- doc_id: doc-pub-f1ecef034619
+  path: corpus/doc-pub-f1ecef034619.md
+  title: "PyCon Code of Conduct \u2014 Contact Information"
   doc_type: policy
-  owner: Go Authors
+  owner: Python Software Foundation
   acl_roles:
   - employee
+  - manager
   created_date: '2024-01-01'
   effective_date: '2024-01-01'
   version: '1.0'
-  authority_score: 3
-- doc_id: doc-pub-4f579d71fe39
-  path: corpus/doc-pub-4f579d71fe39.md
-  title: 'NIST SP 800-63B: Authentication and Lifecycle Management'
+  authority_score: 4
+- doc_id: doc-pub-1a667ad50649
+  path: corpus/doc-pub-1a667ad50649.md
+  title: "PyCon Code of Conduct \u2014 License"
   doc_type: policy
-  owner: NIST
+  owner: Python Software Foundation
+  acl_roles:
+  - finance
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-be4d07460179
+  path: corpus/doc-pub-be4d07460179.md
+  title: 18F Engineering Development Guide
+  doc_type: policy
+  owner: GSA 18F
   acl_roles:
   - employee
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-7b3de17a5842
+  path: corpus/doc-pub-7b3de17a5842.md
+  title: CNCF Foundation Charter
+  doc_type: policy
+  owner: Cloud Native Computing Foundation
+  acl_roles:
   - engineering
   created_date: '2024-01-01'
   effective_date: '2024-01-01'
   version: '1.0'
-  authority_score: 5
+  authority_score: 4
+- doc_id: doc-pub-fdb6d7227e05
+  path: corpus/doc-pub-fdb6d7227e05.md
+  title: "GitLab Handbook: Leadership \u2014 Managers of One"
+  doc_type: report
+  owner: GitLab Inc.
+  acl_roles:
+  - finance
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-77695eb22b78
+  path: corpus/doc-pub-77695eb22b78.md
+  title: "GitLab Handbook: Leadership \u2014 Interim and Acting Leadership"
+  doc_type: report
+  owner: GitLab Inc.
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-9d8aaf3e9657
+  path: corpus/doc-pub-9d8aaf3e9657.md
+  title: "GitLab Handbook: Leadership \u2014 Communication should be direct, not hierarchical"
+  doc_type: report
+  owner: GitLab Inc.
+  acl_roles:
+  - employee
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-c6951546872e
+  path: corpus/doc-pub-c6951546872e.md
+  title: "GitLab Handbook: Leadership \u2014 Giving Feedback"
+  doc_type: report
+  owner: GitLab Inc.
+  acl_roles:
+  - finance
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-ac262775beec
+  path: corpus/doc-pub-ac262775beec.md
+  title: "GitLab Handbook: Leadership \u2014 Responding to Negative Feedback"
+  doc_type: report
+  owner: GitLab Inc.
+  acl_roles:
+  - finance
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-2e2aa354057b
+  path: corpus/doc-pub-2e2aa354057b.md
+  title: "GitLab Handbook: Leadership \u2014 Your Individual README"
+  doc_type: report
+  owner: GitLab Inc.
+  acl_roles:
+  - employee
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-a17e252c37cf
+  path: corpus/doc-pub-a17e252c37cf.md
+  title: "GitLab Handbook: Leadership \u2014 Coaching"
+  doc_type: report
+  owner: GitLab Inc.
+  acl_roles:
+  - employee
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-b8f14e5d96ff
+  path: corpus/doc-pub-b8f14e5d96ff.md
+  title: "GitLab Handbook: Leadership \u2014 Stable counterparts"
+  doc_type: report
+  owner: GitLab Inc.
+  acl_roles:
+  - employee
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-aa6efcd8f10d
+  path: corpus/doc-pub-aa6efcd8f10d.md
+  title: "GitLab Handbook: Leadership \u2014 Effective escalations"
+  doc_type: report
+  owner: GitLab Inc.
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-15ff1467516c
+  path: corpus/doc-pub-15ff1467516c.md
+  title: "GitLab Handbook: Leadership \u2014 Process gets a bad rep"
+  doc_type: report
+  owner: GitLab Inc.
+  acl_roles:
+  - finance
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-d36b3b68e289
+  path: corpus/doc-pub-d36b3b68e289.md
+  title: "GitLab Handbook: Leadership \u2014 Talent Acquisition and retention"
+  doc_type: report
+  owner: GitLab Inc.
+  acl_roles:
+  - employee
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-c62de321a052
+  path: corpus/doc-pub-c62de321a052.md
+  title: "GitLab Handbook: Leadership \u2014 Building High Performing Teams"
+  doc_type: report
+  owner: GitLab Inc.
+  acl_roles:
+  - employee
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-1c9a81ebf2a7
+  path: corpus/doc-pub-1c9a81ebf2a7.md
+  title: "GitLab Handbook: Leadership \u2014 Articles"
+  doc_type: report
+  owner: GitLab Inc.
+  acl_roles:
+  - employee
+  - manager
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-3a5b7b26d2e7
+  path: corpus/doc-pub-3a5b7b26d2e7.md
+  title: "GitLab Handbook: Leadership \u2014 Books"
+  doc_type: report
+  owner: GitLab Inc.
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-73416208e064
+  path: corpus/doc-pub-73416208e064.md
+  title: "GitLab Handbook: Leadership \u2014 Training"
+  doc_type: report
+  owner: GitLab Inc.
+  acl_roles:
+  - employee
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+- doc_id: doc-pub-9e3938411cf0-v1
+  path: corpus/doc-pub-9e3938411cf0-v1.md
+  title: 'NIST SP 800-63B: Authenticator and Verifier Requirements (retired)'
+  doc_type: policy
+  owner: NIST
+  acl_roles: *id001
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+  policy_family: pub-family-000
+- doc_id: doc-pub-5e5a90ac9781-v1
+  path: corpus/doc-pub-5e5a90ac9781-v1.md
+  title: 'NIST SP 800-63B: Authenticator Assurance Levels (retired)'
+  doc_type: policy
+  owner: NIST
+  acl_roles: *id002
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+  policy_family: pub-family-001
+- doc_id: doc-pub-c8b0fc2f83c9-v1
+  path: corpus/doc-pub-c8b0fc2f83c9-v1.md
+  title: 'NIST SP 800-63: Digital Identity Risk Management (retired)'
+  doc_type: policy
+  owner: NIST
+  acl_roles: *id003
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 4
+  policy_family: pub-family-002
+- doc_id: doc-pub-ef498a0d6c09-v1
+  path: corpus/doc-pub-ef498a0d6c09-v1.md
+  title: "Node.js Collaborator Guide \u2014 Contents (retired)"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles: *id004
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 3
+  policy_family: pub-family-003
+- doc_id: doc-pub-75e3d58d269b-v1
+  path: corpus/doc-pub-75e3d58d269b-v1.md
+  title: "Node.js Collaborator Guide \u2014 Issues and pull requests (retired)"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles: *id005
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 3
+  policy_family: pub-family-004
+- doc_id: doc-pub-261b0d562216-v1
+  path: corpus/doc-pub-261b0d562216-v1.md
+  title: "Node.js Collaborator Guide \u2014 Accepting modifications (retired)"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles: *id006
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 3
+  policy_family: pub-family-005
+- doc_id: doc-pub-15b050f56d26-v1
+  path: corpus/doc-pub-15b050f56d26-v1.md
+  title: "Node.js Collaborator Guide \u2014 Landing pull requests (retired)"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles: *id007
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 3
+  policy_family: pub-family-006
+- doc_id: doc-pub-c977325f8f2f-v1
+  path: corpus/doc-pub-c977325f8f2f-v1.md
+  title: "Node.js Collaborator Guide \u2014 Who to CC in the issue tracker (retired)"
+  doc_type: policy
+  owner: Node.js Foundation
+  acl_roles: *id008
+  created_date: '2024-01-01'
+  effective_date: '2024-01-01'
+  version: '1.0'
+  authority_score: 3
+  policy_family: pub-family-007

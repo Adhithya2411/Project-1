@@ -1,0 +1,7 @@
+## Communication should be direct, not hierarchical
+
+Most companies communicate from top to bottom through a chain of command. This communication flow often empowers managers, but it also introduces inefficiency as team members are not able to connect directly with the people they need to communicate with in order to get their work done. At GitLab, every team member is encouraged to reach out to whoever is the correct person (or people) to quickly unblock issues, solve problems or support in other ways. Do be courteous of your direct manager and copy them on the request. We don't encourage unnecessary friction in asking team members to escalate through managers and wait for responses to come back. What matters is efficiency in getting to results. Slack the CEO, Slack a VP, or Slack a peer. Do what you need to do to make GitLab successful.
+
+Managers should not be bottlenecks or silos for communication.
+Anyone should feel [comfortable](/handbook/values/#short-toes) reaching out to anyone else with the best information they can to solve a problem.
+This is a more [efficient](/handbook/values/#efficiency), [transparent](/handbook/values/#transparency), and [collaborative](/handbook/values/#collaboration) way to work.

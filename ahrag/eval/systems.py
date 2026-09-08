@@ -1,15 +1,19 @@
-"""The six comparable systems.
+"""The comparable systems.
 
-All six share the *same* database, chunking, indexes, embedding backend,
-reranker, evidence-sufficiency gates, generator, and ACL enforcement. The only
-thing that varies is the routing policy. That is what makes the comparison an
-ablation of routing rather than a comparison of unrelated pipelines, and it is
-why B1–B5 are not strawmen: every baseline gets the full governance stack.
+All of them share the *same* database, chunking, indexes, embedding
+backend, reranker, evidence-sufficiency gates, generator, and ACL enforcement.
+The only thing that varies is the routing policy. That is what makes the
+comparison an ablation of routing rather than a comparison of unrelated
+pipelines, and it is why B1–B5 are not strawmen: every baseline gets the full
+governance stack.
 
 One consequence worth stating plainly: because ACL enforcement is upstream of
 routing, **every** system here should record a zero ACL violation rate. That is
 the intended result. The metric exists to verify the invariant holds under all
-six policies, not to make the proposed router look better than the baselines.
+of these policies, not to make the proposed router look better than the
+baselines — and it applies to the learned router P2 exactly as it does to the
+hand-tuned P1, because the learned model ranks admissible routes rather than
+deciding admissibility.
 """
 
 from __future__ import annotations
@@ -21,7 +25,13 @@ from ..config import RouterConfig, Settings
 from ..db import Database
 from ..models import Route
 from ..pipeline import AHRAGEngine
-from ..routing.router import ComplexityOnlyRouter, FixedRouter, GovernanceAwareRouter
+from ..routing.router import (
+    AdaptiveRAGRouter,
+    ComplexityOnlyRouter,
+    FixedRouter,
+    GovernanceAwareRouter,
+    LearnedRouter,
+)
 
 
 @dataclass
@@ -50,7 +60,7 @@ def build_systems(
             real date advances.
 
     Returns:
-        The systems in reporting order: B1–B5 then P1.
+        The systems in reporting order: B1–B6, then P1 and P2.
     """
     def engine(router) -> AHRAGEngine:
         return AHRAGEngine(
@@ -97,6 +107,19 @@ def build_systems(
             engine=engine(ComplexityOnlyRouter(config)),
         ),
         SystemSpec(
+            key="B6",
+            name="Adaptive-RAG (trained, text-only)",
+            description=(
+                "A trained complexity classifier over query-text features "
+                "only, which is the actual shape of Jeong et al. (2024) rather "
+                "than B5's hand-set token thresholds. Shares P2's corpus, "
+                "queries and offline labels, so B6-versus-P2 isolates the "
+                "value of the governance features specifically. Degrades to B5 "
+                "when no model artifact is present."
+            ),
+            engine=engine(AdaptiveRAGRouter(config, settings)),
+        ),
+        SystemSpec(
             key="P1",
             name="AHRAG governance-aware router",
             description=(
@@ -104,5 +127,17 @@ def build_systems(
                 "maximisation over the admissible routes."
             ),
             engine=engine(GovernanceAwareRouter(config, settings)),
+        ),
+        SystemSpec(
+            key="P2",
+            name="AHRAG learned router",
+            description=(
+                "Same hard governance constraints, but the admissible routes "
+                "are ranked by a trained classifier instead of the hand-set "
+                "utility weights. Degrades to P1 when no model artifact is "
+                "present, so its row is only meaningful after "
+                "improvement_files/ml_router_training/train_router.py has run."
+            ),
+            engine=engine(LearnedRouter(config, settings)),
         ),
     ]

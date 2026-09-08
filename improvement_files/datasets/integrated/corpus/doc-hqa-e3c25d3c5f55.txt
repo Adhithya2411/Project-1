@@ -1,0 +1,1 @@
+Mac OS X version 10.1, code named Puma, is the second major release of Mac OS X (now named macOS), Apple's desktop and server operating system.  It superseded Mac OS X 10.0 and preceded Mac OS X 10.2.  Version 10.1 was released on September 25, 2001 as a free update for Mac OS X 10.0 users.

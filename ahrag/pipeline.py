@@ -57,7 +57,7 @@ from .models import (
 from .retrieval.pipeline import RetrievalEngine
 from .retrieval.rerank import build_reranker, normalise_query
 from .routing.features import FeatureExtractor
-from .routing.router import GovernanceAwareRouter, Router
+from .routing.router import Router, build_router
 
 logger = logging.getLogger(__name__)
 
@@ -84,8 +84,9 @@ class AHRAGEngine:
             settings: Operational settings. Defaults to the process settings.
             config: Routing policy. Defaults to ``settings.router_config``.
             db: Database. Defaults to one at ``settings.db_path``.
-            router: Routing policy object. Defaults to the governance-aware
-                router; the evaluation harness injects the baselines here.
+            router: Routing policy object. Defaults to whatever
+                ``settings.router_backend`` selects (governance-aware unless
+                overridden); the evaluation harness injects the baselines here.
             generator: Generation backend. Defaults to Anthropic-if-configured,
                 otherwise extractive.
             today: Fixed reference date for freshness comparisons. Supplying
@@ -99,7 +100,7 @@ class AHRAGEngine:
         self.index = IndexBundle(self.settings)
         self.freshness = FreshnessPolicy(self.config.evidence, today=today)
         self.features = FeatureExtractor(self.config)
-        self.router: Router = router or GovernanceAwareRouter(self.config, self.settings)
+        self.router: Router = router or build_router(self.config, self.settings)
         self.generator: Generator = generator or build_generator(self.settings)
         self.audit = AuditLogger(self.db, self.settings)
         self.conflicts = ConflictDetector(self.freshness)
@@ -125,6 +126,9 @@ class AHRAGEngine:
         fit = getattr(self._reranker, "fit", None)
         if callable(fit) and chunks:
             fit(chunks)
+        # Per-class rerankers are derived from the old snapshot, so they are
+        # stale too. The indexes invalidate themselves inside IndexBundle.build.
+        self.retrieval.invalidate_scoped_rerankers()
         logger.info("Engine refreshed: %d chunks indexed", len(chunks))
 
     def seed(
@@ -164,6 +168,10 @@ class AHRAGEngine:
         info["router_version"] = self.config.router_version
         info["verbose_audit"] = self.settings.verbose_audit
         info["documents"] = len(self.db.get_documents())
+        # Whether retrieval statistics are scope-pure. Surfaced because it
+        # changes what the governance claim in INVENTION_DISCLOSURE.md M1
+        # actually covers; see ahrag/index/scoped.py.
+        info["index_specialisation"] = self.index.specialisation.stats()
         return info
 
     # -- query --------------------------------------------------------------

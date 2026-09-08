@@ -204,8 +204,6 @@ $
 See Notes to Consolidated Financial Statements
 Verizon 2022 Annual Report on Form 10-K 56
 
----
-
 benefit related costs and interest and financing expenses. Corporate and other also includes the historical results of divested 
 businesses, including Verizon Media Group (Verizon Media) divested in September 2021, and other adjustments and gains and 
 losses that are not allocated in assessing segment performance due to their nature. Although such transactions are excluded 
@@ -284,8 +282,6 @@ Consolidated operating revenues increased during 2022 compared to 2021, due to i
 segments, partially offset by a decrease in Corporate and other. 
  23 
  Verizon 2022 Annual Report on Form 10-K
-
----
 
 Note 7. Debt 
 Outstanding long-term debt obligations as of December 31, 2022 and 2021 are as follows: 

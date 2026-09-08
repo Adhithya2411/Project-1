@@ -1,10 +1,41 @@
 {
-  "total_examples": 532,
-  "seeded_examples": 32,
-  "hotpotqa_examples": 500,
-  "train_examples": 425,
-  "validation_examples": 107,
-  "validation_accuracy": 0.9719626168224299,
+  "corpus": "/Users/ranganathan.sv/Documents/AEH-BOB/Project-1/improvement_files/datasets/integrated/manifest.yaml",
+  "eval_set": "/Users/ranganathan.sv/Documents/AEH-BOB/Project-1/improvement_files/datasets/integrated/eval_set.yaml",
+  "corpus_documents": 6139,
+  "corpus_chunks": 7082,
+  "queries_executed": 965,
+  "queries_labelled": 643,
+  "label_policy": "Gold route = cheapest route achieving the maximum recall@5 any route achieved, preferring routes whose evidence gate passed. Abstention items labelled R0 only when no route produced sufficient evidence. Unlabelled queries dropped, never defaulted.",
+  "label_stats": {
+    "dropped_no_route_retrieves_gold": 322,
+    "labelled_R2": 115,
+    "labelled_R1": 420,
+    "labelled_R4": 7,
+    "labelled_R3": 11,
+    "labelled_R0": 90
+  },
+  "gold_distribution": {
+    "R0": 90,
+    "R1": 420,
+    "R2": 115,
+    "R3": 11,
+    "R4": 7
+  },
+  "splits": {
+    "train": 386,
+    "validation": 128,
+    "test": 129
+  },
+  "validation_accuracy": 0.8203125,
+  "adaptive_rag_validation_accuracy": 0.8671875,
+  "test_accuracy": {
+    "Oracle (upper bound)": 1.0,
+    "P2  Trained router, all 23 features": 0.7829457364341085,
+    "P1  GovernanceAwareRouter (shipped, rule-based)": 0.031007751937984496,
+    "B6  Adaptive-RAG (trained, text-only features)": 0.5658914728682171,
+    "B5  ComplexityOnlyRouter (hand thresholds)": 0.007751937984496124,
+    "Majority class": 0.6511627906976745
+  },
   "feature_names": [
     "query_length",
     "identifier_signal",
@@ -37,16 +68,124 @@
     "R3",
     "R4"
   ],
-  "label_policy": "Seeded queries: expected_route from eval_set.yaml (should_abstain \u2192 R0). HotpotQA: comparison \u2192 R4, hard multi-hop \u2192 R4, hard single \u2192 R3, easy single-fact \u2192 R1, easy multi-fact \u2192 R2, medium \u2192 R3.",
-  "model_params": {
-    "n_estimators": 200,
-    "max_depth": 5,
-    "learning_rate": 0.1,
-    "subsample": 0.8,
-    "colsample_bytree": 0.8
+  "feature_importances": {
+    "query_length": 0.040007662028074265,
+    "identifier_signal": 0.029929164797067642,
+    "numeric_signal": 0.03826684504747391,
+    "temporal_signal": 0.040141358971595764,
+    "lexical_specificity": 0.045146066695451736,
+    "semantic_ambiguity": 0.0366487130522728,
+    "mixed_signal": 0.04010586440563202,
+    "comparison_signal": 0.030875030905008316,
+    "hop_signal": 0.029227904975414276,
+    "followup_signal": 0.0,
+    "unsupported_signal": 0.04566384479403496,
+    "conflict_likelihood": 0.027145609259605408,
+    "restricted_fraction": 0.040052495896816254,
+    "intent_lookup": 0.035708196461200714,
+    "intent_explanation": 0.0,
+    "intent_comparison": 0.10378280282020569,
+    "intent_summarisation": 0.0,
+    "intent_procedural": 0.0,
+    "intent_temporal": 0.0,
+    "sparse_confidence": 0.04044732451438904,
+    "dense_confidence": 0.11220086365938187,
+    "probe_agreement": 0.21522800624370575,
+    "query_length_tokens": 0.049422211945056915
   },
-  "corpus_info": {
-    "documents": 30,
-    "chunks": 435
-  }
+  "learning_curve": [
+    {
+      "train_size": 38,
+      "val_accuracy": 0.6953125
+    },
+    {
+      "train_size": 96,
+      "val_accuracy": 0.78125
+    },
+    {
+      "train_size": 193,
+      "val_accuracy": 0.8046875
+    },
+    {
+      "train_size": 289,
+      "val_accuracy": 0.796875
+    },
+    {
+      "train_size": 386,
+      "val_accuracy": 0.8125
+    }
+  ],
+  "lambda_sweep_top10": [
+    {
+      "latency": 0.03,
+      "cost": 0.35,
+      "risk": 0.85,
+      "label_agreement": 0.09375,
+      "achieved_recall_at_5": 0.78125
+    },
+    {
+      "latency": 0.09,
+      "cost": 0.35,
+      "risk": 0.85,
+      "label_agreement": 0.1015625,
+      "achieved_recall_at_5": 0.78125
+    },
+    {
+      "latency": 0.2,
+      "cost": 0.35,
+      "risk": 0.85,
+      "label_agreement": 0.1171875,
+      "achieved_recall_at_5": 0.78125
+    },
+    {
+      "latency": 0.03,
+      "cost": 0.6,
+      "risk": 0.25,
+      "label_agreement": 0.1953125,
+      "achieved_recall_at_5": 0.76953125
+    },
+    {
+      "latency": 0.2,
+      "cost": 0.35,
+      "risk": 0.55,
+      "label_agreement": 0.0859375,
+      "achieved_recall_at_5": 0.765625
+    },
+    {
+      "latency": 0.09,
+      "cost": 0.6,
+      "risk": 0.25,
+      "label_agreement": 0.203125,
+      "achieved_recall_at_5": 0.7578125
+    },
+    {
+      "latency": 0.09,
+      "cost": 0.35,
+      "risk": 0.55,
+      "label_agreement": 0.0546875,
+      "achieved_recall_at_5": 0.74609375
+    },
+    {
+      "latency": 0.03,
+      "cost": 0.35,
+      "risk": 0.55,
+      "label_agreement": 0.046875,
+      "achieved_recall_at_5": 0.73828125
+    },
+    {
+      "latency": 0.2,
+      "cost": 0.12,
+      "risk": 0.85,
+      "label_agreement": 0.0390625,
+      "achieved_recall_at_5": 0.73046875
+    },
+    {
+      "latency": 0.09,
+      "cost": 0.12,
+      "risk": 0.55,
+      "label_agreement": 0.0234375,
+      "achieved_recall_at_5": 0.7200520833333333
+    }
+  ],
+  "seed": 1729
 }

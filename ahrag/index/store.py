@@ -32,6 +32,9 @@ class IndexBundle:
         self.embedder: EmbeddingBackend | None = None
         self._chunks: list[Chunk] = []
         self._by_id: dict[str, Chunk] = {}
+        # Lazily created so a specialised bundle (which is itself an
+        # IndexBundle) does not recursively construct a specialisation manager.
+        self._specialisation: object | None = None
 
     @property
     def chunks(self) -> list[Chunk]:
@@ -86,12 +89,37 @@ class IndexBundle:
             vectors = self.embedder.encode(texts)
 
         self.vectors.build(ids, vectors)
+        # Per-class indexes are derived from this snapshot, so they are stale
+        # the moment it changes.
+        if self._specialisation is not None:
+            self._specialisation.invalidate()
         logger.info(
             "Index built: %d chunks, sparse=BM25, dense=%s/%s",
             len(ids),
             self.embedder.name,
             self.vectors.name,
         )
+
+    # -- scope specialisation ----------------------------------------------
+
+    @property
+    def specialisation(self):  # noqa: ANN201 - ScopeSpecialisedIndex
+        """The per-ACL-class index manager, created on first access."""
+        if self._specialisation is None:
+            from .scoped import ScopeSpecialisedIndex
+
+            self._specialisation = ScopeSpecialisedIndex(self.settings, self)
+        return self._specialisation
+
+    def for_scope(self, scope):  # noqa: ANN001, ANN201 - AuthorisedScope/ScopedIndex
+        """Return the retrieval view specialised to ``scope``.
+
+        The single entry point used by ``retrieval/pipeline.py``. When
+        ``Settings.index_specialisation`` is off this returns a view backed by
+        this bundle, so the caller's behaviour is bit-identical to reading
+        ``self.sparse`` / ``self.vectors`` directly.
+        """
+        return self.specialisation.for_scope(scope)
 
     def encode_query(self, query: str) -> np.ndarray:
         """Embed a single query.

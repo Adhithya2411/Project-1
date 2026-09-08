@@ -90,6 +90,60 @@ class SparseIndex:
             out.append((self._ids[rows[int(position)]], raw, raw / best if best > 0 else 0.0))
         return out
 
+    # -- scope specialisation hooks ----------------------------------------
+
+    def idf_snapshot(self) -> dict[str, float]:
+        """Return a copy of the fitted IDF table.
+
+        Exposed so ``index/scoped.py`` can interpolate a class-local IDF
+        towards the global one. Returns a copy: a caller mutating the live
+        table would silently corrupt every subsequent query.
+        """
+        if self._bm25 is None:
+            return {}
+        return dict(self._bm25.idf)
+
+    def shrink_idf_towards(
+        self, reference_idf: dict[str, float], lam: float
+    ) -> None:
+        """Interpolate this index's IDF towards ``reference_idf``.
+
+        The statistical motive is ordinary shrinkage: a small subcorpus gives
+        noisy document-frequency estimates, and a broader reference stabilises
+        them. The governance consequence is the interesting part. When the
+        reference is the *global* IDF table, it is a function of chunks outside
+        this class, so every ``lam > 0`` reopens the information-flow channel
+        that class-local fitting closes.
+
+        ``lam`` is therefore not a tuning knob like any other: it is an
+        explicit information-flow budget for the sparse channel. ``lam=0`` is
+        provably non-interfering and ``lam=1`` restores the global IDF values;
+        the curve between them is the purity/utility frontier the evaluation
+        harness measures. It is a *partial* budget: the dense basis is fitted
+        per class independently of ``lam``, so ``lam=1`` does not restore the
+        unspecialised system as a whole.
+
+        Args:
+            reference_idf: IDF table to shrink towards, typically the global one.
+            lam: Interpolation weight in ``[0, 1]``. ``0`` leaves this index
+                untouched and pure.
+
+        Raises:
+            ValueError: If ``lam`` is outside ``[0, 1]``.
+        """
+        if not 0.0 <= lam <= 1.0:
+            raise ValueError(f"lam must be in [0, 1], got {lam}")
+        if self._bm25 is None or lam == 0.0 or not reference_idf:
+            return
+        local = self._bm25.idf
+        # Terms absent from the local vocabulary are deliberately *not* added.
+        # Introducing them would let a term that occurs only in unauthorised
+        # documents acquire a score here, which is the leak in its purest form.
+        for term, local_value in local.items():
+            reference = reference_idf.get(term)
+            if reference is not None:
+                local[term] = (1.0 - lam) * local_value + lam * reference
+
     def __len__(self) -> int:
         """Number of indexed chunks."""
         return len(self._ids)

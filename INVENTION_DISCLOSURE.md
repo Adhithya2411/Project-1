@@ -100,6 +100,38 @@ search" is neither new nor non-obvious on its own. **The author's assessment is
 that M1 alone is very unlikely to be patentable.** Its value here is as a
 correctness property, not as IP.
 
+> **Correction (2026-09, superseding the claim above).** The sentence "no
+> unauthorised chunk can influence a route choice, a rerank ordering, an
+> evidence pack" was **false as implemented**, and remains false whenever
+> `Settings.index_specialisation` is off (the default).
+>
+> Access control was enforced; **non-interference was not**. Three retrieval
+> statistics were fitted over the whole corpus and only then restricted at
+> query time:
+>
+> | Statistic | Site | Effect |
+> |---|---|---|
+> | BM25 IDF and average document length | `index/sparse.py` — `BM25Okapi` built over all chunks | Rank order *within* the authorised pool is computed with weights drawn from unreadable documents |
+> | TF-IDF vocabulary and LSA basis | `index/embeddings.py` — `LSAEmbedder.fit` over all chunks | The dense basis is fitted on a pool nobody searches |
+> | Lexical reranker IDF | `retrieval/rerank.py` — `fit()` called from `refresh_indexes()` with all chunks | Global term statistics set the *final* ordering |
+>
+> It also reached a governance decision: `sparse_confidence` is derived from the
+> raw global-IDF score and tested against the hard `min_probe_for_answering`
+> constraint, so a restricted principal's *abstention* was a function of
+> documents it could not read.
+>
+> Measured on the seed corpus (`measure_specialisation.py`, E2; 24
+> observer/query pairs over three principals): mean Kendall tau-b **0.950**,
+> top-1 flips **8.3%**, evidence-order changes **20.8%**, and **route changes
+> 33.3%** when unreadable documents are deleted while the authorised subcorpus
+> is held fixed. No restricted content is ever returned, so this is not an
+> access-control violation — it is an information-flow violation.
+>
+> M7 below closes it, and the same measurement reports tau **1.000** with zero
+> flips, zero order changes, and zero route changes under M7. The claim in M1
+> is therefore **conditional on M7 being enabled**, and the qualified form is
+> the only one that should be relied upon.
+
 ---
 
 ### M2 — Governance signals as inputs to the route-utility computation
@@ -244,6 +276,85 @@ applied to retrieval-route decisions may be narrower.
 
 ---
 
+### M7 — Per-ACL-class retrieval statistics, giving index-level non-interference
+
+**Description.** Under ACL the corpus is not one corpus but a lattice of
+subcorpora indexed by authorised scope. An *ACL equivalence class* is a maximal
+set of principals with identical authorised scope; the class count is bounded by
+the distinct role-set combinations appearing on documents, not by headcount (on
+the seed corpus, five users collapse to four classes).
+
+For each class *C*, retrieval statistics are fitted on *C*'s chunks and nothing
+else:
+
+1. BM25 IDF and average document length.
+2. TF-IDF vocabulary and the truncated-SVD (LSA) basis.
+3. The lexical reranker's IDF table.
+4. Optionally the BM25 saturation constant used by `sparse_confidence`.
+
+Bundles are built lazily per class, cached under an LRU cap, and invalidated on
+re-ingestion. A cross-encoder reranker needs no specialisation: it scores
+(query, passage) pairs and holds no corpus statistics, so it is already pure.
+
+**The claimed property.** Every parameter of *C*'s index is a function of *C*'s
+chunks alone. Therefore mutating, adding, or deleting **any** chunk outside *C*
+cannot change any score, any ranking, any router feature, any route decision, or
+any generated answer for a principal in *C*. This is non-interference in the
+sense of Goguen and Meseguer (1982), applied to retrieval-index parameters
+rather than to program state.
+
+Two secondary consequences:
+
+* The threshold `min_probe_for_answering` can be made principal-invariant,
+  because the confidence it gates is calibrated on the pool actually searched.
+  Left off by default — see the limitation below.
+* Restriction becomes *specialisation* rather than pure loss: the statistics
+  describe the searched pool, which is a strictly better-specified ranking
+  problem. Whether that yields measurably better ranking is **unproven** (below).
+
+**Implementation:** `ahrag/index/lattice.py` (equivalence classes),
+`ahrag/index/scoped.py` (per-class bundles, LRU, calibration),
+`ahrag/index/sparse.py` (`idf_snapshot`, `shrink_idf_towards`),
+`ahrag/retrieval/pipeline.py` (`_reranker_for`, scoped dispatch).
+**Verified by:** `tests/test_noninterference.py` — 26 tests.
+`TestGlobalIndexLeaks` asserts the unspecialised path *does* leak, so the suite
+fails rather than passing vacuously if that ever changes.
+`TestScopePureNonInterference::test_route_and_evidence_are_invariant_end_to_end`
+is the theorem at pipeline level: same route, same evidence IDs, same answer
+text, same probe confidences across the two corpus conditions.
+
+**The lambda knob.** `specialisation_lambda` interpolates class-local IDF
+towards the global table. It is deliberately framed as an **information-flow
+budget** rather than a hyperparameter: any value above zero reimports statistics
+from outside the class and reopens the channel, in exchange for more stable
+document-frequency estimates on small scopes. `lambda=0` is provably pure. Note
+it governs the **sparse channel only** — the LSA basis is class-local whenever
+specialisation is on — so it is a partial frontier, not a complete one.
+
+**Measured status.** Non-interference: **established** (tau 1.000, zero flips,
+zero route changes, versus 0.950 / 8.3% / 33.3% unspecialised). Retrieval
+quality: **not established.** On the 9-document seed corpus, R@5 is identical
+(0.840, delta 0.0000) and MRR/nDCG move by less than 0.004 with p > 0.45, which
+is exactly what the corpus-size limitation in `RESEARCH_LIMITATIONS.md` §2.1
+predicts. Abstention appropriateness shows a small *regression* (0.875 to 0.812,
+2 items, p = 0.247), traced to the class-local LSA basis rather than to IDF.
+
+**Prior-art risk: MEDIUM-LOW, and the most likely of the seven to be a genuine
+delta.** The components are individually old: per-partition index statistics
+exist in federated and sharded IR, IDF shrinkage is standard smoothing, and
+non-interference dates to 1982. What the author has not found is the
+composition — treating an ACL partition as the unit over which retrieval
+statistics are fitted, in order to obtain a *checkable* non-interference
+property for a RAG index, with an explicit information-flow budget parameterising
+the purity/utility trade-off. HONEYBEE partitions vector storage by RBAC but the
+concern there is access enforcement and efficiency, not statistical
+interference. **This has still not been professionally searched, and the caveats
+in the header apply unchanged.** The distinction between access control and
+information-flow control is textbook security, so a reviewer may reasonably hold
+that applying it here is obvious once stated.
+
+---
+
 ## 4. Prior art the author is already aware of
 
 Any assessment must weigh at minimum the following. This list is from reading,
@@ -262,7 +373,9 @@ blocking art.
 | Kalra et al. 2024, HyPA-RAG | Parameter-adaptive hybrid for legal/policy | Adaptive hybrid retrieval in a governed domain |
 | **Zhao et al., R³AG** | **Closest on retriever routing** | Retriever routing using document assessment + downstream correctness |
 | Cost-aware RAG routing work | Quality/cost/latency utility | **Closest to the utility formulation.** Same trade-off structure without governance terms. |
-| **HONEYBEE (RBAC for vector DBs)** | **Closest to M1** | RBAC-aware partitioning in the vector database layer |
+| **HONEYBEE (RBAC for vector DBs)** | **Closest to M1 and M7** | RBAC-aware partitioning in the vector database layer; concerned with enforcement and efficiency, not statistical interference |
+| **Goguen & Meseguer 1982, non-interference** | **The property M7 asserts** | Textbook information-flow security. M7 is its application to retrieval-index parameters |
+| Federated / sharded IR; distributed IDF | Per-partition collection statistics | Per-shard statistics are old; the ACL partition as the unit, for a security property, is the claimed delta |
 | ARES, RAGAS, RAGChecker | Evaluation frameworks | M5's methodology sits alongside these |
 | Enterprise search products | ACL-filtered retrieval | Microsoft Graph/SharePoint security trimming, Elasticsearch document-level security, Glean, Coveo — all apply ACL pre-filtering as standard |
 
@@ -281,12 +394,13 @@ assessed and the honest expectation is that most will not.
 
 | Rank | Mechanism | Assessment |
 |---|---|---|
-| 1 | **M2** — governance signals inside the routing utility | Narrowest delta from the closest art (Adaptive-RAG, R³AG, cost-aware routing). Most likely to be a genuine composition. |
-| 2 | **M4** — non-destructive conflict disclosure | The mandatory non-suppression policy is a specific behavioural constraint, not just detection. |
-| 3 | **M6** — decision auditability under minimisation | Composition may be narrow; components are all known. |
-| 4 | **M3** — governance-scoped probe | Small delta over CRAG's retrieval evaluator. |
-| 5 | **M5** — typed abstention + symmetric measurement | Methodological. Likely publishable, unlikely patentable. |
-| 6 | **M1** — ACL as hard upstream constraint | **Likely unpatentable.** Standard enterprise-search practice. Valuable as a correctness property, not as IP. |
+| 1 | **M7** — per-ACL-class retrieval statistics / index non-interference | Components are old individually; the composition and the checkable property appear to be the largest delta from known art. Also the only mechanism that *corrects* a false claim elsewhere in this document. |
+| 2 | **M2** — governance signals inside the routing utility | Narrowest delta from the closest art (Adaptive-RAG, R³AG, cost-aware routing). Most likely to be a genuine composition. |
+| 3 | **M4** — non-destructive conflict disclosure | The mandatory non-suppression policy is a specific behavioural constraint, not just detection. |
+| 4 | **M6** — decision auditability under minimisation | Composition may be narrow; components are all known. |
+| 5 | **M3** — governance-scoped probe | Small delta over CRAG's retrieval evaluator. |
+| 6 | **M5** — typed abstention + symmetric measurement | Methodological. Likely publishable, unlikely patentable. |
+| 7 | **M1** — ACL as hard upstream constraint | **Likely unpatentable.** Standard enterprise-search practice. Valuable as a correctness property, not as IP — and only sound in its qualified form; see the correction under M1. |
 
 ---
 
@@ -294,12 +408,13 @@ assessed and the honest expectation is that most will not.
 
 | Mechanism | Implemented | Tested | Reduced to practice |
 |---|---|---|---|
-| M1 | ✅ | ✅ 20 tests | ✅ on the demo corpus |
+| M1 | ✅ | ✅ 20 tests | ⚠️ only in its qualified form; non-interference requires M7 |
 | M2 | ✅ | ✅ 30 tests | ✅ on the demo corpus |
 | M3 | ✅ | ✅ 4 tests | ✅ on the demo corpus |
 | M4 | ✅ | ✅ 5 tests | ✅ on the demo corpus |
 | M5 | ✅ | ✅ symmetric metric tested | ✅ on the demo corpus |
 | M6 | ✅ | ✅ 7 tests | ✅ on the demo corpus |
+| M7 | ✅ (opt-in, default off) | ✅ 26 tests | ✅ for the non-interference property; ❌ for any retrieval-quality claim |
 
 **All reduction to practice is on a 9-document, 60-chunk demo corpus with 32
 labelled queries.** No mechanism has been validated at enterprise scale, and the

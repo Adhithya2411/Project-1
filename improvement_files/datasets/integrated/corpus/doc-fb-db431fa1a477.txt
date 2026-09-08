@@ -123,8 +123,6 @@ $
 See accompanying notes to consolidated financial statements.
 53
 
----
-
 Table of Contents
 PART I
 ITEM 1. BUSINESS
@@ -165,8 +163,6 @@ embedded CPUs, GPUs, APUs, FPGAs, and Adaptive SoC products.
 From time to time, we may also sell or license portions of our intellectual property (IP) portfolio.
 1
 
----
-
 Table of Contents
 ITEM 7. MANAGEMENTS DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS
 The following discussion should be read in conjunction with the consolidated financial statements as of December 31, 2022 and December 25, 2021 and for
@@ -206,8 +202,6 @@ consisting of $500 million in aggregate principal amount of 3.924% Senior Notes 
 4.393% Notes will mature on June 1, 2052 and bear interest at a rate of 4.393% per annum. The 3.924% Notes and the 4.393% Notes are senior unsecured
 obligations.
 40
-
----
 
 Table of Contents
 Advanced Micro Devices, Inc.
@@ -377,8 +371,6 @@ $
 1,595 
 55
 
----
-
 Table of Contents
 Results of Operations
 During the second quarter of fiscal year 2022, we changed our reporting segments to align our financial reporting with how we manage our business in strategic
@@ -451,8 +443,6 @@ driven by a richer mix of Ryzen mobile processor sales.
 Client operating income was $1.2 billion in 2022, compared to operating income of $2.1 billion in 2021. The decrease in operating income was primarily driven
 by lower revenue and higher operating expenses. Operating expenses increased for the reasons outlined under Expenses below.
 45
-
----
 
 Table of Contents
 We also work with our customers to create differentiated products that leverage our CPU, GPU and APU technology. Certain customers pay us non-recurring

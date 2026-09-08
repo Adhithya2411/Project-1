@@ -1,66 +1,547 @@
 {
-  "total_documents": 10,
-  "total_chars": 120638,
-  "sources": {
-    "Node.js Code of Conduct": {
-      "url": "https://raw.githubusercontent.com/nodejs/node/main/CODE_OF_CONDUCT.md",
-      "license": "MIT",
-      "chars": 203,
-      "doc_type": "policy"
+  "seed": 1729,
+  "min_document_bytes": 2000,
+  "sources_requested": 17,
+  "sources_rejected": [],
+  "documents": 73,
+  "supersession_chains": 8,
+  "total_chars": 486970,
+  "by_doc_type": {
+    "runbook": 13,
+    "policy": 45,
+    "report": 15
+  },
+  "by_audience": {
+    "employee": 18,
+    "engineering": 16,
+    "engineering,manager": 3,
+    "employee,manager": 19,
+    "hr": 2,
+    "legal": 5,
+    "finance,manager": 10
+  },
+  "licences": [
+    "Apache-2.0",
+    "BSD-3-Clause",
+    "CC-BY-3.0",
+    "CC-BY-4.0",
+    "CC-BY-SA-4.0",
+    "MIT",
+    "MIT OR Apache-2.0",
+    "Public Domain (US Government / CC0)",
+    "Public Domain (US Government)"
+  ],
+  "provenance": [
+    {
+      "doc_id": "doc-pub-7be434274b72",
+      "title": "Kubernetes: Troubleshoot Pods \u2014 Diagnosing the problem",
+      "url": "https://raw.githubusercontent.com/kubernetes/website/main/content/en/docs/tasks/debug/debug-application/debug-pods.md",
+      "licence": "Apache-2.0",
+      "chars": 8111
     },
-    "Node.js Contributing Guide": {
-      "url": "https://raw.githubusercontent.com/nodejs/node/main/CONTRIBUTING.md",
-      "license": "MIT",
-      "chars": 4654,
-      "doc_type": "policy"
+    {
+      "doc_id": "doc-pub-d7afd50dc9d4",
+      "title": "Kubernetes: Troubleshoot Services \u2014 Running commands in a Pod",
+      "url": "https://raw.githubusercontent.com/kubernetes/website/main/content/en/docs/tasks/debug/debug-application/debug-service.md",
+      "licence": "Apache-2.0",
+      "chars": 877
     },
-    "Node.js Security Policy": {
-      "url": "https://raw.githubusercontent.com/nodejs/node/main/SECURITY.md",
-      "license": "MIT",
-      "chars": 37240,
-      "doc_type": "policy"
+    {
+      "doc_id": "doc-pub-b89441e65bfc",
+      "title": "Kubernetes: Troubleshoot Services \u2014 Setup",
+      "url": "https://raw.githubusercontent.com/kubernetes/website/main/content/en/docs/tasks/debug/debug-application/debug-service.md",
+      "licence": "Apache-2.0",
+      "chars": 2646
     },
-    "Rust Code of Conduct": {
-      "url": "https://raw.githubusercontent.com/rust-lang/rust/master/CODE_OF_CONDUCT.md",
-      "license": "MIT/Apache 2.0",
-      "chars": 131,
-      "doc_type": "policy"
+    {
+      "doc_id": "doc-pub-47591c6e6d06",
+      "title": "Kubernetes: Troubleshoot Services \u2014 Does the Service exist?",
+      "url": "https://raw.githubusercontent.com/kubernetes/website/main/content/en/docs/tasks/debug/debug-application/debug-service.md",
+      "licence": "Apache-2.0",
+      "chars": 1996
     },
-    "Rust Contributing Guide": {
-      "url": "https://raw.githubusercontent.com/rust-lang/rust/master/CONTRIBUTING.md",
-      "license": "MIT/Apache 2.0",
-      "chars": 3110,
-      "doc_type": "policy"
+    {
+      "doc_id": "doc-pub-deb2d124c521",
+      "title": "Kubernetes: Troubleshoot Services \u2014 Does the Service work by DNS name?",
+      "url": "https://raw.githubusercontent.com/kubernetes/website/main/content/en/docs/tasks/debug/debug-application/debug-service.md",
+      "licence": "Apache-2.0",
+      "chars": 4307
     },
-    "CPython Project Overview": {
-      "url": "https://raw.githubusercontent.com/python/cpython/main/README.rst",
-      "license": "PSF-2.0",
-      "chars": 8907,
-      "doc_type": "wiki"
+    {
+      "doc_id": "doc-pub-85f4c119a968",
+      "title": "Kubernetes: Troubleshoot Services \u2014 Is the Service defined correctly?",
+      "url": "https://raw.githubusercontent.com/kubernetes/website/main/content/en/docs/tasks/debug/debug-application/debug-service.md",
+      "licence": "Apache-2.0",
+      "chars": 1445
     },
-    "VS Code Contributing Guide": {
-      "url": "https://raw.githubusercontent.com/microsoft/vscode/main/CONTRIBUTING.md",
-      "license": "MIT",
-      "chars": 5703,
-      "doc_type": "policy"
+    {
+      "doc_id": "doc-pub-a3ad992e3a5d",
+      "title": "Kubernetes: Troubleshoot Services \u2014 Does the Service have any EndpointSlices?",
+      "url": "https://raw.githubusercontent.com/kubernetes/website/main/content/en/docs/tasks/debug/debug-application/debug-service.md",
+      "licence": "Apache-2.0",
+      "chars": 1968
     },
-    "Go Contributing Guide": {
-      "url": "https://raw.githubusercontent.com/golang/go/master/CONTRIBUTING.md",
-      "license": "BSD-3-Clause",
-      "chars": 1337,
-      "doc_type": "policy"
+    {
+      "doc_id": "doc-pub-826a94564e09",
+      "title": "Kubernetes: Troubleshoot Services \u2014 Are the Pods working?",
+      "url": "https://raw.githubusercontent.com/kubernetes/website/main/content/en/docs/tasks/debug/debug-application/debug-service.md",
+      "licence": "Apache-2.0",
+      "chars": 857
     },
-    "Go Security Policy": {
-      "url": "https://raw.githubusercontent.com/golang/go/master/SECURITY.md",
-      "license": "BSD-3-Clause",
-      "chars": 426,
-      "doc_type": "policy"
+    {
+      "doc_id": "doc-pub-c985c5de5dde",
+      "title": "Kubernetes: Troubleshoot Services \u2014 Is the kube-proxy working?",
+      "url": "https://raw.githubusercontent.com/kubernetes/website/main/content/en/docs/tasks/debug/debug-application/debug-service.md",
+      "licence": "Apache-2.0",
+      "chars": 9045
     },
-    "NIST SP 800-63B: Authentication and Lifecycle Management": {
+    {
+      "doc_id": "doc-pub-fe7548485e56",
+      "title": "Kubernetes: Troubleshoot Clusters \u2014 Listing your cluster",
+      "url": "https://raw.githubusercontent.com/kubernetes/website/main/content/en/docs/tasks/debug/debug-cluster/_index.md",
+      "licence": "Apache-2.0",
+      "chars": 8298
+    },
+    {
+      "doc_id": "doc-pub-e5e65f6e3d16",
+      "title": "Kubernetes: Troubleshoot Clusters \u2014 Looking at logs",
+      "url": "https://raw.githubusercontent.com/kubernetes/website/main/content/en/docs/tasks/debug/debug-cluster/_index.md",
+      "licence": "Apache-2.0",
+      "chars": 854
+    },
+    {
+      "doc_id": "doc-pub-a6ad5ff7b88b",
+      "title": "Kubernetes: Troubleshoot Clusters \u2014 Cluster failure modes",
+      "url": "https://raw.githubusercontent.com/kubernetes/website/main/content/en/docs/tasks/debug/debug-cluster/_index.md",
+      "licence": "Apache-2.0",
+      "chars": 3387
+    },
+    {
+      "doc_id": "doc-pub-12dbb120f27a",
+      "title": "Kubernetes: Troubleshoot Clusters \u2014 * Learn about the metrics available in the",
+      "url": "https://raw.githubusercontent.com/kubernetes/website/main/content/en/docs/tasks/debug/debug-cluster/_index.md",
+      "licence": "Apache-2.0",
+      "chars": 763
+    },
+    {
+      "doc_id": "doc-pub-9e3938411cf0",
+      "title": "NIST SP 800-63B: Authenticator and Verifier Requirements",
       "url": "https://raw.githubusercontent.com/usnistgov/800-63-3/master/sp800-63b/sec5_authenticators.md",
-      "license": "Public Domain (US Government)",
-      "chars": 58927,
-      "doc_type": "policy"
+      "licence": "Public Domain (US Government)",
+      "chars": 58923
+    },
+    {
+      "doc_id": "doc-pub-5e5a90ac9781",
+      "title": "NIST SP 800-63B: Authenticator Assurance Levels",
+      "url": "https://raw.githubusercontent.com/usnistgov/800-63-3/master/sp800-63b/sec4_aal.md",
+      "licence": "Public Domain (US Government)",
+      "chars": 19897
+    },
+    {
+      "doc_id": "doc-pub-c8b0fc2f83c9",
+      "title": "NIST SP 800-63: Digital Identity Risk Management",
+      "url": "https://raw.githubusercontent.com/usnistgov/800-63-3/master/sp800-63-3/sec5_DIRM.md",
+      "licence": "Public Domain (US Government)",
+      "chars": 18816
+    },
+    {
+      "doc_id": "doc-pub-ef498a0d6c09",
+      "title": "Node.js Collaborator Guide \u2014 Contents",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/doc/contributing/collaborator-guide.md",
+      "licence": "MIT",
+      "chars": 2219
+    },
+    {
+      "doc_id": "doc-pub-75e3d58d269b",
+      "title": "Node.js Collaborator Guide \u2014 Issues and pull requests",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/doc/contributing/collaborator-guide.md",
+      "licence": "MIT",
+      "chars": 5002
+    },
+    {
+      "doc_id": "doc-pub-261b0d562216",
+      "title": "Node.js Collaborator Guide \u2014 Accepting modifications",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/doc/contributing/collaborator-guide.md",
+      "licence": "MIT",
+      "chars": 21772
+    },
+    {
+      "doc_id": "doc-pub-15b050f56d26",
+      "title": "Node.js Collaborator Guide \u2014 Landing pull requests",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/doc/contributing/collaborator-guide.md",
+      "licence": "MIT",
+      "chars": 11152
+    },
+    {
+      "doc_id": "doc-pub-c977325f8f2f",
+      "title": "Node.js Collaborator Guide \u2014 Who to CC in the issue tracker",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/doc/contributing/collaborator-guide.md",
+      "licence": "MIT",
+      "chars": 6677
+    },
+    {
+      "doc_id": "doc-pub-19e9fa96d31e",
+      "title": "Node.js Collaborator Guide \u2014 Labels",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/doc/contributing/collaborator-guide.md",
+      "licence": "MIT",
+      "chars": 8360
+    },
+    {
+      "doc_id": "doc-pub-a42376c7ff4e",
+      "title": "Node.js Security Policy \u2014 Reporting a bug in Node.js",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/SECURITY.md",
+      "licence": "MIT",
+      "chars": 1256
+    },
+    {
+      "doc_id": "doc-pub-c76e5c43d1fa",
+      "title": "Node.js Security Policy \u2014 Disclosure policy",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/SECURITY.md",
+      "licence": "MIT",
+      "chars": 1461
+    },
+    {
+      "doc_id": "doc-pub-6dafa97d01cb",
+      "title": "Node.js Security Policy \u2014 Code of Conduct and Vulnerability Reporting Guidelines",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/SECURITY.md",
+      "licence": "MIT",
+      "chars": 1724
+    },
+    {
+      "doc_id": "doc-pub-467406b34fbc",
+      "title": "Node.js Security Policy \u2014 The Node.js threat model",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/SECURITY.md",
+      "licence": "MIT",
+      "chars": 26640
+    },
+    {
+      "doc_id": "doc-pub-b1971e016834",
+      "title": "Node.js Security Policy \u2014 Receiving security updates",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/SECURITY.md",
+      "licence": "MIT",
+      "chars": 1234
+    },
+    {
+      "doc_id": "doc-pub-1261a99e5640",
+      "title": "Node.js Security Policy \u2014 Node.js Security Team",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/SECURITY.md",
+      "licence": "MIT",
+      "chars": 1272
+    },
+    {
+      "doc_id": "doc-pub-cd9fb6057ad8",
+      "title": "Node.js Security Policy \u2014 Team responsible for Triaging security reports",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/SECURITY.md",
+      "licence": "MIT",
+      "chars": 605
+    },
+    {
+      "doc_id": "doc-pub-f8f3c5303b9d",
+      "title": "Node.js Security Policy \u2014 Team with access to private security reports against Node.js",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/SECURITY.md",
+      "licence": "MIT",
+      "chars": 959
+    },
+    {
+      "doc_id": "doc-pub-1fa3917dadf2",
+      "title": "Node.js Security Policy \u2014 Team with access to private security patches to Node.js",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/SECURITY.md",
+      "licence": "MIT",
+      "chars": 2072
+    },
+    {
+      "doc_id": "doc-pub-9a4ef226f851",
+      "title": "Node.js Contributing Guide",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/CONTRIBUTING.md",
+      "licence": "MIT",
+      "chars": 4653
+    },
+    {
+      "doc_id": "doc-pub-2b2d3bd1da12",
+      "title": "Kubernetes Contributor Guide \u2014 Overview",
+      "url": "https://raw.githubusercontent.com/kubernetes/community/master/contributors/guide/README.md",
+      "licence": "Apache-2.0",
+      "chars": 780
+    },
+    {
+      "doc_id": "doc-pub-540d7c4ebdf6",
+      "title": "Kubernetes Contributor Guide \u2014 Welcome",
+      "url": "https://raw.githubusercontent.com/kubernetes/community/master/contributors/guide/README.md",
+      "licence": "Apache-2.0",
+      "chars": 1040
+    },
+    {
+      "doc_id": "doc-pub-20b79ba40c62",
+      "title": "Kubernetes Contributor Guide \u2014 Prerequisites",
+      "url": "https://raw.githubusercontent.com/kubernetes/community/master/contributors/guide/README.md",
+      "licence": "Apache-2.0",
+      "chars": 2333
+    },
+    {
+      "doc_id": "doc-pub-12a57dd8fe67",
+      "title": "Kubernetes Contributor Guide \u2014 Community",
+      "url": "https://raw.githubusercontent.com/kubernetes/community/master/contributors/guide/README.md",
+      "licence": "Apache-2.0",
+      "chars": 964
+    },
+    {
+      "doc_id": "doc-pub-cc83b202baf2",
+      "title": "Kubernetes Contributor Guide \u2014 Advanced Topics",
+      "url": "https://raw.githubusercontent.com/kubernetes/community/master/contributors/guide/README.md",
+      "licence": "Apache-2.0",
+      "chars": 1310
+    },
+    {
+      "doc_id": "doc-pub-69bf588ae4d7",
+      "title": "Kubernetes Project Governance \u2014 Overview",
+      "url": "https://raw.githubusercontent.com/kubernetes/community/master/governance.md",
+      "licence": "Apache-2.0",
+      "chars": 1615
+    },
+    {
+      "doc_id": "doc-pub-887c70e84417",
+      "title": "Kubernetes Project Governance \u2014 SIGs",
+      "url": "https://raw.githubusercontent.com/kubernetes/community/master/governance.md",
+      "licence": "Apache-2.0",
+      "chars": 3749
+    },
+    {
+      "doc_id": "doc-pub-b2b22255d495",
+      "title": "Kubernetes Project Governance \u2014 Committees",
+      "url": "https://raw.githubusercontent.com/kubernetes/community/master/governance.md",
+      "licence": "Apache-2.0",
+      "chars": 991
+    },
+    {
+      "doc_id": "doc-pub-c73416d32610",
+      "title": "Kubernetes Project Governance \u2014 Cross-project Communication and Coordination",
+      "url": "https://raw.githubusercontent.com/kubernetes/community/master/governance.md",
+      "licence": "Apache-2.0",
+      "chars": 2971
+    },
+    {
+      "doc_id": "doc-pub-6f090465843a",
+      "title": "Rust Contributing Guide",
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/master/CONTRIBUTING.md",
+      "licence": "MIT OR Apache-2.0",
+      "chars": 3109
+    },
+    {
+      "doc_id": "doc-pub-96a5a07df37e",
+      "title": "Django Contributing Guide",
+      "url": "https://raw.githubusercontent.com/django/django/main/docs/internals/contributing/index.txt",
+      "licence": "BSD-3-Clause",
+      "chars": 4444
+    },
+    {
+      "doc_id": "doc-pub-472ea80f218e",
+      "title": "PyCon Code of Conduct \u2014 Overview",
+      "url": "https://raw.githubusercontent.com/python/pycon-code-of-conduct/master/code_of_conduct.md",
+      "licence": "CC-BY-3.0",
+      "chars": 713
+    },
+    {
+      "doc_id": "doc-pub-721520df22a9",
+      "title": "PyCon Code of Conduct \u2014 Our Standards",
+      "url": "https://raw.githubusercontent.com/python/pycon-code-of-conduct/master/code_of_conduct.md",
+      "licence": "CC-BY-3.0",
+      "chars": 2218
+    },
+    {
+      "doc_id": "doc-pub-73fa9df1cc68",
+      "title": "PyCon Code of Conduct \u2014 Scope",
+      "url": "https://raw.githubusercontent.com/python/pycon-code-of-conduct/master/code_of_conduct.md",
+      "licence": "CC-BY-3.0",
+      "chars": 603
+    },
+    {
+      "doc_id": "doc-pub-f1ecef034619",
+      "title": "PyCon Code of Conduct \u2014 Contact Information",
+      "url": "https://raw.githubusercontent.com/python/pycon-code-of-conduct/master/code_of_conduct.md",
+      "licence": "CC-BY-3.0",
+      "chars": 1247
+    },
+    {
+      "doc_id": "doc-pub-1a667ad50649",
+      "title": "PyCon Code of Conduct \u2014 License",
+      "url": "https://raw.githubusercontent.com/python/pycon-code-of-conduct/master/code_of_conduct.md",
+      "licence": "CC-BY-3.0",
+      "chars": 1279
+    },
+    {
+      "doc_id": "doc-pub-be4d07460179",
+      "title": "18F Engineering Development Guide",
+      "url": "https://raw.githubusercontent.com/18F/development-guide/master/README.md",
+      "licence": "Public Domain (US Government / CC0)",
+      "chars": 4515
+    },
+    {
+      "doc_id": "doc-pub-7b3de17a5842",
+      "title": "CNCF Foundation Charter",
+      "url": "https://raw.githubusercontent.com/cncf/foundation/main/charter.md",
+      "licence": "CC-BY-4.0",
+      "chars": 35551
+    },
+    {
+      "doc_id": "doc-pub-fdb6d7227e05",
+      "title": "GitLab Handbook: Leadership \u2014 Managers of One",
+      "url": "https://gitlab.com/gitlab-com/content-sites/handbook/-/raw/main/content/handbook/leadership/_index.md",
+      "licence": "CC-BY-SA-4.0",
+      "chars": 6319
+    },
+    {
+      "doc_id": "doc-pub-77695eb22b78",
+      "title": "GitLab Handbook: Leadership \u2014 Interim and Acting Leadership",
+      "url": "https://gitlab.com/gitlab-com/content-sites/handbook/-/raw/main/content/handbook/leadership/_index.md",
+      "licence": "CC-BY-SA-4.0",
+      "chars": 1084
+    },
+    {
+      "doc_id": "doc-pub-9d8aaf3e9657",
+      "title": "GitLab Handbook: Leadership \u2014 Communication should be direct, not hierarchical",
+      "url": "https://gitlab.com/gitlab-com/content-sites/handbook/-/raw/main/content/handbook/leadership/_index.md",
+      "licence": "CC-BY-SA-4.0",
+      "chars": 1231
+    },
+    {
+      "doc_id": "doc-pub-c6951546872e",
+      "title": "GitLab Handbook: Leadership \u2014 Giving Feedback",
+      "url": "https://gitlab.com/gitlab-com/content-sites/handbook/-/raw/main/content/handbook/leadership/_index.md",
+      "licence": "CC-BY-SA-4.0",
+      "chars": 1326
+    },
+    {
+      "doc_id": "doc-pub-ac262775beec",
+      "title": "GitLab Handbook: Leadership \u2014 Responding to Negative Feedback",
+      "url": "https://gitlab.com/gitlab-com/content-sites/handbook/-/raw/main/content/handbook/leadership/_index.md",
+      "licence": "CC-BY-SA-4.0",
+      "chars": 1877
+    },
+    {
+      "doc_id": "doc-pub-2e2aa354057b",
+      "title": "GitLab Handbook: Leadership \u2014 Your Individual README",
+      "url": "https://gitlab.com/gitlab-com/content-sites/handbook/-/raw/main/content/handbook/leadership/_index.md",
+      "licence": "CC-BY-SA-4.0",
+      "chars": 3773
+    },
+    {
+      "doc_id": "doc-pub-a17e252c37cf",
+      "title": "GitLab Handbook: Leadership \u2014 Coaching",
+      "url": "https://gitlab.com/gitlab-com/content-sites/handbook/-/raw/main/content/handbook/leadership/_index.md",
+      "licence": "CC-BY-SA-4.0",
+      "chars": 752
+    },
+    {
+      "doc_id": "doc-pub-b8f14e5d96ff",
+      "title": "GitLab Handbook: Leadership \u2014 Stable counterparts",
+      "url": "https://gitlab.com/gitlab-com/content-sites/handbook/-/raw/main/content/handbook/leadership/_index.md",
+      "licence": "CC-BY-SA-4.0",
+      "chars": 1154
+    },
+    {
+      "doc_id": "doc-pub-aa6efcd8f10d",
+      "title": "GitLab Handbook: Leadership \u2014 Effective escalations",
+      "url": "https://gitlab.com/gitlab-com/content-sites/handbook/-/raw/main/content/handbook/leadership/_index.md",
+      "licence": "CC-BY-SA-4.0",
+      "chars": 1790
+    },
+    {
+      "doc_id": "doc-pub-15ff1467516c",
+      "title": "GitLab Handbook: Leadership \u2014 Process gets a bad rep",
+      "url": "https://gitlab.com/gitlab-com/content-sites/handbook/-/raw/main/content/handbook/leadership/_index.md",
+      "licence": "CC-BY-SA-4.0",
+      "chars": 941
+    },
+    {
+      "doc_id": "doc-pub-d36b3b68e289",
+      "title": "GitLab Handbook: Leadership \u2014 Talent Acquisition and retention",
+      "url": "https://gitlab.com/gitlab-com/content-sites/handbook/-/raw/main/content/handbook/leadership/_index.md",
+      "licence": "CC-BY-SA-4.0",
+      "chars": 1327
+    },
+    {
+      "doc_id": "doc-pub-c62de321a052",
+      "title": "GitLab Handbook: Leadership \u2014 Building High Performing Teams",
+      "url": "https://gitlab.com/gitlab-com/content-sites/handbook/-/raw/main/content/handbook/leadership/_index.md",
+      "licence": "CC-BY-SA-4.0",
+      "chars": 5454
+    },
+    {
+      "doc_id": "doc-pub-1c9a81ebf2a7",
+      "title": "GitLab Handbook: Leadership \u2014 Articles",
+      "url": "https://gitlab.com/gitlab-com/content-sites/handbook/-/raw/main/content/handbook/leadership/_index.md",
+      "licence": "CC-BY-SA-4.0",
+      "chars": 1986
+    },
+    {
+      "doc_id": "doc-pub-3a5b7b26d2e7",
+      "title": "GitLab Handbook: Leadership \u2014 Books",
+      "url": "https://gitlab.com/gitlab-com/content-sites/handbook/-/raw/main/content/handbook/leadership/_index.md",
+      "licence": "CC-BY-SA-4.0",
+      "chars": 2226
+    },
+    {
+      "doc_id": "doc-pub-73416208e064",
+      "title": "GitLab Handbook: Leadership \u2014 Training",
+      "url": "https://gitlab.com/gitlab-com/content-sites/handbook/-/raw/main/content/handbook/leadership/_index.md",
+      "licence": "CC-BY-SA-4.0",
+      "chars": 2592
+    },
+    {
+      "doc_id": "doc-pub-9e3938411cf0-v1",
+      "title": "NIST SP 800-63B: Authenticator and Verifier Requirements (retired)",
+      "url": "https://raw.githubusercontent.com/usnistgov/800-63-3/master/sp800-63b/sec5_authenticators.md",
+      "licence": "Public Domain (US Government)",
+      "chars": 58923
+    },
+    {
+      "doc_id": "doc-pub-5e5a90ac9781-v1",
+      "title": "NIST SP 800-63B: Authenticator Assurance Levels (retired)",
+      "url": "https://raw.githubusercontent.com/usnistgov/800-63-3/master/sp800-63b/sec4_aal.md",
+      "licence": "Public Domain (US Government)",
+      "chars": 19897
+    },
+    {
+      "doc_id": "doc-pub-c8b0fc2f83c9-v1",
+      "title": "NIST SP 800-63: Digital Identity Risk Management (retired)",
+      "url": "https://raw.githubusercontent.com/usnistgov/800-63-3/master/sp800-63-3/sec5_DIRM.md",
+      "licence": "Public Domain (US Government)",
+      "chars": 18816
+    },
+    {
+      "doc_id": "doc-pub-ef498a0d6c09-v1",
+      "title": "Node.js Collaborator Guide \u2014 Contents (retired)",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/doc/contributing/collaborator-guide.md",
+      "licence": "MIT",
+      "chars": 2219
+    },
+    {
+      "doc_id": "doc-pub-75e3d58d269b-v1",
+      "title": "Node.js Collaborator Guide \u2014 Issues and pull requests (retired)",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/doc/contributing/collaborator-guide.md",
+      "licence": "MIT",
+      "chars": 5002
+    },
+    {
+      "doc_id": "doc-pub-261b0d562216-v1",
+      "title": "Node.js Collaborator Guide \u2014 Accepting modifications (retired)",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/doc/contributing/collaborator-guide.md",
+      "licence": "MIT",
+      "chars": 21772
+    },
+    {
+      "doc_id": "doc-pub-15b050f56d26-v1",
+      "title": "Node.js Collaborator Guide \u2014 Landing pull requests (retired)",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/doc/contributing/collaborator-guide.md",
+      "licence": "MIT",
+      "chars": 11152
+    },
+    {
+      "doc_id": "doc-pub-c977325f8f2f-v1",
+      "title": "Node.js Collaborator Guide \u2014 Who to CC in the issue tracker (retired)",
+      "url": "https://raw.githubusercontent.com/nodejs/node/main/doc/contributing/collaborator-guide.md",
+      "licence": "MIT",
+      "chars": 6677
     }
-  }
+  ]
 }

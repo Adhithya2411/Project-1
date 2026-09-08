@@ -415,6 +415,20 @@ class RetrievalTrace(BaseModel):
     reranked_candidates: int = 0
     acl_scoped_pool: int = 0
     acl_withheld: int = 0
+    index_class: str = Field(
+        default="global",
+        description=(
+            "Short signature of the ACL equivalence class whose specialised "
+            "index served this query. 'global' when specialisation is off."
+        ),
+    )
+    index_specialised: bool = Field(
+        default=False,
+        description=(
+            "True when retrieval statistics were fitted on the authorised "
+            "subcorpus alone rather than on the whole corpus."
+        ),
+    )
     timings_ms: dict[str, float] = Field(default_factory=dict)
     per_iteration: list[dict[str, Any]] = Field(default_factory=list)
 

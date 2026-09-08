@@ -94,8 +94,6 @@ $
 The accompanying Notes to Consolidated Financial Statements are an integral part of this statement.
 48
 
----
-
 Table of Contents
 3M Company and Subsidiaries
 Consolidated Balance Sheet
@@ -236,8 +234,6 @@ $
 47,072 
 The accompanying Notes to Consolidated Financial Statements are an integral part of this statement.
 50
-
----
 
 Table of Contents
 3M Company and Subsidiaries
@@ -402,8 +398,6 @@ $
 The accompanying Notes to Consolidated Financial Statements are an integral part of this statement.
 52
 
----
-
 Table of Contents
 RESULTS OF OPERATIONS
 Net Sales:
@@ -460,8 +454,6 @@ Goodwill Impairment Expense:
 As a result of 3M's commitment to exit per- and polyfluoroalkyl substance (PFAS) manufacturing, 3M recorded a goodwill impairment charge related to the Advanced
 Materials reporting unit (within the Transportation and Electronics business). Refer to Note 15 for further details.
 27
-
----
 
 Table of Contents
 Sales and operating income (loss) by business segment:

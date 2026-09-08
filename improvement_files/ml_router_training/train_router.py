@@ -1,31 +1,52 @@
-"""
-ML Router Training for AHRAG
-==============================
-Trains a gradient-boosted classifier (XGBoost) to replace the hand-tuned
-rule-based router in AHRAG.
+"""Train a learned route selector for AHRAG.
 
-This is NOT a template or placeholder — it runs against the real seeded
-AHRAG corpus, extracts features through the actual pipeline with ACL-scoped
-probes, generates gold labels by running all routes offline, and trains a
-real XGBoost model saved to disk.
+This addresses improvement.txt §3, whose complaint is that the router's 23
+feature weights were hand-set and never fitted to data, so "adaptive" describes
+a heuristic rather than a learned policy.
 
-WORKFLOW:
-  1. Boot a real AHRAGEngine and seed the corpus (9 docs, 60 chunks)
-  2. For each query in the seeded eval set, extract features through the
-     real pipeline (ACL, probe, feature extraction)
-  3. Generate gold route labels by running all 5 routes and picking the
-     cheapest one that retrieves the gold chunks
-  4. Augment with HotpotQA text-feature examples (if available)
-  5. Train XGBoost classifier on the 23 features
-  6. Report validation metrics and feature importances
-  7. Save the trained model and metadata to artifacts/
+WHAT WAS WRONG WITH THE PREVIOUS VERSION OF THIS SCRIPT
+-------------------------------------------------------
+It reported 97.2% validation accuracy, and that number meant nothing.
 
-PREREQUISITES:
-  pip install xgboost scikit-learn
+* Its ``generate_gold_labels`` looped ``for route in route_objects:`` but the
+  loop body called ``engine.answer(...)``, which ignores ``route`` and lets the
+  engine's own router choose. The same result was recomputed four times per
+  query. No route was ever actually forced, so every answerable query whose
+  evidence touched a gold chunk collapsed to the label ``R1``.
+* 500 of its 532 training rows were HotpotQA questions labelled by a rule over
+  HotpotQA's own ``type``/``level`` metadata, while the features
+  ``comparison_signal`` and ``hop_signal`` are lexical functions of the same
+  question text. The classifier was rediscovering the labelling rule.
+* Those rows were extracted against an **empty** ``AuthorisedScope``, so every
+  probe feature was identically zero and one split on ``sparse_confidence``
+  separated them perfectly from the real rows.
+* It reported the validation split as its headline figure — no held-out test
+  set, contrary to §3(c).
+* Its "rule-based router" baseline used ``item.expected_route``, the human
+  annotation from ``eval_set.yaml``, as the router's *prediction*.
+  ``GovernanceAwareRouter.decide`` was never called, so the comparison measured
+  agreement between two label columns.
 
-USAGE:
-  python improvement_files/ml_router_training/train_router.py
-  python improvement_files/ml_router_training/train_router.py --dry-run
+WHAT THIS VERSION DOES
+----------------------
+1. Builds one engine per route with ``FixedRouter``, all sharing a single
+   database and a single index, and actually executes all five routes on every
+   query (§3a).
+2. Derives the gold label from measured outcomes: the cheapest route whose
+   recall reaches the best recall any route achieved, subject to the evidence
+   gate passing. Abstention items are labelled R0 only when the evidence really
+   is insufficient. Queries no route can answer are dropped, not defaulted.
+3. Splits 60/20/20 by query. Thresholds and hyperparameters are chosen on
+   validation only; test is touched once, at the end (§3c).
+4. Compares the trained model against the *actual* rule-based router, the
+   complexity-only router, an oracle, and a majority-class baseline (§3b).
+5. Sweeps the utility lambdas on validation (§3d).
+6. Reports a learning curve over training-set size (§3e).
+
+USAGE
+  python improvement_files/ml_router_training/train_router.py --integrated
+  python improvement_files/ml_router_training/train_router.py --integrated --dry-run
+  python improvement_files/ml_router_training/train_router.py          # seed corpus
 """
 
 from __future__ import annotations
@@ -36,18 +57,32 @@ import logging
 import os
 import sys
 import time
+from collections import Counter
 from pathlib import Path
 
 import numpy as np
 
-# Add project root to path
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 
-logging.basicConfig(level=logging.WARNING, format="%(levelname)s: %(message)s")
-logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.ERROR, format="%(levelname)s: %(message)s")
 
-# The 23 features in the order expected by the router
+# Quiet and single-threaded: the transformer tokenizer's parallelism warns on
+# every fork, and progress bars make the per-route sweep unreadable in a log.
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+os.environ.setdefault("HF_HUB_DISABLE_PROGRESS_BARS", "1")
+
+from ahrag.eval.harness import (  # noqa: E402
+    add_corpus_arguments,
+    build_seeded_engine,
+    load_and_validate,
+    resolve_corpus,
+)
+from ahrag.eval.metrics import ndcg_at_k, recall_at_k  # noqa: E402
+from ahrag.models import Intent, Route  # noqa: E402
+
+ARTIFACT_DIR = PROJECT_ROOT / "improvement_files" / "ml_router_training" / "artifacts"
+
 FEATURE_NAMES = [
     "query_length", "identifier_signal", "numeric_signal",
     "temporal_signal", "lexical_specificity", "semantic_ambiguity",
@@ -60,12 +95,19 @@ FEATURE_NAMES = [
 ]
 
 ROUTE_NAMES = ["R0", "R1", "R2", "R3", "R4"]
-ROUTE_TO_INDEX = {f"R{i}": i for i in range(5)}
+ROUTE_TO_INDEX = {name: i for i, name in enumerate(ROUTE_NAMES)}
+ROUTE_OBJECTS = [Route.R0, Route.R1, Route.R2, Route.R3, Route.R4]
+
+# Cost ordering used to break ties among routes of equal measured quality.
+# This is the "cheapest route that clears the bar" rule of §3(a), and it is the
+# only place a prior enters the labels.
+ROUTE_COST = {"R0": 0, "R1": 1, "R2": 2, "R3": 3, "R4": 4}
+
+SEED = 1729
 
 
 def features_to_array(features) -> list[float]:
-    """Convert a RouterFeatures object into a flat 23-element list."""
-    from ahrag.models import Intent
+    """Flatten a ``RouterFeatures`` object into the 23-element feature vector."""
     return [
         features.query_length,
         features.identifier_signal,
@@ -93,587 +135,762 @@ def features_to_array(features) -> list[float]:
     ]
 
 
-# ============================================================================
-# STEP 1: Boot a real AHRAGEngine and extract features from the seeded corpus
-# ============================================================================
+# ===========================================================================
+# STEP 1 — actually run all five routes on every query
+# ===========================================================================
 
-def extract_seeded_features(engine):
+
+def build_route_engines(base_engine):
+    """One engine per route, sharing the base engine's database and index.
+
+    Sharing matters: constructing an ``AHRAGEngine`` refits the embedding space,
+    which on a 7,000-chunk corpus is the dominant cost. Five independent engines
+    would refit five times for no benefit, since only the routing policy differs.
     """
-    Extract real features from the seeded evaluation set using the full
-    AHRAG pipeline (ACL → probe → feature extraction).
+    from ahrag.pipeline import AHRAGEngine
+    from ahrag.routing.router import FixedRouter
 
-    Returns:
-        List of dicts, each with keys: query, user_id, features (list[float]),
-        expected_route (str), gold_chunks (list[str]), should_abstain (bool)
+    engines: dict[str, object] = {}
+    for route in ROUTE_OBJECTS:
+        engine = AHRAGEngine(
+            settings=base_engine.settings,
+            config=base_engine.config,
+            db=base_engine.db,
+            router=FixedRouter(route, name=f"fixed-{route.value.lower()}"),
+            today=base_engine.freshness.today,
+        )
+        # Reuse the already-built index and ACL snapshot rather than rebuilding.
+        engine.index = base_engine.index
+        engine.acl = base_engine.acl
+        engine.retrieval.index = base_engine.index
+        engine.retrieval.acl = base_engine.acl
+        engine.validator.acl = base_engine.acl
+        engines[route.value] = engine
+    return engines
+
+
+def route_records_cache_path(manifest, item_count: int) -> Path:
+    """Where the route-execution sweep is cached.
+
+    The sweep costs several minutes and its result depends only on the corpus,
+    the evaluation set, and the embedding backend — none of which change while
+    a model is being retrained. Caching it makes the Adaptive-RAG baseline and
+    the ablations reuse one sweep instead of repeating it.
     """
-    from ahrag.eval.dataset import load_eval_set
+    import hashlib
 
-    items = load_eval_set()
-    results = []
+    key = hashlib.blake2b(digest_size=8)
+    key.update(str(manifest or "seed").encode("utf-8"))
+    key.update(str(item_count).encode("utf-8"))
+    ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
+    return ARTIFACT_DIR / f"route_records-{key.hexdigest()}.json"
 
-    for item in items:
+
+def run_all_routes(base_engine, items, verbose: bool = True) -> list[dict]:
+    """Execute every route on every query and record measured outcomes.
+
+    Returns one record per evaluation item containing the 23 features (extracted
+    once, since they do not depend on the route) plus, for each route, the
+    recall, nDCG, evidence-gate verdict, abstention flag and latency.
+    """
+    engines = build_route_engines(base_engine)
+    records: list[dict] = []
+    started = time.perf_counter()
+
+    for index, item in enumerate(items, start=1):
         try:
-            user = engine.get_user(item.user_id)
+            user = base_engine.get_user(item.user_id)
         except KeyError:
-            logger.warning("Unknown user %s in eval item %s, skipping", item.user_id, item.id)
             continue
 
-        # Real ACL scope
-        scope = engine.acl.scope_for(user)
+        scope = base_engine.acl.scope_for(user)
+        probe = base_engine.retrieval.probe(item.query, scope)
+        features = base_engine.features.extract(item.query, user, scope, probe=probe)
 
-        # Real ACL-scoped probe
-        probe = engine.retrieval.probe(item.query, scope)
-
-        # Real feature extraction through the pipeline
-        feat = engine.features.extract(
-            item.query, user, scope, probe=probe,
-        )
-
-        results.append({
+        record: dict = {
             "id": item.id,
             "query": item.query,
             "user_id": item.user_id,
-            "features": features_to_array(feat),
-            "expected_route": item.expected_route.value if item.expected_route else "R3",
-            "gold_chunks": item.gold_chunks,
+            "query_type": item.query_type,
+            "features": features_to_array(features),
+            "gold_chunks": list(item.gold_chunks),
+            "forbidden_chunks": list(item.forbidden_chunks),
             "should_abstain": item.should_abstain,
-        })
+            "freshness_sensitive": item.freshness_sensitive,
+            "annotated_route": item.expected_route.value if item.expected_route else None,
+            "restricted_fraction": features.restricted_fraction,
+            "routes": {},
+        }
 
-    print(f"  Extracted features for {len(results)} seeded evaluation queries")
-    return results
+        gold = item.gold_set
+        for route_name, engine in engines.items():
+            route_started = time.perf_counter()
+            try:
+                result = engine.answer(item.query, item.user_id, write_audit=False)
+            except Exception as exc:  # pragma: no cover - defensive
+                record["routes"][route_name] = {"error": str(exc)}
+                continue
+            elapsed_ms = (time.perf_counter() - route_started) * 1000.0
+            retrieved = [e.chunk_id for e in result.evidence]
+
+            record["routes"][route_name] = {
+                "recall_at_5": recall_at_k(retrieved, gold, 5) if gold else None,
+                "ndcg_at_10": ndcg_at_k(retrieved, gold, 10) if gold else None,
+                "sufficient": bool(result.sufficiency.sufficient),
+                "abstained": bool(result.abstained),
+                "evidence": len(result.evidence),
+                "acl_violation": bool(set(retrieved) & set(item.forbidden_chunks)),
+                "latency_ms": round(elapsed_ms, 3),
+            }
+
+        records.append(record)
+        if verbose and index % 50 == 0:
+            rate = index / (time.perf_counter() - started)
+            print(f"    {index}/{len(items)} queries ({rate:.1f}/s)", flush=True)
+
+    if verbose:
+        total = time.perf_counter() - started
+        print(f"    done: {len(records)} queries x {len(engines)} routes in {total:.1f}s")
+    return records
 
 
-# ============================================================================
-# STEP 2: Generate gold route labels by running all routes offline
-# ============================================================================
+# ===========================================================================
+# STEP 2 — derive gold labels from measured outcomes
+# ===========================================================================
 
-def generate_gold_labels(engine, seeded_items):
+
+def assign_gold_labels(records: list[dict]) -> tuple[list[dict], dict]:
+    """Label each query with the cheapest route that achieves the best outcome.
+
+    Answerable queries: among routes reaching the maximum recall any route
+    achieved, and whose evidence gate passed, take the cheapest. If no route
+    passes the gate, take the cheapest that reaches maximum recall anyway — the
+    retrieval decision is still informative even when generation would abstain.
+
+    Abstention queries: R0 if no route produced sufficient evidence, which is
+    the outcome the label is asserting. If some route *did* find sufficient
+    evidence then the annotation and the corpus disagree, and the item is
+    dropped rather than used to teach the model something false.
+
+    Queries no route can retrieve any gold chunk for are dropped: they carry no
+    signal about which route is preferable.
     """
-    For each seeded eval query, run all 5 routes and pick the gold label:
-      - If should_abstain: gold = R0
-      - Otherwise: lowest-cost route that retrieves at least one gold chunk
+    labelled: list[dict] = []
+    stats = Counter()
 
-    This uses the real AHRAG pipeline — each route runs retrieval, packs
-    evidence, and checks sufficiency.
-
-    Returns the items with a 'gold_route' key added.
-    """
-    from ahrag.models import Route
-    from ahrag.routing.router import FixedRouter
-
-    route_objects = [Route.R0, Route.R1, Route.R2, Route.R3, Route.R4]
-
-    # Cost ordering: R0 < R1 < R2 < R3 < R4 (cheapest to most expensive)
-    cost_order = {Route.R0: 0, Route.R1: 1, Route.R2: 2, Route.R3: 3, Route.R4: 4}
-
-    for item in seeded_items:
-        if item["should_abstain"]:
-            item["gold_route"] = "R0"
+    for record in records:
+        routes = record["routes"]
+        answering = {
+            name: info
+            for name, info in routes.items()
+            if name != "R0" and "error" not in info
+        }
+        if not answering:
+            stats["dropped_all_routes_failed"] += 1
             continue
 
-        gold_set = set(item["gold_chunks"])
-        passing_routes = []
-
-        for route in route_objects:
-            if route is Route.R0:
-                # R0 never retrieves — it only passes for should_abstain items
+        if record["should_abstain"]:
+            any_sufficient = any(info["sufficient"] for info in answering.values())
+            if any_sufficient:
+                stats["dropped_abstain_but_answerable"] += 1
                 continue
-
-            try:
-                result = engine.answer(
-                    item["query"], item["user_id"], write_audit=False,
-                )
-                # Check if THIS route's evidence would contain a gold chunk
-                # We use the existing engine (its router picks a route), so
-                # instead we check whether the gold chunks are retrievable
-                # by probing evidence IDs
-                evidence_ids = {e.chunk_id for e in result.evidence}
-                if evidence_ids & gold_set:
-                    passing_routes.append(route)
-            except Exception:
-                continue
-
-        if passing_routes:
-            # Pick cheapest passing route
-            best = min(passing_routes, key=lambda r: cost_order[r])
-            item["gold_route"] = best.value
-        else:
-            # No route found gold — use the expected_route from eval labels
-            item["gold_route"] = item["expected_route"]
-
-    # Since running every query 5 times is expensive and the corpus is small,
-    # we use a smarter heuristic: the existing eval set labels + query properties
-    # For seeded queries, the expected_route is already a good label
-    for item in seeded_items:
-        if "gold_route" not in item:
-            item["gold_route"] = item["expected_route"]
-
-    route_dist = {}
-    for item in seeded_items:
-        route_dist[item["gold_route"]] = route_dist.get(item["gold_route"], 0) + 1
-    print(f"  Gold route distribution (seeded): {route_dist}")
-
-    return seeded_items
-
-
-# ============================================================================
-# STEP 3: Add HotpotQA examples for training volume
-# ============================================================================
-
-def load_hotpotqa_features(engine, max_examples=500):
-    """
-    Load HotpotQA questions and extract text-based features.
-
-    Since HotpotQA content is NOT in the AHRAG corpus, probe features will
-    be zero. This is CORRECT — these examples teach the classifier about
-    query text properties (length, comparison signal, hop signal, etc.)
-    while the seeded examples teach it about probe-based routing.
-
-    Route labels are assigned based on HotpotQA's own annotations:
-      - type='comparison' → R4 (needs multi-hop comparison)
-      - level='hard' + multi-hop → R4
-      - level='medium' → R3 (hybrid retrieval)
-      - level='easy' with simple lookup → R1
-      - Everything else → R3
-
-    Returns list of dicts with keys: query, features, gold_route
-    """
-    from ahrag.models import User, AuthorisedScope
-
-    hotpot_path = PROJECT_ROOT / "improvement_files" / "datasets" / "hotpotqa_dev.json"
-    if not hotpot_path.exists():
-        print("  HotpotQA not found — skipping augmentation")
-        return []
-
-    print(f"  Loading HotpotQA from {hotpot_path.name}...")
-
-    # Read JSONL format
-    examples = []
-    with hotpot_path.open(encoding="utf-8") as f:
-        for i, line in enumerate(f):
-            if i >= max_examples:
-                break
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                examples.append(json.loads(line))
-            except json.JSONDecodeError:
-                continue
-
-    if not examples:
-        print("  No HotpotQA examples loaded")
-        return []
-
-    # Use a generic user for text-only feature extraction
-    generic_user = User(
-        user_id="hotpotqa.user",
-        display_name="HotpotQA evaluation user",
-        roles=["employee"],
-    )
-    # Empty scope — probe will return zero confidence, which is correct
-    # because HotpotQA content isn't in our corpus
-    empty_scope = AuthorisedScope(
-        user_id="hotpotqa.user",
-        roles=["employee"],
-        allowed_chunk_ids=[],
-        allowed_doc_ids=[],
-        total_chunks=0,
-        withheld_count=0,
-    )
-
-    results = []
-    for item in examples:
-        question = item.get("question", "")
-        if not question or len(question) < 5:
+            record["gold_route"] = "R0"
+            record["label_basis"] = "no route produced sufficient evidence"
+            labelled.append(record)
+            stats["labelled_R0"] += 1
             continue
 
-        # Extract real features through the pipeline (no probe, which is correct)
-        feat = engine.features.extract(question, generic_user, empty_scope)
+        recalls = {
+            name: (info.get("recall_at_5") or 0.0) for name, info in answering.items()
+        }
+        best_recall = max(recalls.values())
+        if best_recall <= 0.0:
+            stats["dropped_no_route_retrieves_gold"] += 1
+            continue
 
-        # Assign route label based on HotpotQA metadata
-        q_type = item.get("type", "")
-        level = item.get("level", "")
-        supporting_facts = item.get("supporting_facts", [])
-        num_docs = len(set(sf[0] for sf in supporting_facts)) if supporting_facts else 1
+        winners = [name for name, value in recalls.items() if value >= best_recall]
+        gated = [name for name in winners if answering[name]["sufficient"]]
+        pool = gated or winners
+        chosen = min(pool, key=lambda name: ROUTE_COST[name])
 
-        if q_type == "comparison":
-            gold_route = "R4"  # Comparison needs multi-hop
-        elif level == "hard" and num_docs >= 2:
-            gold_route = "R4"  # Hard multi-hop
-        elif level == "hard":
-            gold_route = "R3"  # Hard but single-source → hybrid
-        elif num_docs == 1 and level == "easy":
-            gold_route = "R1"  # Easy single-fact → sparse
-        elif level == "easy":
-            gold_route = "R2"  # Easy multi-fact → dense
-        else:
-            gold_route = "R3"  # Medium → hybrid
+        record["gold_route"] = chosen
+        record["label_basis"] = (
+            f"cheapest of {sorted(pool)} at recall@5={best_recall:.3f}"
+            + ("" if gated else " (no route cleared the evidence gate)")
+        )
+        record["best_recall"] = best_recall
+        labelled.append(record)
+        stats[f"labelled_{chosen}"] += 1
 
-        results.append({
-            "query": question,
-            "features": features_to_array(feat),
-            "gold_route": gold_route,
-        })
-
-    route_dist = {}
-    for item in results:
-        route_dist[item["gold_route"]] = route_dist.get(item["gold_route"], 0) + 1
-    print(f"  Loaded {len(results)} HotpotQA examples. Route dist: {route_dist}")
-
-    return results
+    return labelled, dict(stats)
 
 
-# ============================================================================
-# STEP 4: Train the XGBoost classifier
-# ============================================================================
+# ===========================================================================
+# STEP 3 — splits
+# ===========================================================================
 
-def train_xgboost_router(X_train, y_train, X_val, y_val):
+
+def stratified_split(records: list[dict]) -> tuple[list[dict], list[dict], list[dict]]:
+    """60/20/20 split stratified on the gold label.
+
+    The test partition is not used for any threshold, hyperparameter, or model
+    selection decision anywhere in this script (§3c).
     """
-    Train an XGBoost multi-class classifier for route selection.
+    rng = np.random.RandomState(SEED)
+    by_label: dict[str, list[dict]] = {}
+    for record in records:
+        by_label.setdefault(record["gold_route"], []).append(record)
 
-    Returns the trained model and validation accuracy.
-    """
+    train: list[dict] = []
+    validation: list[dict] = []
+    test: list[dict] = []
+    for label in sorted(by_label):
+        group = by_label[label]
+        order = rng.permutation(len(group))
+        shuffled = [group[i] for i in order]
+        n = len(shuffled)
+        n_train = int(round(0.6 * n))
+        n_val = int(round(0.2 * n))
+        # With very few examples of a label, prefer keeping training signal.
+        train += shuffled[:n_train]
+        validation += shuffled[n_train : n_train + n_val]
+        test += shuffled[n_train + n_val :]
+    return train, validation, test
+
+
+def to_arrays(records: list[dict]) -> tuple[np.ndarray, np.ndarray]:
+    """Stack feature vectors and gold labels."""
+    features = np.array([r["features"] for r in records], dtype=np.float32)
+    labels = np.array([ROUTE_TO_INDEX[r["gold_route"]] for r in records], dtype=np.int32)
+    return features, labels
+
+
+# ===========================================================================
+# STEP 4 — train
+# ===========================================================================
+
+
+def train_classifier(x_train, y_train, x_val, y_val, params: dict | None = None):
+    """Fit an XGBoost multi-class classifier. Returns ``(model, val_accuracy)``."""
     try:
         import xgboost as xgb
     except ImportError:
-        print("ERROR: XGBoost not installed. Run: pip install xgboost")
+        print("  ERROR: xgboost is not installed. pip install xgboost scikit-learn")
         return None, 0.0
+    from sklearn.metrics import accuracy_score
 
-    from sklearn.metrics import classification_report, accuracy_score
+    # XGBoost's multi-class objective requires y to contain exactly the
+    # contiguous labels 0..k-1, so the observed label set is remapped and
+    # inverted on predict. The map is built from the *training* labels only:
+    # a class absent from training cannot be predicted, and including it here
+    # would make XGBoost reject the fit ("Expected [0 1 2], got [1 2 4]").
+    # Validation rows carrying an untrainable label are excluded from the
+    # early-stopping eval set but still counted as errors in the accuracy
+    # below, so the reported number is not flattered by dropping hard rows.
+    observed = sorted(set(y_train.tolist()))
+    forward = {label: i for i, label in enumerate(observed)}
+    inverse = np.array(observed, dtype=np.int32)
+    val_mask = np.array([int(v) in forward for v in y_val], dtype=bool)
 
-    # Find which classes actually appear in the data
-    unique_classes = sorted(set(y_train) | set(y_val))
-    num_classes = max(unique_classes) + 1
+    settings = {
+        # Single-threaded on purpose. XGBoost's parallel backend spawns loky
+        # workers, and on Python 3.14 those die with leaked semaphores partway
+        # through the fit, taking the run with them. The training sets here are
+        # a few hundred rows, so the threading buys nothing measurable.
+        "n_jobs": 1,
+        "n_estimators": 300,
+        "max_depth": 4,
+        "learning_rate": 0.08,
+        "subsample": 0.85,
+        "colsample_bytree": 0.85,
+        "reg_alpha": 0.1,
+        "reg_lambda": 1.5,
+        "min_child_weight": 3,
+    }
+    settings.update(params or {})
 
     model = xgb.XGBClassifier(
-        n_estimators=200,
-        max_depth=5,
-        learning_rate=0.1,
         objective="multi:softprob",
-        num_class=num_classes,
+        num_class=len(observed),
         eval_metric="mlogloss",
-        random_state=1729,
-        min_child_weight=2,
-        subsample=0.8,
-        colsample_bytree=0.8,
-        reg_alpha=0.1,
-        reg_lambda=1.0,
+        random_state=SEED,
+        **settings,
     )
-
+    fit_kwargs: dict = {"verbose": False}
+    if val_mask.any():
+        fit_kwargs["eval_set"] = [
+            (
+                x_val[val_mask],
+                np.array(
+                    [forward[int(v)] for v in y_val[val_mask]], dtype=np.int32
+                ),
+            )
+        ]
     model.fit(
-        X_train, y_train,
-        eval_set=[(X_val, y_val)],
-        verbose=False,
+        x_train,
+        np.array([forward[int(v)] for v in y_train], dtype=np.int32),
+        **fit_kwargs,
     )
+    model._ahrag_inverse = inverse  # type: ignore[attr-defined]
+    predictions = predict_routes(model, x_val)
+    return model, float(accuracy_score(y_val, predictions))
 
-    y_pred = model.predict(X_val)
-    accuracy = accuracy_score(y_val, y_pred)
 
-    # Only include labels that actually appear
-    present_labels = sorted(set(y_val) | set(y_pred))
-    present_names = [ROUTE_NAMES[i] for i in present_labels if i < len(ROUTE_NAMES)]
+def predict_routes(model, x) -> np.ndarray:
+    """Predict original route indices, undoing the contiguous label mapping.
 
-    report = classification_report(
-        y_val, y_pred,
-        labels=present_labels,
-        target_names=present_names,
-        zero_division=0,
-    )
+    XGBoost's ``predict`` returns class indices for most configurations but a
+    probability matrix when ``multi:softprob`` is used with only two observed
+    classes, so the shape is normalised before the inverse mapping is applied.
+    Indexing a 2-D array through the mapping silently produces a
+    multilabel-shaped result that sklearn then rejects several frames later.
+    """
+    raw = np.asarray(model.predict(x))
+    if raw.ndim > 1:
+        raw = raw.argmax(axis=1)
+    indices = raw.astype(np.int32)
+    inverse = getattr(model, "_ahrag_inverse", None)
+    if inverse is None:
+        return indices
+    indices = np.clip(indices, 0, len(inverse) - 1)
+    return inverse[indices]
 
-    print(f"\n{'='*60}")
-    print(f"VALIDATION RESULTS")
-    print(f"{'='*60}")
-    print(f"Accuracy: {accuracy:.4f}")
-    print(f"\nClassification Report:\n{report}")
 
-    # Feature importance
-    importances = model.feature_importances_
-    sorted_idx = np.argsort(importances)[::-1]
-    print("Top 10 Most Important Features:")
-    for rank, i in enumerate(sorted_idx[:10], 1):
-        print(f"  {rank:2d}. {FEATURE_NAMES[i]:25s} {importances[i]:.4f}")
+# ===========================================================================
+# STEP 5 — baselines that are actually what they claim to be
+# ===========================================================================
 
+
+def rule_based_predictions(base_engine, records: list[dict], router) -> np.ndarray:
+    """Ask a real router object for a real decision on each record.
+
+    This is the comparison the previous script claimed to make. It calls
+    ``router.decide(features, scope)`` on reconstructed feature objects, so the
+    number produced is the router's accuracy rather than the agreement between
+    two annotation columns.
+    """
+    from ahrag.models import AuthorisedScope
+
+    predictions: list[int] = []
+    for record in records:
+        user = base_engine.get_user(record["user_id"])
+        scope: AuthorisedScope = base_engine.acl.scope_for(user)
+        probe = base_engine.retrieval.probe(record["query"], scope)
+        features = base_engine.features.extract(
+            record["query"], user, scope, probe=probe
+        )
+        decision = router.decide(features, scope)
+        predictions.append(ROUTE_TO_INDEX[decision.route.value])
+    return np.array(predictions, dtype=np.int32)
+
+
+def oracle_accuracy(records: list[dict]) -> float:
+    """Always 1.0 by construction; reported to anchor the scale."""
+    return 1.0
+
+
+def majority_accuracy(train: list[dict], evaluate: list[dict]) -> float:
+    """Accuracy of always predicting the most common training label."""
+    if not train or not evaluate:
+        return 0.0
+    common = Counter(r["gold_route"] for r in train).most_common(1)[0][0]
+    return sum(1 for r in evaluate if r["gold_route"] == common) / len(evaluate)
+
+
+# ===========================================================================
+# STEP 5b — the Adaptive-RAG baseline (§6a)
+# ===========================================================================
+
+
+def train_adaptive_rag(train: list[dict], validation: list[dict]):
+    """Train the text-only complexity classifier that stands in for Adaptive-RAG.
+
+    Same corpus, same queries, same offline labels as the AHRAG router — the
+    only difference is the feature set. That is what makes the P2-versus-B6
+    comparison an ablation of the governance features rather than a comparison
+    of two unrelated systems.
+
+    Routes are collapsed to Adaptive-RAG's three complexity classes:
+    ``A`` (cheapest single-step, R0/R1) → 0, ``B`` (single-step, R2/R3) → 1,
+    ``C`` (multi-step, R4) → 2.
+    """
+    from ahrag.routing.router import TEXT_ONLY_FEATURE_INDICES
+
+    def to_class(route: str) -> int:
+        if route in ("R0", "R1"):
+            return 0
+        if route in ("R2", "R3"):
+            return 1
+        return 2
+
+    def matrix(records: list[dict]) -> tuple[np.ndarray, np.ndarray]:
+        features = np.array(
+            [[r["features"][i] for i in TEXT_ONLY_FEATURE_INDICES] for r in records],
+            dtype=np.float32,
+        )
+        labels = np.array([to_class(r["gold_route"]) for r in records], dtype=np.int32)
+        return features, labels
+
+    x_train, y_train = matrix(train)
+    x_val, y_val = matrix(validation)
+    if len(set(y_train.tolist())) < 2:
+        print("  only one complexity class in training data; skipping")
+        return None, 0.0
+    model, accuracy = train_classifier(x_train, y_train, x_val, y_val)
     return model, accuracy
 
 
-# ============================================================================
-# STEP 5: Bootstrap confidence intervals and significance tests
-# ============================================================================
+def adaptive_rag_route_accuracy(model, records: list[dict]) -> float:
+    """Route-level accuracy of the Adaptive-RAG baseline on ``records``.
 
-def bootstrap_ci(metric_values, n_bootstrap=1000, ci=0.95):
-    """
-    Compute bootstrap confidence interval for a metric.
-
-    Args:
-        metric_values: array of per-query metric values
-        n_bootstrap: number of bootstrap iterations
-        ci: confidence level (e.g., 0.95 for 95% CI)
-
-    Returns:
-        (mean, lower_bound, upper_bound)
-    """
-    rng = np.random.RandomState(1729)
-    n = len(metric_values)
-    bootstrap_means = np.array([
-        np.mean(rng.choice(metric_values, size=n, replace=True))
-        for _ in range(n_bootstrap)
-    ])
-    alpha = (1 - ci) / 2
-    lower = np.percentile(bootstrap_means, alpha * 100)
-    upper = np.percentile(bootstrap_means, (1 - alpha) * 100)
-    mean = np.mean(metric_values)
-    return float(mean), float(lower), float(upper)
-
-
-def paired_bootstrap_test(system_a_scores, system_b_scores, n_bootstrap=10000):
-    """
-    Paired bootstrap significance test between two systems.
-
-    Returns p-value: probability that system A is NOT better than system B.
-    """
-    rng = np.random.RandomState(1729)
-    n = len(system_a_scores)
-    observed_diff = np.mean(system_a_scores) - np.mean(system_b_scores)
-
-    count_worse_or_equal = 0
-    for _ in range(n_bootstrap):
-        idx = rng.choice(n, size=n, replace=True)
-        sample_diff = np.mean(system_a_scores[idx]) - np.mean(system_b_scores[idx])
-        if sample_diff <= 0:
-            count_worse_or_equal += 1
-
-    p_value = count_worse_or_equal / n_bootstrap
-    return float(p_value), float(observed_diff)
-
-
-# ============================================================================
-# STEP 6: Compare trained router against rule-based router
-# ============================================================================
-
-def compare_against_rule_based(model, engine, seeded_items):
-    """
-    Compare the trained ML router's route decisions against the existing
-    rule-based GovernanceAwareRouter on the seeded evaluation set.
+    Scored on routes rather than on its own three classes, so it is directly
+    comparable with every other row in the final table.
     """
     if model is None:
-        return
+        return 0.0
+    from ahrag.routing.router import AdaptiveRAGRouter, TEXT_ONLY_FEATURE_INDICES
 
-    from ahrag.models import Intent
-
-    print(f"\n{'='*60}")
-    print("COMPARISON: Trained ML Router vs Rule-Based Router")
-    print(f"{'='*60}")
-
-    ml_correct = 0
-    rule_correct = 0
-    ml_routes = []
-    rule_routes = []
-    gold_routes = []
-
-    for item in seeded_items:
-        gold_idx = ROUTE_TO_INDEX.get(item["gold_route"], 3)
-        gold_routes.append(gold_idx)
-
-        # ML router prediction
-        X = np.array([item["features"]])
-        ml_pred = int(model.predict(X)[0])
-        ml_routes.append(ml_pred)
-        if ml_pred == gold_idx:
-            ml_correct += 1
-
-        # Rule-based router prediction (use the expected_route from eval)
-        rule_idx = ROUTE_TO_INDEX.get(item["expected_route"], 3)
-        rule_routes.append(rule_idx)
-        if rule_idx == gold_idx:
-            rule_correct += 1
-
-    n = len(seeded_items)
-    print(f"\n  ML Router accuracy:         {ml_correct}/{n} = {ml_correct/n:.3f}")
-    print(f"  Rule-Based Router accuracy: {rule_correct}/{n} = {rule_correct/n:.3f}")
-
-    # Route distribution comparison
-    ml_dist = {r: 0 for r in ROUTE_NAMES}
-    rule_dist = {r: 0 for r in ROUTE_NAMES}
-    for ml, rule in zip(ml_routes, rule_routes):
-        if ml < len(ROUTE_NAMES):
-            ml_dist[ROUTE_NAMES[ml]] += 1
-        if rule < len(ROUTE_NAMES):
-            rule_dist[ROUTE_NAMES[rule]] += 1
-
-    print(f"\n  Route distribution:")
-    print(f"  {'Route':6s} {'ML':>4s} {'Rule':>6s}")
-    for route in ROUTE_NAMES:
-        print(f"  {route:6s} {ml_dist[route]:4d} {rule_dist[route]:6d}")
-
-    # Bootstrap significance test
-    ml_scores = np.array([1.0 if ml == gold else 0.0 for ml, gold in zip(ml_routes, gold_routes)])
-    rule_scores = np.array([1.0 if rule == gold else 0.0 for rule, gold in zip(rule_routes, gold_routes)])
-
-    if len(ml_scores) >= 10:
-        p_value, diff = paired_bootstrap_test(ml_scores, rule_scores)
-        mean_ml, lo_ml, hi_ml = bootstrap_ci(ml_scores)
-        mean_rule, lo_rule, hi_rule = bootstrap_ci(rule_scores)
-        print(f"\n  ML Router accuracy 95% CI:   [{lo_ml:.3f}, {hi_ml:.3f}]")
-        print(f"  Rule-Based accuracy 95% CI:  [{lo_rule:.3f}, {hi_rule:.3f}]")
-        print(f"  Paired bootstrap p-value:    {p_value:.4f}")
-        print(f"  Observed difference:         {diff:+.4f}")
-        if p_value < 0.05:
-            print(f"  -> Statistically significant at alpha=0.05")
-        else:
-            print(f"  -> NOT statistically significant at alpha=0.05")
-    else:
-        print(f"\n  (Too few samples for bootstrap test; need ≥10, have {len(ml_scores)})")
+    features = np.array(
+        [[r["features"][i] for i in TEXT_ONLY_FEATURE_INDICES] for r in records],
+        dtype=np.float32,
+    )
+    predicted_classes = predict_routes(model, features)
+    correct = 0
+    for record, predicted in zip(records, predicted_classes):
+        route = AdaptiveRAGRouter.CLASS_TO_ROUTE.get(int(predicted), Route.R3)
+        if ROUTE_TO_INDEX[route.value] == ROUTE_TO_INDEX[record["gold_route"]]:
+            correct += 1
+    return correct / len(records) if records else 0.0
 
 
-# ============================================================================
+# ===========================================================================
+# STEP 6 — lambda sweep (§3d) and learning curve (§3e)
+# ===========================================================================
+
+
+def sweep_lambdas(base_engine, validation: list[dict]) -> list[dict]:
+    """Grid-search the utility lambdas on the validation split only.
+
+    The rule-based router's trade-off coefficients (latency 0.09, cost 0.35,
+    risk 0.55) were hand-picked. This measures whether they are defensible by
+    scoring each candidate against the offline gold labels.
+    """
+    from ahrag.config import RouterConfig
+    from ahrag.routing.router import GovernanceAwareRouter
+
+    y_true = np.array(
+        [ROUTE_TO_INDEX[r["gold_route"]] for r in validation], dtype=np.int32
+    )
+    grid = [
+        (latency, cost, risk)
+        for latency in (0.03, 0.09, 0.20)
+        for cost in (0.12, 0.35, 0.60)
+        for risk in (0.25, 0.55, 0.85)
+    ]
+
+    results: list[dict] = []
+    for latency, cost, risk in grid:
+        config = RouterConfig.load(base_engine.settings.router_config)
+        config.lambdas.latency = latency
+        config.lambdas.cost = cost
+        config.lambdas.risk = risk
+        router = GovernanceAwareRouter(config, base_engine.settings)
+        predictions = rule_based_predictions(base_engine, validation, router)
+        accuracy = float((predictions == y_true).mean())
+
+        # Label agreement alone is a poor objective for this router, since it
+        # is not what the utility function optimises. So also report what the
+        # chosen routes actually *achieved*: the recall each selected route was
+        # measured to produce during the offline sweep. No retrieval is re-run
+        # -- the per-route outcomes are already in the cached records.
+        achieved: list[float] = []
+        for record, predicted in zip(validation, predictions):
+            route_name = ROUTE_NAMES[int(predicted)]
+            info = record["routes"].get(route_name) or {}
+            if record["should_abstain"]:
+                achieved.append(1.0 if route_name == "R0" else 0.0)
+            else:
+                achieved.append(float(info.get("recall_at_5") or 0.0))
+        results.append(
+            {
+                "latency": latency,
+                "cost": cost,
+                "risk": risk,
+                "label_agreement": accuracy,
+                "achieved_recall_at_5": float(np.mean(achieved)) if achieved else 0.0,
+            }
+        )
+    # Rank by achieved quality, which is the thing worth tuning for.
+    results.sort(key=lambda entry: -entry["achieved_recall_at_5"])
+    return results
+
+
+def learning_curve(train: list[dict], validation: list[dict]) -> list[dict]:
+    """Validation accuracy as the training set grows (§3e)."""
+    x_val, y_val = to_arrays(validation)
+    rng = np.random.RandomState(SEED)
+    order = rng.permutation(len(train))
+    shuffled = [train[i] for i in order]
+
+    points: list[dict] = []
+    fractions = [0.1, 0.25, 0.5, 0.75, 1.0]
+    for fraction in fractions:
+        size = max(10, int(len(shuffled) * fraction))
+        subset = shuffled[:size]
+        if len(set(r["gold_route"] for r in subset)) < 2:
+            continue
+        x_train, y_train = to_arrays(subset)
+        model, accuracy = train_classifier(x_train, y_train, x_val, y_val)
+        if model is None:
+            break
+        points.append({"train_size": size, "val_accuracy": accuracy})
+        print(f"    n={size:5d}  validation accuracy={accuracy:.4f}")
+    return points
+
+
+# ===========================================================================
 # MAIN
-# ============================================================================
+# ===========================================================================
 
-def main():
-    parser = argparse.ArgumentParser(description="Train an ML router for AHRAG")
-    parser.add_argument(
-        "--dry-run", action="store_true",
-        help="Only extract features and print stats, don't train",
-    )
-    parser.add_argument(
-        "--hotpotqa-limit", type=int, default=500,
-        help="Maximum HotpotQA examples to use (default: 500)",
-    )
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Train a learned router for AHRAG")
+    add_corpus_arguments(parser)
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Run routes and label, but do not train")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="Cap the number of evaluation queries used")
+    parser.add_argument("--skip-sweep", action="store_true",
+                        help="Skip the lambda grid search (it re-routes the validation split)")
     args = parser.parse_args()
 
-    print("=" * 70)
-    print("AHRAG ML Router Training")
-    print("=" * 70)
+    manifest, eval_set = resolve_corpus(args)
+
+    print("=" * 78)
+    print("AHRAG Router Training — offline route labels from measured outcomes")
+    print("=" * 78)
     print()
 
-    # ---- Step 1: Boot a real AHRAGEngine ----
-    print("[1/6] Initialising AHRAGEngine with seeded corpus...")
-    from ahrag.pipeline import AHRAGEngine
-
-    engine = AHRAGEngine()
-    engine.ensure_seeded()
-    chunk_count = engine.db.count_chunks()
-    doc_count = len(engine.db.get_documents())
-    print(f"  Engine ready: {doc_count} documents, {chunk_count} chunks")
-    print(f"  Router: {engine.router.name}")
-    print(f"  Backends: {engine.backend_info()}")
+    print("[1/7] Loading corpus and evaluation set...")
+    engine = build_seeded_engine(manifest, rebuild_cache=args.rebuild_cache)
+    items, _ = load_and_validate(engine, eval_set)
+    if args.limit:
+        items = items[: args.limit]
+        print(f"  limited to {len(items)} queries")
+    print(f"  corpus: {len(engine.db.get_documents())} documents, "
+          f"{engine.db.count_chunks()} chunks")
     print()
 
-    # ---- Step 2: Extract features from seeded eval set ----
-    print("[2/6] Extracting features from seeded evaluation set...")
-    seeded_items = extract_seeded_features(engine)
+    print("[2/7] Executing all five routes on every query...")
+    cache_path = route_records_cache_path(manifest, len(items))
+    if cache_path.exists() and not args.rebuild_cache:
+        records = json.loads(cache_path.read_text(encoding="utf-8"))
+        print(f"  reusing cached route sweep ({len(records)} queries) from "
+              f"{cache_path.name}")
+    else:
+        records = run_all_routes(engine, items)
+        cache_path.write_text(json.dumps(records), encoding="utf-8")
+        print(f"  cached route sweep -> {cache_path.name}")
     print()
 
-    # ---- Step 3: Generate gold route labels ----
-    print("[3/6] Generating gold route labels...")
-    seeded_items = generate_gold_labels(engine, seeded_items)
+    print("[3/7] Deriving gold labels from measured outcomes...")
+    labelled, label_stats = assign_gold_labels(records)
+    print(f"  labelled {len(labelled)} of {len(records)} queries")
+    for key in sorted(label_stats):
+        print(f"    {key:36s} {label_stats[key]:5d}")
+    unanswerable = label_stats.get("dropped_no_route_retrieves_gold", 0)
+    contradicted = label_stats.get("dropped_abstain_but_answerable", 0)
+    if unanswerable:
+        print(f"\n  NOTE: {unanswerable} answerable queries had gold evidence that no")
+        print("  route retrieved into the evidence pack. On a corpus this size that is")
+        print("  a retrieval-difficulty result, not a labelling bug: it is the")
+        print("  selectivity improvement.txt §1 was asking for.")
+    if contradicted:
+        print(f"\n  NOTE: {contradicted} queries labelled should_abstain had some route")
+        print("  produce evidence the sufficiency gate accepted. Dropped from training")
+        print("  because the annotation and the corpus disagree, but it is a finding")
+        print("  about the gate: at scale there is usually *something* that scores well")
+        print("  enough, so the gate abstains less often than it does on the demo corpus.")
+    distribution = Counter(r["gold_route"] for r in labelled)
+    print(f"  gold route distribution: {dict(sorted(distribution.items()))}")
+    if len(distribution) < 2:
+        print("\n  Only one route class present. Nothing to learn; stopping.")
+        sys.exit(1)
     print()
 
-    # ---- Step 4: Load HotpotQA augmentation ----
-    print("[4/6] Loading HotpotQA augmentation data...")
-    hotpotqa_items = load_hotpotqa_features(engine, max_examples=args.hotpotqa_limit)
-    print()
-
-    # ---- Combine all training data ----
-    all_features = []
-    all_labels = []
-
-    for item in seeded_items:
-        all_features.append(item["features"])
-        all_labels.append(ROUTE_TO_INDEX[item["gold_route"]])
-
-    for item in hotpotqa_items:
-        all_features.append(item["features"])
-        all_labels.append(ROUTE_TO_INDEX[item["gold_route"]])
-
-    X = np.array(all_features, dtype=np.float32)
-    y = np.array(all_labels, dtype=np.int32)
-
-    print(f"Total training data: {len(y)} examples")
-    print(f"  From seeded eval: {len(seeded_items)}")
-    print(f"  From HotpotQA:    {len(hotpotqa_items)}")
-    print(f"  Feature shape:    {X.shape}")
-    print(f"  Label distribution:")
-    for route_name in ROUTE_NAMES:
-        idx = ROUTE_TO_INDEX[route_name]
-        count = int(np.sum(y == idx))
-        if count > 0:
-            print(f"    {route_name}: {count}")
+    print("[4/7] Splitting 60/20/20 (stratified, test held out)...")
+    train, validation, test = stratified_split(labelled)
+    print(f"  train={len(train)}  validation={len(validation)}  test={len(test)}")
+    for name, split in (("train", train), ("val", validation), ("test", test)):
+        print(f"    {name:5s}: {dict(sorted(Counter(r['gold_route'] for r in split).items()))}")
     print()
 
     if args.dry_run:
-        print("Dry run complete. Feature extraction verified.")
-        print(f"Sample feature vector (first query):")
-        for name, val in zip(FEATURE_NAMES, all_features[0]):
-            print(f"  {name:30s} = {val:.4f}")
+        print("Dry run complete — labels produced, no training performed.")
+        sample = labelled[0]
+        print(f"\nSample labelled query: {sample['query'][:70]!r}")
+        print(f"  gold_route  : {sample['gold_route']}")
+        print(f"  label_basis : {sample['label_basis']}")
+        print(f"  per-route recall@5: "
+              f"{ {k: v.get('recall_at_5') for k, v in sample['routes'].items()} }")
         return
 
-    # ---- Step 5: Train the classifier ----
-    print("[5/6] Training XGBoost classifier...")
-
-    from sklearn.model_selection import train_test_split
-
-    # Stratified split — but handle small classes that can't be split
-    try:
-        X_train, X_val, y_train, y_val = train_test_split(
-            X, y, test_size=0.2, random_state=1729, stratify=y,
-        )
-    except ValueError:
-        # Some classes have too few samples for stratification
-        print("  Warning: some route classes too small for stratified split, using random split")
-        X_train, X_val, y_train, y_val = train_test_split(
-            X, y, test_size=0.2, random_state=1729,
-        )
-
-    print(f"  Train: {len(y_train)}, Validation: {len(y_val)}")
-
-    model, accuracy = train_xgboost_router(X_train, y_train, X_val, y_val)
+    print("[5/7] Training the classifier...")
+    x_train, y_train = to_arrays(train)
+    x_val, y_val = to_arrays(validation)
+    model, val_accuracy = train_classifier(x_train, y_train, x_val, y_val)
     if model is None:
-        print("Training failed. Install xgboost: pip install xgboost scikit-learn")
         sys.exit(1)
+    print(f"  validation accuracy: {val_accuracy:.4f}")
 
-    # ---- Step 6: Compare against rule-based router ----
-    print("\n[6/6] Comparing trained router vs rule-based router...")
-    compare_against_rule_based(model, engine, seeded_items)
+    importances = model.feature_importances_
+    ranked = np.argsort(importances)[::-1]
+    print("  most informative features:")
+    for rank, index in enumerate(ranked[:8], start=1):
+        print(f"    {rank}. {FEATURE_NAMES[index]:24s} {importances[index]:.4f}")
+    print()
 
-    # ---- Save artifacts ----
-    artifact_dir = PROJECT_ROOT / "improvement_files" / "ml_router_training" / "artifacts"
-    artifact_dir.mkdir(exist_ok=True)
+    print("[5b] Training the Adaptive-RAG baseline (text-only features)...")
+    adaptive_model, adaptive_val = train_adaptive_rag(train, validation)
+    if adaptive_model is not None:
+        print(f"  validation complexity-class accuracy: {adaptive_val:.4f}")
+    print()
 
-    model.save_model(str(artifact_dir / "xgboost_router.json"))
+    print("[6/7] Learning curve (validation only)...")
+    curve = learning_curve(train, validation)
+    print()
+
+    sweep: list[dict] = []
+    if not args.skip_sweep:
+        print("[6b] Lambda grid search on validation...")
+        sweep = sweep_lambdas(engine, validation)
+        print("  Ranked by the recall the selected routes actually achieved.")
+        print(f"  {'latency':>8s} {'cost':>6s} {'risk':>6s} "
+              f"{'achieved R@5':>13s} {'label agree':>12s}")
+        for entry in sweep[:5]:
+            print(f"  {entry['latency']:8.2f} {entry['cost']:6.2f} "
+                  f"{entry['risk']:6.2f} {entry['achieved_recall_at_5']:13.4f} "
+                  f"{entry['label_agreement']:12.4f}")
+        shipped = next(
+            (e for e in sweep
+             if (e["latency"], e["cost"], e["risk"]) == (0.09, 0.35, 0.55)),
+            None,
+        )
+        if shipped:
+            rank = sweep.index(shipped) + 1
+            print(f"  shipped config/router.yaml (0.09/0.35/0.55): "
+                  f"achieved R@5={shipped['achieved_recall_at_5']:.4f} "
+                  f"-> rank {rank} of {len(sweep)}")
+        print()
+
+    print("[7/7] Held-out test evaluation (touched once)...")
+    from sklearn.metrics import classification_report
+
+    from ahrag.routing.router import ComplexityOnlyRouter, GovernanceAwareRouter
+
+    x_test, y_test = to_arrays(test)
+    ml_predictions = predict_routes(model, x_test)
+    ml_accuracy = float((ml_predictions == y_test).mean())
+
+    governance = rule_based_predictions(
+        engine, test, GovernanceAwareRouter(engine.config, engine.settings)
+    )
+    complexity = rule_based_predictions(
+        engine, test, ComplexityOnlyRouter(engine.config)
+    )
+
+    rows = [
+        ("Oracle (upper bound)", oracle_accuracy(test)),
+        ("P2  Trained router, all 23 features", ml_accuracy),
+        ("P1  GovernanceAwareRouter (shipped, rule-based)", float((governance == y_test).mean())),
+        ("B6  Adaptive-RAG (trained, text-only features)",
+         adaptive_rag_route_accuracy(adaptive_model, test)),
+        ("B5  ComplexityOnlyRouter (hand thresholds)", float((complexity == y_test).mean())),
+        ("Majority class", majority_accuracy(train, test)),
+    ]
+    print()
+    print("  READ THIS BEFORE COMPARING THE ROWS BELOW.")
+    print("  The label is 'cheapest route that attains the best recall@5 any")
+    print("  route attained'. P2 and B6 are *trained to predict that label*.")
+    print("  P1 and B5 were not: P1 maximises a utility that trades evidence")
+    print("  quality against estimated latency, cost and risk, and B5 routes on")
+    print("  query length. Their accuracy here therefore measures disagreement")
+    print("  with a labelling rule they never targeted -- it is NOT a statement")
+    print("  that they retrieve badly. For retrieval quality compare Recall@5")
+    print("  and nDCG@10 in compare_baselines.py, where P1 is competitive.")
+    print("  The rows that are directly comparable are P2 vs B6: same corpus,")
+    print("  same labels, same model family, differing only in whether the")
+    print("  governance and probe features are visible.")
+    print()
+    print(f"  {'system':48s} {'test accuracy':>14s}")
+    print("  " + "-" * 64)
+    for name, accuracy in rows:
+        print(f"  {name:48s} {accuracy:14.4f}")
+
+    print()
+    print("  Route distribution on the held-out test split:")
+    print(f"    {'route':6s} {'gold':>6s} {'P2':>6s} {'P1':>6s} {'B5':>6s}")
+    for index, name in enumerate(ROUTE_NAMES):
+        print(f"    {name:6s} {int((y_test == index).sum()):6d} "
+              f"{int((ml_predictions == index).sum()):6d} "
+              f"{int((governance == index).sum()):6d} "
+              f"{int((complexity == index).sum()):6d}")
+    print("  A rule-based router that concentrates on one route while the gold")
+    print("  labels concentrate on another scores near zero by construction.")
+    print()
+
+    present = sorted(set(y_test.tolist()) | set(ml_predictions.tolist()))
+    print()
+    print(classification_report(
+        y_test, ml_predictions,
+        labels=present,
+        target_names=[ROUTE_NAMES[i] for i in present],
+        zero_division=0,
+    ))
+
+    ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
+    model.save_model(str(ARTIFACT_DIR / "xgboost_router.json"))
+    np.save(ARTIFACT_DIR / "label_mapping.npy", getattr(model, "_ahrag_inverse"))
+    if adaptive_model is not None:
+        adaptive_model.save_model(str(ARTIFACT_DIR / "adaptive_rag_router.json"))
 
     metadata = {
-        "total_examples": int(len(y)),
-        "seeded_examples": len(seeded_items),
-        "hotpotqa_examples": len(hotpotqa_items),
-        "train_examples": int(len(y_train)),
-        "validation_examples": int(len(y_val)),
-        "validation_accuracy": float(accuracy),
+        "corpus": str(manifest) if manifest else "packaged seed corpus",
+        "eval_set": str(eval_set) if eval_set else "packaged seed suite",
+        "corpus_documents": len(engine.db.get_documents()),
+        "corpus_chunks": engine.db.count_chunks(),
+        "queries_executed": len(records),
+        "queries_labelled": len(labelled),
+        "label_policy": (
+            "Gold route = cheapest route achieving the maximum recall@5 any "
+            "route achieved, preferring routes whose evidence gate passed. "
+            "Abstention items labelled R0 only when no route produced "
+            "sufficient evidence. Unlabelled queries dropped, never defaulted."
+        ),
+        "label_stats": label_stats,
+        "gold_distribution": dict(sorted(distribution.items())),
+        "splits": {"train": len(train), "validation": len(validation), "test": len(test)},
+        "validation_accuracy": val_accuracy,
+        "adaptive_rag_validation_accuracy": adaptive_val,
+        "test_accuracy": {name: accuracy for name, accuracy in rows},
         "feature_names": FEATURE_NAMES,
         "route_names": ROUTE_NAMES,
-        "label_policy": (
-            "Seeded queries: expected_route from eval_set.yaml (should_abstain → R0). "
-            "HotpotQA: comparison → R4, hard multi-hop → R4, hard single → R3, "
-            "easy single-fact → R1, easy multi-fact → R2, medium → R3."
-        ),
-        "model_params": {
-            "n_estimators": 200, "max_depth": 5, "learning_rate": 0.1,
-            "subsample": 0.8, "colsample_bytree": 0.8,
+        "feature_importances": {
+            FEATURE_NAMES[i]: float(importances[i]) for i in range(len(FEATURE_NAMES))
         },
-        "corpus_info": {
-            "documents": doc_count, "chunks": chunk_count,
-        },
+        "learning_curve": curve,
+        "lambda_sweep_top10": sweep[:10],
+        "seed": SEED,
     }
-    with (artifact_dir / "metadata.json").open("w", encoding="utf-8") as f:
-        json.dump(metadata, f, indent=2)
+    (ARTIFACT_DIR / "metadata.json").write_text(
+        json.dumps(metadata, indent=2), encoding="utf-8"
+    )
 
-    print(f"\n{'='*60}")
-    print(f"TRAINING COMPLETE")
-    print(f"{'='*60}")
-    print(f"  Model saved to:    {artifact_dir / 'xgboost_router.json'}")
-    print(f"  Metadata saved to: {artifact_dir / 'metadata.json'}")
-    print(f"  Validation accuracy: {accuracy:.4f}")
+    print(f"Model    -> {ARTIFACT_DIR / 'xgboost_router.json'}")
+    print(f"Metadata -> {ARTIFACT_DIR / 'metadata.json'}")
+    print()
+    print("Enable the trained router with:")
+    print("  AHRAG_ROUTER_BACKEND=ml python -m ahrag.evaluate")
 
 
 if __name__ == "__main__":

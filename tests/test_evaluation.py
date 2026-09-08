@@ -242,9 +242,15 @@ class TestEvaluationRun:
         items = load_eval_set()
         return {s.key: run_system(s, items) for s in systems}
 
-    def test_all_six_systems_run(self, evaluated) -> None:
-        """The full comparison set executes."""
-        assert set(evaluated) == {"B1", "B2", "B3", "B4", "B5", "P1"}
+    def test_all_systems_run(self, evaluated) -> None:
+        """The full comparison set executes.
+
+        P2 is the learned router and B6 the Adaptive-RAG baseline. Both are
+        present whether or not a trained model artifact exists: without one
+        they degrade to the rule-based and threshold policies respectively, so
+        the systems still run and still have to satisfy every invariant below.
+        """
+        assert set(evaluated) == {"B1", "B2", "B3", "B4", "B5", "B6", "P1", "P2"}
 
     def test_no_system_errored(self, evaluated) -> None:
         """No query crashed any system."""

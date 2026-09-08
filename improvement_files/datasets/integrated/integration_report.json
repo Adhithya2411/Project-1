@@ -1,15 +1,57 @@
 {
-  "datasets_integrated": "all",
-  "total_documents": 1125,
-  "total_eval_items": 400,
-  "total_eval_only_items": 100,
-  "total_corpus_chars": 1054851,
+  "seed": 1729,
+  "documents": 6139,
+  "chunks": 7092,
+  "corpus_chars": 3864559,
+  "supersession_chains": 15,
+  "eval_items": 965,
+  "answerable": 875,
+  "should_abstain": 90,
+  "freshness_sensitive": 38,
+  "with_forbidden_chunks": 60,
+  "document_audiences": {
+    "finance,manager": 381,
+    "finance": 521,
+    "employee": 2044,
+    "engineering,manager": 617,
+    "employee,manager": 960,
+    "legal": 167,
+    "hr,manager": 270,
+    "engineering": 730,
+    "hr": 449
+  },
   "eval_types": {
-    "finance_metrics-generated": 50,
-    "finance_domain-relevant": 50,
-    "finance_novel-generated": 50,
-    "policy_comprehension": 150,
-    "hotpotqa_comparison": 21,
-    "hotpotqa_bridge": 79
-  }
+    "finance_metrics-generated": 30,
+    "finance_domain-relevant": 45,
+    "finance_novel-generated": 49,
+    "policy_comprehension": 300,
+    "hotpotqa_comparison": 70,
+    "hotpotqa_bridge": 326,
+    "permission_boundary": 60,
+    "unanswerable": 30,
+    "adversarial_misspelled": 19,
+    "adversarial_rambling": 21,
+    "freshness_competing_versions": 15
+  },
+  "per_dataset": {
+    "financebench": {
+      "total": 150,
+      "located": 124,
+      "dropped_no_evidence": 0,
+      "dropped_unlocatable": 26
+    },
+    "policyqa": {
+      "total": 450,
+      "located": 300,
+      "dropped_unlocatable": 150,
+      "chains": 15
+    },
+    "hotpotqa": {
+      "total": 600,
+      "located": 396,
+      "dropped_unlocatable": 0,
+      "dropped_scope": 204
+    }
+  },
+  "gold_resolution": "real chunker; unlocatable evidence dropped, never defaulted"
 }
