@@ -446,14 +446,19 @@ only the routing policy differs.
 
 | System | R@5 | MRR | nDCG@10 | Abstention-ok | Latency | ACL violations |
 |---|---|---|---|---|---|---|
-| B1 fixed BM25 | 0.473 [0.44,0.50] | 0.506 | 0.453 | 0.811 | 0.095 s | **0** |
-| B2 fixed dense | 0.519 [0.49,0.55] | 0.527 | 0.480 | 0.820 | 0.086 s | **0** |
-| B3 fixed hybrid RRF | 0.542 [0.51,0.57] | 0.539 | 0.498 | 0.824 | 0.103 s | **0** |
-| B4 always-maximal (R4) | 0.537 [0.51,0.57] | 0.538 | 0.495 | 0.824 | 0.109 s | **0** |
+| B1 fixed BM25 | 0.473 [0.44,0.50] | 0.506 | 0.453 | 0.811 | 0.125 s | **0** |
+| B2 fixed dense | 0.519 [0.49,0.55] | 0.527 | 0.480 | 0.820 | **0.113 s** | **0** |
+| B3 fixed hybrid RRF | 0.542 [0.51,0.57] | 0.539 | 0.498 | 0.824 | 0.139 s | **0** |
+| B4 always-maximal (R4) | 0.537 [0.51,0.57] | 0.538 | 0.495 | 0.824 | 0.142 s | **0** |
 | B5 complexity-only | 0.539 [0.51,0.57] | 0.537 | 0.496 | 0.824 | 0.145 s | **0** |
-| B6 Adaptive-RAG (trained) | 0.539 [0.51,0.57] | 0.540 | 0.498 | 0.823 | 0.096 s | **0** |
-| P1 governance-aware (rule-based) | 0.524 [0.49,0.55] | 0.530 | 0.487 | 0.818 | 0.102 s | **0** |
-| **P2 learned router** | **0.548** [0.52,0.58] | **0.542** | **0.503** | 0.818 | **0.082 s** | **0** |
+| B6 Adaptive-RAG (trained) | 0.539 [0.51,0.57] | 0.540 | 0.498 | 0.823 | 0.127 s | **0** |
+| P1 governance-aware (rule-based) | 0.524 [0.49,0.55] | 0.530 | 0.487 | 0.818 | 0.139 s | **0** |
+| **P2 learned router** | **0.548** [0.52,0.58] | **0.542** | **0.503** | 0.818 | 0.118 s | **0** |
+
+Latency was measured while other jobs shared the machine, so read that column
+as soft — §2.5 of `RESEARCH_LIMITATIONS.md` already treats latency here as an
+estimate. The route distribution is the durable evidence for the efficiency
+claim: P2 uses the most expensive route on **2** of 965 queries, B4 on all 965.
 
 These are the numbers **after** the freshness-stratum repair described in
 §4.5(b) below. Every system gained roughly +0.017 Recall@5, which is exactly
