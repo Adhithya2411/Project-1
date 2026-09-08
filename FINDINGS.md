@@ -323,11 +323,61 @@ violation — it is an information-flow violation, and the distinction is the
 point: **access control constrains outputs; non-interference constrains
 dependence.**
 
-**Honest limitation:** SPIS does **not** improve retrieval quality at demo scale
-(R@5 Δ = 0.0000, p = 1.0; abstention −0.0625, p = 0.247, traced to the
-class-local LSA basis). The purity property is free but not profitable there.
-The λ knob is also only *half* a frontier — it governs the sparse channel only.
-Both recorded in `RESEARCH_LIMITATIONS.md` §5.1–5.2.
+**The open question, now answered.** At demo scale SPIS was quality-neutral,
+and the obvious objection was that the demo corpus has almost no ACL structure
+to exploit. So it was re-run on the benchmark corpus, whose lattice is
+genuinely wide: **7 distinct ACL equivalence classes** across 7 principals,
+class sizes 3,123–5,677 chunks, with the narrowest principal seeing only 44% of
+the corpus.
+
+| System | R@5 | MRR | nDCG@10 | Abstention-ok |
+|---|---|---|---|---|
+| unspecialised | 0.507 [0.48, 0.54] | 0.512 | 0.470 | 0.802 |
+| SPIS λ = 0 (provably pure) | 0.503 [0.47, 0.53] | 0.511 | 0.468 | 0.802 |
+| SPIS λ = 0.5 | 0.506 [0.48, 0.54] | 0.512 | 0.470 | 0.803 |
+| SPIS λ = 1 | 0.507 [0.48, 0.54] | 0.512 | 0.470 | 0.802 |
+
+| Comparison vs unspecialised | Δ R@5 | p | *d* |
+|---|---|---|---|
+| λ = 0 | **−0.0040** | **0.027** | −0.071 |
+| λ = 0.5 | −0.0011 | 0.584 | −0.034 |
+| λ = 1 | +0.0000 | 1.000 | 0.000 |
+
+**Non-interference costs 0.004 Recall@5, and that cost is real (p = 0.027)
+rather than noise.** The effect size is negligible by convention
+(*d* = −0.071), so in absolute terms the price of the security property is
+about one item in 250. It does not disappear on a wide lattice, which settles
+the question: **SPIS's contribution is the information-flow property alone, not
+a retrieval improvement.**
+
+This was predicted in advance. §5 of an earlier draft of this document, written
+before the run, said "I expect SPIS to remain quality-neutral-to-slightly-negative
+even on the wider lattice. If SPIS shows a recall gain there, that is a
+genuinely new result; if not, the contribution stays the security property
+alone." It did not, and the contribution stays the security property alone.
+
+**The λ frontier behaves exactly as designed**, which is the useful part. λ is
+an explicit information-flow budget: at λ = 0 the index is provably
+non-interfering and costs 0.004 recall; by λ = 1 the recall penalty is
+identically zero and the sparse channel's statistics are fully global again.
+An operator can therefore choose a point on that curve deliberately, with both
+axes measured, instead of getting whichever end the implementation happened to
+pick. That is a small curve, but it is a *measured* one.
+
+**Remaining honest limitations:**
+
+- λ governs the **sparse channel only**. The LSA basis is class-local whenever
+  specialisation is on, so it is half a frontier; a complete one needs a dense
+  analogue.
+- Specialisation is **expensive at scale**: building 7 per-class indexes over a
+  7,082-chunk corpus dominates the run time, since each fits its own LSA space.
+  The LRU cap bounds memory but not first-use latency.
+- With a **pre-trained neural encoder the dense channel is inherently pure** —
+  the encoder holds no corpus statistics — so SPIS's dense specialisation is
+  only relevant to corpus-fitted embeddings like LSA. Only BM25 IDF and the
+  reranker's IDF leak in that configuration.
+
+All of the above is recorded in `RESEARCH_LIMITATIONS.md` §5.1–5.2.
 
 ### 4.5 Web application — verified end to end
 
